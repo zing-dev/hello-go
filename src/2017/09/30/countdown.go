@@ -16,6 +16,7 @@ func main() {
 		var h int = int(diff / 3600)
 		var m int = int((diff - h*3600) / 60)
 		var s int = int(diff % 60)
+		// var s int = 60 - int(diff % 60)
 		fmt.Println("还剩", h, "小时", m, "分钟", s, "秒下班了!")
 		time.Sleep(time.Second * 2)
 	}

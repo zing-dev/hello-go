@@ -10,7 +10,7 @@ import (
 func main() {
 
 	network := "tcp4"
-	address := "192.168.10.10:7777"
+	address := ":7777"
 	addr, e := net.ResolveTCPAddr(network, address)
 	checkError(e)
 

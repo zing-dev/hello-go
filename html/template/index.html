@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{{define "layer"}}
+    <h4>layer {{.}}</h4>
+    <code>
+        {{range $i,$e := .}}
+            {{$i}} : {{$e}}
+        {{end}}
+    </code>
+{{end}}
+
+<h3>userslist:</h3>
+<p>userlist:</p>{{ .}}
+<p>users:</p>
+{{range $i,$e := .}}
+    {{$i}}:{{$e}}
+{{end}}
+{{range .}}
+    {{ .}}
+{{end}}
+</body>
+</html>

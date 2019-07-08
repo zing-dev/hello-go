@@ -17,7 +17,7 @@ func main() {
 	for true {
 		fmt.Println("选择去的楼层,退出按0:")
 		_, _ = fmt.Scanln(&i)
-		if i > 8 {
+		if i < 0 || i > 8 {
 			fmt.Println("楼层数错误")
 		} else if i == 0 {
 			break

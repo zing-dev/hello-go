@@ -1,74 +1,77 @@
 use std::fmt::{self, Display, Formatter};
 
-struct City {
-    name: &'static str,
-    // Latitude
-    lat: f32,
-    // Longitude
-    lon: f32,
+// Tuples can be used as function arguments and as return values
+fn reverse(pair: (i32, bool)) -> (bool, i32) {
+    // `let` can be used to bind the members of a tuple to variables
+    let (integer, boolean) = pair;
+
+    (boolean, integer)
 }
 
-impl Display for City {
-    // `f` is a buffer, and this method must write the formatted string into it
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        let lat_c = if self.lat >= 0.0 { 'N' } else { 'S' };
-        let lon_c = if self.lon >= 0.0 { 'E' } else { 'W' };
+fn transpose(pair: Matrix) -> Matrix {
+    Matrix(pair.0, pair.2, pair.1, pair.3)
+}
 
-        // `write!` is like `format!`, but it will write the formatted string
-        // into a buffer (the first argument)
-        write!(f, "{}: {:.3}°{} {:.3}°{}",
-               self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
+// The following struct is for the activity.
+#[derive(Debug)]
+struct Matrix(f32, f32, f32, f32);
+
+impl Matrix {
+    pub fn transpose(&self) ->Matrix{
+        Matrix(self.0, self.2, self.1, self.3)
     }
 }
 
-#[derive(Debug)]
-struct Color {
-    red: u8,
-    green: u8,
-    blue: u8,
-}
-
-#[derive(Debug)]
-struct RGB {
-    red: u8,
-    green: u8,
-    blue: u8,
-}
-
-impl Display for RGB {
-    // `f` is a buffer, and this method must write the formatted string into it
+impl Display for Matrix {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "RGB ({},{},{}) 0x{:X}{:X}{:X}",
-               self.red, self.green, self.blue,self.red, self.green, self.blue, )
+        write!(f, "({},{})\n({},{})", self.0, self.1, self.2, self.3)
     }
 }
 
 fn main() {
-    println!("{}", [1, 2, 3].len());
-    for city in [
-        City { name: "Dublin", lat: 53.347778, lon: -6.259722 },
-        City { name: "Oslo", lat: 59.95, lon: 10.75 },
-        City { name: "Vancouver", lat: 49.25, lon: -123.1 },
-    ].iter() {
-        println!("{},Name is {:?}", *city, city.name);
-    }
-    for color in [
-        Color { red: 128, green: 255, blue: 90 },
-        Color { red: 0, green: 3, blue: 254 },
-        Color { red: 0, green: 0, blue: 0 },
-    ].iter() {
-        // Switch this to use {} once you've added an implementation
-        // for fmt::Display.
-        println!("{:?}", *color);
-    }
+    // A tuple with a bunch of different types
+    let long_tuple = (1u8, 2u16, 3u32, 4u64,
+                      -1i8, -2i16, -3i32, -4i64,
+                      0.1f32, 0.2f64,
+                      'a', true);
 
-    for rgb in [
-        RGB { red: 128, green: 255, blue: 90 },
-        RGB { red: 0, green: 3, blue: 254 },
-        RGB { red: 0, green: 0, blue: 0 },
-    ].iter() {
-        // Switch this to use {} once you've added an implementation
-        // for fmt::Display.
-        println!("{}", *rgb);
-    }
+    // Values can be extracted from the tuple using tuple indexing
+    println!("long tuple first value: {}", long_tuple.0);
+    println!("long tuple second value: {}", long_tuple.1);
+
+    // Tuples can be tuple members
+    let tuple_of_tuples = ((1u8, 2u16, 2u32), (4u64, -1i8), -2i16);
+
+    // Tuples are printable
+    println!("tuple of tuples: {:?}", tuple_of_tuples);
+    println!("tuple of tuples: {:#?}", tuple_of_tuples);
+
+    // But long Tuples cannot be printed
+    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+//    println!("too long tuple: {:?}", too_long_tuple);
+    // TODO ^ Uncomment the above 2 lines to see the compiler error
+    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+    println!("too long tuple: {:?}", too_long_tuple);
+
+    let pair = (1, true);
+    println!("pair is {:?}", pair);
+
+    println!("the reversed pair is {:?}", reverse(pair));
+
+    // To create one element tuples, the comma is required to tell them apart
+    // from a literal surrounded by parentheses
+    println!("one element tuple: {:?}", (5u32, ));
+    println!("just an integer: {:?}", (5u32));
+
+    //tuples can be destructured to create bindings
+    let tuple = (1, "hello", 4.5, true);
+
+    let (a, b, c, d) = tuple;
+    println!("{:?}, {:?}, {:?}, {:?}", a, b, c, d);
+
+    let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
+    println!("{:?}", matrix);
+    println!("{}", matrix);
+    println!("{}", matrix.transpose());
+    println!("{}", transpose(matrix));
 }

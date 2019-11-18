@@ -1,57 +1,56 @@
+use std::fmt; // Import `fmt`
+
+// A structure holding two numbers. `Debug` will be derived so the results can
+// be contrasted with `Display`.
+#[derive(Debug)]
+struct MinMax(i64, i64);
+
+// Implement `Display` for `MinMax`.
+impl fmt::Display for MinMax {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Use `self.number` to refer to each positional data point.
+        write!(f, "({}, {})", self.0, self.1)
+    }
+}
+
+// Define a structure where the fields are nameable for comparison.
+#[derive(Debug)]
+struct Point2D {
+    x: f64,
+    y: f64,
+}
+
+// Similarly, implement `Display` for `Point2D`
+impl fmt::Display for Point2D {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Customize so only `x` and `y` are denoted.
+        write!(f, "x: {}, y: {}", self.x, self.y)
+    }
+}
+
 fn main() {
-    let s1 = String::from("hello");
+    let minmax = MinMax(0, 14);
 
-    let (s2, len) = calculate_length(s1);
+    println!("Compare structures:");
+    println!("Display: {}", minmax);
+    println!("Debug: {:?}", minmax);
+    println!("Debug: {:#?}", minmax);
 
-    println!("The length of '{}' is {}.", s2, len);
+    let big_range =   MinMax(-300, 300);
+    let small_range = MinMax(-3, 3);
 
+    println!("The big range is {big} and the small is {small}",
+             small = small_range,
+             big = big_range);
 
-    let s = "hello";
+    let point = Point2D { x: 3.3, y: 7.2 };
 
-    {                      // s is not valid here, it’s not yet declared
-        println!("{}",s);
-        let s = "hello rust";   // s is valid from this point forward
-        println!("{}",s);
+    println!("Compare points:");
+    println!("Display: {}", point);
+    println!("Debug: {:?}", point);
+    println!("Debug: {:#?}", point);
 
-        // do stuff with s
-    }
-
-
-    {
-        let s = String::from("hello");
-        let mut s = String::from("hello");
-
-        s.push_str(", world!"); // push_str() appends a literal to a String
-
-        println!("{}", s); // This will print `hello, world!`
-
-    }
-
-    let s1 = String::from("hello");
-
-    let len = calculate_length2(&s1);
-
-    println!("The length of '{}' is {}.", s1, len);
-
-    {
-        let mut s = String::from("hello");
-
-        change(&mut s);
-
-        println!("The length of '{}' ", s);
-    }
-}
-fn change(some_string: &mut String) {
-    some_string.push_str(", world");
-}
-
-
-fn calculate_length2(s: &String) -> usize {
-    s.len()
-}
-
-fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len(); // len() returns the length of a String
-
-    (s, length)
+    // Error. Both `Debug` and `Display` were implemented, but `{:b}`
+    // requires `fmt::Binary` to be implemented. This will not work.
+    // println!("What does Point2D look like in binary: {:b}?", point);
 }

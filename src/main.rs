@@ -1,11 +1,13 @@
-pub mod variable;
-
+pub mod learn;
 fn main() {
+
     {
-        use variable::bindings;
-//        bindings::bindings();
-//        bindings::mut_test();
-//        bindings::scope();
-        bindings::declare();
+        use learn::types;
+
+        types::literals();
+        types::inference();
+        types::alias()
+
+
     }
 }

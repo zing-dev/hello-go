@@ -5,7 +5,12 @@ authors = ["zing <599490911@qq.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+#[[bin]]
+#doc=false
+#name= "app"
+#path="src/main.rs"
 
 [dependencies]
 ferris-says = "0.1"
 rand = "0.4.0"
+rust-crypto = "0.2"

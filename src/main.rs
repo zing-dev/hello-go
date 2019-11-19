@@ -1,89 +1,88 @@
-#[derive(Debug)]
-struct Person<'a, 'b> {
-    // The 'a defines a lifetime
-    name: &'a str,
-    age: u8,
-    sex: &'b str,
+// Create an `enum` to classify a web event. Note how both
+// names and type information together specify the variant:
+// `PageLoad != PageUnload` and `KeyPress(char) != Paste(String)`.
+// Each is different and independent.
+enum WebEvent {
+    // An `enum` may either be `unit-like`,
+    PageLoad,
+    PageUnload,
+    // like tuple structs,
+    KeyPress(char),
+    Paste(String),
+    // or c-like structures.
+    Click { x: i64, y: i64 },
 }
 
-// A unit struct
-struct Nil;
-
-// A tuple struct
-struct Pair(i32, f32);
-
-// A struct with two fields
-struct Point {
-    x: f32,
-    y: f32,
-}
-
-// Structs can be reused as fields of another struct
-#[allow(dead_code)]
-struct Rectangle {
-    // A rectangle can be specified by where the top left and bottom right
-    // corners are in space.
-    top_left: Point,
-    bottom_right: Point,
-}
-
-impl Rectangle {
-    pub fn rect_area(&self) -> f32 {
-        let mut area = (self.top_left.x - self.bottom_right.x) * (self.top_left.y - self.bottom_right.y);
-        if area < 0f32 {
-            area = -area;
+impl WebEvent {
+    fn inspect(&self) {
+        match self {
+            WebEvent::PageLoad => println!("page loaded"),
+            WebEvent::PageUnload => println!("page unloaded"),
+            // Destructure `c` from inside the `enum`.
+            WebEvent::KeyPress(c) => println!("pressed '{}'.", c),
+            WebEvent::Paste(s) => println!("pasted \"{}\".", s),
+            // Destructure `Click` into `x` and `y`.
+            WebEvent::Click { x, y } => {
+                println!("clicked at x={}, y={}.", x, y);
+            }
         }
-        area
+    }
+}
+
+// A function which takes a `WebEvent` enum as an argument and
+// returns nothing.
+fn inspect(event: WebEvent) {
+    match event {
+        WebEvent::PageLoad => println!("page loaded"),
+        WebEvent::PageUnload => println!("page unloaded"),
+        // Destructure `c` from inside the `enum`.
+        WebEvent::KeyPress(c) => println!("pressed '{}'.", c),
+        WebEvent::Paste(s) => println!("pasted \"{}\".", s),
+        // Destructure `Click` into `x` and `y`.
+        WebEvent::Click { x, y } => {
+            println!("clicked at x={}, y={}.", x, y);
+        }
+    }
+}
+
+enum VeryVerboseEnumOfThingsToDoWithNumbers {
+    Add,
+    Subtract,
+}
+
+impl VeryVerboseEnumOfThingsToDoWithNumbers {
+    fn run(&self, x: i32, y: i32) -> i32 {
+        match self {
+            Self::Add => x + y,
+            Self::Subtract => x - y,
+        }
     }
 }
 
 fn main() {
-    // Create struct with field init shorthand
-    let name = "Peter";
-    let age = 27;
-    let sex = "male";
-    let peter = Person { name, age, sex };
+    let pressed = WebEvent::KeyPress('x');
+    // `to_owned()` creates an owned `String` from a string slice.
+    let pasted = WebEvent::Paste("my text".to_owned());
+    let click = WebEvent::Click { x: 20, y: 80 };
+    let load = WebEvent::PageLoad;
+    let unload = WebEvent::PageUnload;
 
-    // Print debug struct
-    println!("{:?}", peter);
+    inspect(pressed);
+    inspect(pasted);
+    inspect(click);
+    inspect(load);
+    inspect(unload);
 
+    let mut pasted2 = WebEvent::Paste("my text 2".to_owned());
+    pasted2.inspect();
+    inspect( pasted2);
 
-    // Instantiate a `Point`
-    let point: Point = Point { x: 10.3, y: 0.4 };
+    type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
+    let x = Operations::Add;
 
-    // Access the fields of the point
-    println!("point coordinates: ({}, {})", point.x, point.y);
-
-    // Make a new point by using struct update syntax to use the fields of our
-    // other one
-    let bottom_right = Point { x: 5.2, ..point };
-
-    // `bottom_right.y` will be the same as `point.y` because we used that field
-    // from `point`
-    println!("second point: ({}, {})", bottom_right.x, bottom_right.y);
-
-    // Destructure the point using a `let` binding
-    let Point { x: top_edge, y: left_edge } = point;
-
-    let _rectangle = Rectangle {
-        // struct instantiation is an expression too
-        top_left: Point { x: left_edge, y: top_edge },
-        bottom_right,
-    };
-
-    println!("Rectangle area: {}", _rectangle.rect_area());
-
-    // Instantiate a unit struct
-    let _nil = Nil;
-
-    // Instantiate a tuple struct
-    let pair = Pair(1, 0.1);
-
-    // Access the fields of a tuple struct
-    println!("pair contains {:?} and {:?}", pair.0, pair.1);
-
-    // Destructure a tuple struct
-    let Pair(integer, decimal) = pair;
-
-    println!("pair contains {:?} and {:?}", integer, decimal);
+    println!("{}",x.run(1,2));
+    let sub = VeryVerboseEnumOfThingsToDoWithNumbers::Subtract;
+    println!("{}",sub.run(3,1));
+    println!("{}",VeryVerboseEnumOfThingsToDoWithNumbers::Subtract.run(4,2))
 }
+

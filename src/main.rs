@@ -48,6 +48,8 @@ fn match_test() {
     match_test::match_structs();
     match_test::match_guards();
     match_test::match_bindings();
+    match_test::if_let();
+    match_test::while_let();
 }
 
 fn main() {

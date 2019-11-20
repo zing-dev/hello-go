@@ -46,6 +46,8 @@ fn match_test() {
     match_test::match_enums();
     match_test::match_pointers();
     match_test::match_structs();
+    match_test::match_guards();
+    match_test::match_bindings();
 }
 
 fn main() {

@@ -1,7 +1,7 @@
 #![allow(unused)]
+#![allow(ellipsis_inclusive_range_patterns)]
 
 pub mod learn;
-
 
 fn types() {
     use learn::types;
@@ -11,7 +11,7 @@ fn types() {
     types::alias()
 }
 
-fn conversion(){
+fn conversion() {
     use learn::conversion;
 
     conversion::from_into();
@@ -19,14 +19,14 @@ fn conversion(){
     conversion::to_string()
 }
 
-fn expression(){
+fn expression() {
     use learn::expression;
 
     expression::expression2()
 }
 
 
-fn flow_control(){
+fn flow_control() {
     use learn::flow_control;
 
     flow_control::if_else();
@@ -39,7 +39,15 @@ fn flow_control(){
     flow_control::for_iter_mut();
 }
 
+fn match_test() {
+    use learn::match_test;
+    match_test::match_test();
+    match_test::match_tuples();
+    match_test::match_enums();
+    match_test::match_pointers();
+    match_test::match_structs();
+}
 
 fn main() {
-    flow_control()
+    match_test()
 }

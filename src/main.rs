@@ -52,6 +52,16 @@ fn match_test() {
     match_test::while_let();
 }
 
+fn function(){
+    use learn::function;
+
+    function::function();
+    function::methods();
+    function::closures();
+    function::capture();
+    function::input_parameters();
+}
+
 fn main() {
-    match_test()
+    function()
 }

@@ -63,9 +63,18 @@ fn function(){
     function::input_functions();
     function::anonymity();
     function::output_parameters();
-    function::iter_any();
+//    function::iter_any();
+}
+
+fn function2(){
+    use learn::function2;
+
+    function2::hof();
+    function2::diverging();
+    function2::diverging2();
+    function2::diverging3();
 }
 
 fn main() {
-    function()
+    function2()
 }

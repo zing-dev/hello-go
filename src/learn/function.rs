@@ -323,3 +323,100 @@ pub fn input_parameters() {
     println!("I said {}.", greeting2.len());
     println!("I said {:?}.", greeting2.borrow());
 }
+
+pub fn input_functions() {
+    // Define a function which takes a generic `F` argument
+// bounded by `Fn`, and calls it
+    fn call_me<F: Fn()>(f: F) {
+        f();
+    }
+
+    // Define a wrapper function satisfying the `Fn` bound
+    fn function() {
+        println!("I'm a function!");
+    }
+
+    // Define a closure satisfying the `Fn` bound
+    let closure = || println!("I'm a closure!");
+
+    call_me(closure);
+    call_me(function);
+    call_me(|| println!("hello world"));
+}
+
+pub fn anonymity() {
+    // `F` must implement `Fn` for a closure which takes no
+// inputs and returns nothing - exactly what is required
+// for `print`.
+    fn apply<F>(f: F) where
+        F: Fn() {
+        f();
+    }
+
+    fn apply2<F: Fn()>(f: F) {
+        f();
+    }
+
+    let x = 7;
+
+    // Capture `x` into an anonymous type and implement
+    // `Fn` for it. Store it in `print`.
+    let print = || println!("{}", x);
+
+    apply(print);
+    apply2(print);
+}
+
+pub fn output_parameters() {
+    fn create_fn() -> impl Fn() {
+        let text = "Fn".to_owned();
+        let text2 = String::from("hello world");
+
+        move || println!("This is a: {}", text)
+    }
+
+    fn create_fnmut() -> impl FnMut() {
+        let text = "FnMut".to_owned();
+
+        move || println!("This is a: {}", text)
+    }
+
+    let fn_plain = create_fn();
+    let mut fn_mut = create_fnmut();
+
+    fn_plain();
+    fn_mut();
+}
+
+
+//todo
+/*
+pub fn iter_any() {
+    pub trait Iterator {
+        // The type being iterated over.
+        type Item;
+
+        // `any` takes `&mut self` meaning the caller may be borrowed
+        // and modified, but not consumed.
+        fn any<F>(&mut self, f: F) -> bool where
+        // `FnMut` meaning any captured variable may at most be
+        // modified, not consumed. `Self::Item` states it takes
+        // arguments to the closure by value.
+            F: FnMut(Self::Item) -> bool {}
+    }
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
+
+    // `iter()` for vecs yields `&i32`. Destructure to `i32`.
+    println!("2 in vec1: {}", vec1.iter().any(|&x| x == 2));
+    // `into_iter()` for vecs yields `i32`. No destructuring required.
+    println!("2 in vec2: {}", vec2.into_iter().any(|x| x == 2));
+
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5, 6];
+
+    // `iter()` for arrays yields `&i32`.
+    println!("2 in array1: {}", array1.iter().any(|&x| x == 2));
+    // `into_iter()` for arrays unusually yields `&i32`.
+    println!("2 in array2: {}", array2.into_iter().any(|&x| x == 2));
+}*/

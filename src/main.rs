@@ -60,6 +60,10 @@ fn function(){
     function::closures();
     function::capture();
     function::input_parameters();
+    function::input_functions();
+    function::anonymity();
+    function::output_parameters();
+    function::iter_any();
 }
 
 fn main() {

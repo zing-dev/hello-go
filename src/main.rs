@@ -75,6 +75,14 @@ fn function2(){
     function2::diverging3();
 }
 
+fn mod_test(){
+    use learn::mod_test;
+
+    mod_test::mod_test();
+    mod_test::struct_test();
+    mod_test::use_test();
+    mod_test::super_test();
+}
 fn main() {
-    function2()
+    mod_test()
 }

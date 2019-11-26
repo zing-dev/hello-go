@@ -1,5 +1,6 @@
 #![allow(ellipsis_inclusive_range_patterns)]
 #![allow(dead_code)]
+
 pub mod learn;
 
 fn types() {
@@ -51,7 +52,7 @@ fn match_test() {
     match_test::while_let();
 }
 
-fn function(){
+fn function() {
     use learn::function;
 
     function::function();
@@ -65,7 +66,7 @@ fn function(){
 //    function::iter_any();
 }
 
-fn function2(){
+fn function2() {
     use learn::function2;
 
     function2::hof();
@@ -74,7 +75,7 @@ fn function2(){
     function2::diverging3();
 }
 
-fn mod_test(){
+fn mod_test() {
     use learn::mod_test;
 
     mod_test::mod_test();
@@ -83,12 +84,25 @@ fn mod_test(){
     mod_test::super_test();
 }
 
-fn attribute(){
+fn attribute() {
     use learn::attribute;
 
     attribute::dead_code();
     attribute::cfg();
 }
+
+fn generics() {
+    use learn::generics;
+    generics::gen_fn();
+    generics::implement();
+    generics::gen_trait();
+    generics::bounds();
+    generics::case_empty();
+    generics::multi_bounds();
+    generics::where_test();
+    generics::new_types();
+}
+
 fn main() {
-    attribute()
+    generics()
 }

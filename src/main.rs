@@ -1,6 +1,5 @@
-#![allow(unused)]
 #![allow(ellipsis_inclusive_range_patterns)]
-
+#![allow(dead_code)]
 pub mod learn;
 
 fn types() {
@@ -83,6 +82,13 @@ fn mod_test(){
     mod_test::use_test();
     mod_test::super_test();
 }
+
+fn attribute(){
+    use learn::attribute;
+
+    attribute::dead_code();
+    attribute::cfg();
+}
 fn main() {
-    mod_test()
+    attribute()
 }

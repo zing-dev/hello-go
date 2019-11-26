@@ -48,7 +48,7 @@ pub fn cast() {
     println!(" 232 as a i8 is : {}", 232 as i8);
 }
 
-
+#[allow(dead_code)]
 pub fn literals() {
     // Suffixed literals, their types2 are known at initialization
     let x = 1u8;

@@ -367,6 +367,7 @@ pub fn anonymity() {
     apply2(print);
 }
 
+#[allow(unused_variables)]
 pub fn output_parameters() {
     fn create_fn() -> impl Fn() {
         let text = "Fn".to_owned();

@@ -35,6 +35,8 @@ pub fn hof() {
     println!("{}", (1..5).map(|x| x * 2).fold(0, |n, sum| n + sum))
 }
 
+#[allow(dead_code)]
+#[allow(unused_variables)]
 pub fn diverging() {
     fn foo() -> ! {
         panic!("This call never returns.");
@@ -52,6 +54,10 @@ pub fn diverging() {
     main()
 }
 
+#[allow(unused_attributes)]
+#[allow(unused_variables)]
+#[allow(unreachable_code)]
+#[allow(dead_code)]
 pub fn diverging2() {
     #![feature(never_type)]
     fn main() {

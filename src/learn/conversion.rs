@@ -40,6 +40,7 @@ impl TryFrom<i32> for EvenNumber {
     }
 }
 
+#[allow(unused_variables)]
 pub fn try_from_into() {
     // TryFrom
     assert_eq!(EvenNumber::try_from(8), Ok(EvenNumber(8)));

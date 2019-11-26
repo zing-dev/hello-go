@@ -1,3 +1,5 @@
+#[allow(path_statements)]
+#[allow(unused_must_use)]
 pub fn expression1() {
     // variable binding
     let x = 5;
@@ -19,6 +21,7 @@ pub fn expression2() {
         x_cube + x_squared + x
     };
 
+    #[allow(unused_must_use)]
     let z = {
         // The semicolon suppresses this expression and `()` is assigned to `z`
         2 * x;

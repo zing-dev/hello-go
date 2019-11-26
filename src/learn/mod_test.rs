@@ -164,6 +164,7 @@ pub fn struct_test() {
     // TODO ^ Try uncommenting this line
 }
 
+#[allow(dead_code)]
 mod deeply {
     pub(crate) mod nested {
         pub fn my_first_function() {
@@ -187,6 +188,7 @@ mod deeply {
 }
 
 pub fn use_test() {
+    #![allow(unused_imports)]
     use crate::learn::mod_test::deeply::nested::{
         my_first_function,
         my_second_function,
@@ -198,7 +200,7 @@ pub fn use_test() {
     deeply::nested2::my_first_function()
 }
 
-
+#[allow(dead_code)]
 mod cool {
     pub fn function() {
         println!("called `cool::function()`");

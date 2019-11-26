@@ -60,6 +60,7 @@ pub fn match_tuples() {
     }
 }
 
+#[allow(unused_variables)]
 pub fn match_enums() {
     // `allow` required to silence warnings because only
 // one variant is used.
@@ -251,6 +252,7 @@ pub fn match_bindings() {
     }
 }
 
+#[allow(unused_variables)]
 pub fn if_let() {
 
 // Make `optional` of type `Option<i32>`

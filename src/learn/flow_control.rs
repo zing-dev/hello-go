@@ -54,6 +54,7 @@ pub fn loop_test() {
     }
 }
 
+#[allow(unreachable_code)]
 pub fn loop_nested_label() {
     'outer: loop {
         println!("Entered the outer loop");

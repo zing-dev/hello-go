@@ -7,3 +7,4 @@ pub mod match_test;
 pub mod function;
 pub mod function2;
 pub mod mod_test;
+pub mod attribute;

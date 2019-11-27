@@ -9,3 +9,4 @@ pub mod function2;
 pub mod mod_test;
 pub mod attribute;
 pub mod generics;
+pub mod scope;

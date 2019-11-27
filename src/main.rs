@@ -107,6 +107,19 @@ fn generics() {
     generics::case_units()
 }
 
+fn scope(){
+    use learn::scope;
+
+    scope::raii();
+    scope::move_test();
+    scope::mut_test();
+    scope::borrow();
+    scope::mutability();
+    scope::freeze();
+    scope::alias();
+    scope::ref_test();
+}
+
 fn main() {
-    generics()
+    scope()
 }

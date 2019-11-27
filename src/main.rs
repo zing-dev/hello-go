@@ -101,6 +101,10 @@ fn generics() {
     generics::multi_bounds();
     generics::where_test();
     generics::new_types();
+    generics::the_problem();
+    generics::associated_types();
+    generics::phantom();
+    generics::case_units()
 }
 
 fn main() {

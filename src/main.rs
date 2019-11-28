@@ -118,8 +118,21 @@ fn scope(){
     scope::freeze();
     scope::alias();
     scope::ref_test();
+    scope::ref_test();
 }
 
+fn lifetimes(){
+    use learn::lifetime;
+    lifetime::lifetimes();
+    lifetime::explicit();
+    lifetime::function();
+    lifetime::methods();
+    lifetime::struct_test();
+    lifetime::trait_test();
+    lifetime::bounds();
+    lifetime::coercion();
+    lifetime::static_test();
+}
 fn main() {
-    scope()
+    lifetimes()
 }

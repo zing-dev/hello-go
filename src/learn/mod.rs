@@ -11,3 +11,4 @@ pub mod attribute;
 pub mod generics;
 pub mod scope;
 pub mod lifetime;
+pub mod trait_test;

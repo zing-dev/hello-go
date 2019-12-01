@@ -133,6 +133,19 @@ fn lifetimes(){
     lifetime::coercion();
     lifetime::static_test();
 }
+
+fn trait_test(){
+    use learn::trait_test;
+    trait_test::derive();
+    trait_test::dyn_test();
+    trait_test::overload();
+    trait_test::drop_test();
+    trait_test::iter();
+    trait_test::impl_trait();
+    trait_test::clone();
+    trait_test::disambiguating();
+
+}
 fn main() {
-    lifetimes()
+    trait_test()
 }

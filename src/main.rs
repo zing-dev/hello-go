@@ -157,6 +157,12 @@ fn concurrency(){
 //    concurrency::message_passing2();
     concurrency::message_passing3();
 }
+
+fn collection(){
+    use learn::collection;
+    collection::vector();
+    collection::string();
+}
 fn main() {
-    concurrency()
+    collection();
 }

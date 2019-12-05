@@ -146,6 +146,12 @@ fn trait_test(){
     trait_test::disambiguating();
 
 }
+
+fn collection(){
+    use learn::collection;
+    collection::vector();
+    collection::string();
+}
 fn main() {
-    trait_test()
+    collection();
 }

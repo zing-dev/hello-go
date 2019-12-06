@@ -149,8 +149,10 @@ fn trait_test(){
 
 fn collection(){
     use learn::collection;
-    collection::vector();
-    collection::string();
+//    collection::vector();
+//    collection::string();
+//    collection::string2();
+    collection::string3();
 }
 fn main() {
     collection();

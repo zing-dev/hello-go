@@ -147,6 +147,17 @@ fn trait_test(){
 
 }
 
+fn concurrency(){
+    use learn::concurrency;
+//    concurrency::thread1();
+//    concurrency::thread2();
+//    concurrency::thread3();
+//    concurrency::thread4();
+//    concurrency::message_passing();
+//    concurrency::message_passing2();
+    concurrency::message_passing3();
+}
+
 fn collection(){
     use learn::collection;
 //    collection::vector();

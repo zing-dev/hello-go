@@ -12,4 +12,5 @@ pub mod generics;
 pub mod scope;
 pub mod lifetime;
 pub mod trait_test;
+pub mod concurrency;
 pub mod collection;

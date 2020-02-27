@@ -77,6 +77,6 @@ func main() {
 
 	fmt.Println(time.Hour.Hours())
 
-	fmt.Println(time.Duration(time.Hour * 10).Seconds()) // 36000秒
+	fmt.Println(time.Duration(time.Hour * 10).Seconds())                       // 36000秒
 	fmt.Println(time.Duration(time.Hour * 10).Truncate(time.Minute).Minutes()) // 600分钟
 }

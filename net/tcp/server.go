@@ -2,39 +2,46 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"net"
-	"os"
 	"time"
 )
 
 func main() {
 
-	service := ":7777"
+	service := ":8080"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
-	checkError2(err)
-
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("-------------服务器启动----------------")
 	listener, err := net.ListenTCP("tcp", tcpAddr)
-	checkError2(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
 			continue
 		}
-		//b := []byte("                     ")
-		b := make([]byte, 100)
-		n, err := conn.Read(b)
-		checkError2(err)
-		fmt.Printf("客户端：%d - %s\n", n, b)
-		daytime := time.Now().String()
-		_, _ = conn.Write([]byte(daytime)) // don't care about return value
-		_ = conn.Close()                   // we're finished with this client
-	}
-}
 
-func checkError2(err error) {
-	if err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
-		os.Exit(1)
+		for {
+			//b := []byte("                     ")
+			b := make([]byte, 100)
+			n, err := conn.Read(b)
+			if b[0] == 'a' || err == io.EOF {
+				log.Println("客户端退出")
+				break
+			}
+			fmt.Printf("客户端%s ：%d - %s\n", conn.RemoteAddr().String(), n, b)
+			daytime := time.Now().Format("2006-01-02 15:04:05")
+			n, err = conn.Write([]byte(daytime)) // don't care about return value
+			if err != nil {
+				break
+			}
+			fmt.Printf("send %d:%s \n", n, daytime)
+		}
+		//_ = conn.Close() // we're finished with this client
 	}
 }

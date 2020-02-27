@@ -1,0 +1,3 @@
+[submodule "demo/wsam/shimmer"]
+	path = demo/wsam/shimmer
+	url = git@github.com:agnivade/shimmer.git

@@ -1,30 +1,40 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"log"
 	"net"
+	"sync"
+	"sync/atomic"
 	"time"
 )
 
-type Client struct {
-	conn net.Conn
-}
+const (
+	disconnected uint32 = iota
+	connecting
+	reconnecting
+	connected
+)
 
-type OpenMessageRequest struct {
-	Relay []bool
-}
-type HeartBeat struct {
+type Client struct {
+	conn   net.Conn
+	status uint32
+	stop   chan struct{}
+	sync.RWMutex
 }
 
 func NewClient() *Client {
-	conn, err := net.Dial("tcp", ":17000")
+	c := &Client{}
+	c.setConnected(connecting)
+	conn, err := net.Dial("tcp", "192.168.0.111:17000")
 	if err != nil {
 		return nil
 	}
+	c.setConnected(connected)
+	c.stop = make(chan struct{})
+	c.conn = conn
 	log.Println("success")
-	return &Client{conn: conn}
+	return c
 }
 
 func (c *Client) Heart() {
@@ -33,52 +43,63 @@ func (c *Client) Heart() {
 	for {
 		select {
 		case <-t.C:
-			var data []byte
-			d, _ := json.Marshal(HeartBeat{})
-			data = append(data, IntToBytes(len(d))...)
-			data = append(data, byte(250))
-			data = append(data, d...)
-			log.Println(data)
-			write, _ := c.conn.Write(data)
-			log.Println(write)
+			_, _ = c.conn.Write(NewProtocol(HeartBeatId).Pack())
+		case <-c.stop:
+			if c.stop != nil {
+				close(c.stop)
+			}
+			c.setConnected(disconnected)
+			log.Println("心跳关闭...")
+			return
 		}
 	}
 }
 
-func (c *Client) Open() error {
-	var data []byte
-	bytes, _ := json.Marshal(OpenMessageRequest{Relay: []bool{
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-	}})
-	data = append(data, IntToBytes(len(bytes))...)
-	data = append(data, byte(2))
-	data = append(data, bytes...)
-	write, err := c.conn.Write(data)
+func (c *Client) RelayOpenAll() error {
+	write, err := c.conn.Write(NewProtocol(OpenId).Pack())
 	if err != nil {
 		return err
 	}
 	log.Println(write)
-	return errors.New("open ok")
+	return errors.New("open ok..")
 }
 
-func (c *Client) Close() error {
-	var data []byte
-	bytes, _ := json.Marshal(OpenMessageRequest{Relay: []bool{
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-		true, true, true, true, true, true, true, true,
-	}})
-	data = append(data, IntToBytes(len(bytes))...)
-	data = append(data, byte(3))
-	data = append(data, bytes...)
-	write, err := c.conn.Write(data)
+func (c *Client) RelayCloseAll() error {
+	write, err := c.conn.Write(NewProtocol(CloseId).Pack())
 	if err != nil {
 		return err
 	}
 	log.Println(write)
-	return errors.New("close ok")
+	return errors.New("close ok..")
+}
+
+func (c *Client) IsConnected() bool {
+	c.RLock()
+	defer c.RUnlock()
+	status := atomic.LoadUint32(&c.status)
+	switch {
+	case status == connected:
+		return true
+	case status > connecting:
+		return true
+	case status == connecting:
+		return true
+	default:
+		return false
+	}
+}
+
+func (c *Client) setConnected(status uint32) {
+	c.Lock()
+	defer c.Unlock()
+	atomic.StoreUint32(&c.status, status)
+}
+
+func (c *Client) Close() {
+	if c.IsConnected() {
+		if c.stop != nil {
+			c.stop <- struct{}{}
+		}
+		_ = c.conn.Close()
+	}
 }

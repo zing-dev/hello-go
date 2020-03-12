@@ -9,3 +9,7 @@ func TestTest(t *testing.T) {
 func TestTest2(t *testing.T) {
 	test2()
 }
+
+func TestTest3(t *testing.T) {
+	test3()
+}

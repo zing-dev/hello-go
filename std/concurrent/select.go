@@ -1,6 +1,7 @@
 package concurrent
 
 import (
+	"fmt"
 	"log"
 	"time"
 )
@@ -96,4 +97,56 @@ func select7() {
 	default:
 		log.Println("通道channel已经满啦，塞不下东西了!")
 	}
+}
+
+func select8() {
+	i := 0
+	defer fmt.Println("for循环外")
+
+	for {
+		select {
+		case <-time.After(time.Second * time.Duration(2)):
+			i++
+			if i == 5 {
+				fmt.Println("跳出for循环")
+				return
+			}
+		}
+		fmt.Println("for循环内 i=", i)
+	}
+}
+
+func select9() {
+	i := 0
+Loop:
+	for {
+		select {
+		case <-time.After(time.Second * time.Duration(2)):
+			i++
+			if i == 5 {
+				fmt.Println("跳出for循环")
+				break Loop
+			}
+		}
+		fmt.Println("for循环内 i=", i)
+	}
+
+	fmt.Println("for循环外")
+}
+
+func select10() {
+	i := 0
+	for {
+		select {
+		case <-time.After(time.Second * time.Duration(2)):
+			i++
+			if i == 5 {
+				fmt.Println("跳出for循环")
+				goto Loop
+			}
+		}
+		fmt.Println("for循环内 i=", i)
+	}
+Loop:
+	fmt.Println("for循环外")
 }

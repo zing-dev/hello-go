@@ -31,3 +31,15 @@ func TestSelect6(t *testing.T) {
 func TestSelect7(t *testing.T) {
 	select7()
 }
+
+func TestSelect8(t *testing.T) {
+	select8()
+}
+
+func TestSelect9(t *testing.T) {
+	select9()
+}
+
+func TestSelect10(t *testing.T) {
+	select10()
+}

@@ -1,11 +1,11 @@
-package main
+package time
 
 import (
 	"fmt"
 	"time"
 )
 
-func main() {
+func time1() {
 
 	fmt.Println(time.Now().String()) //2019-04-23 13:41:51.825852 +0800 CST m=+0.001974201
 

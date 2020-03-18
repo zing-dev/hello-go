@@ -1,11 +1,11 @@
-package main
+package byte
 
 import (
 	"bytes"
 	"fmt"
 )
 
-func main() {
+func byte1() {
 
 	///////////////////////////////////////
 	a := [10]byte{1, 2, 3, 4, 5, 6}
@@ -71,5 +71,4 @@ func main() {
 
 	fmt.Printf("%c\n", 0x7F)
 	fmt.Println(bytes.Trim(e, "a")) //[98 99 100 101]
-
 }

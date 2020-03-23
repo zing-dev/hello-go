@@ -1,4 +1,4 @@
-package main
+package os
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func main() {
+func env() {
 
 	environ := os.Environ()
 

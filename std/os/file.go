@@ -1,4 +1,4 @@
-package main
+package os
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func main() {
+func f() {
 	fileName := "./os/test.txt"
 
 	//file, e := os.Open(fileName)

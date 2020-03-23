@@ -150,3 +150,43 @@ func select10() {
 Loop:
 	fmt.Println("for循环外")
 }
+
+func select11() {
+	t1 := time.NewTicker(time.Second * 5)
+	t2 := time.NewTicker(time.Second * 5)
+	defer func() {
+		t1.Stop()
+		t2.Stop()
+	}()
+	for {
+		select {
+		case <-t1.C:
+			log.Println("========t1==start============")
+			T1()
+			log.Println("========t1==end============")
+		case <-t2.C:
+			log.Println("========t2===start===========")
+			T2()
+			log.Println("========t2===end===========")
+		}
+	}
+}
+
+func T1() {
+	i := 0
+	for i < 1000 {
+		if i%50 == 0 {
+			log.Println(i)
+		}
+		i++
+	}
+}
+func T2() {
+	i := 0
+	for i < 2000 {
+		if i%80 == 0 {
+			log.Println(i)
+		}
+		i++
+	}
+}

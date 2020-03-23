@@ -43,3 +43,11 @@ func TestSelect9(t *testing.T) {
 func TestSelect10(t *testing.T) {
 	select10()
 }
+
+func TestSelect11(t *testing.T) {
+	select11()
+}
+
+func TestSelect20(t *testing.T) {
+	select20()
+}

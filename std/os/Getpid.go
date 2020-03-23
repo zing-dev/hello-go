@@ -1,11 +1,11 @@
-package main
+package os
 
 import (
 	"fmt"
 	"os"
 )
 
-func main() {
+func Getpid() {
 
 	fmt.Println("Getpid ", os.Getpid())
 

@@ -27,3 +27,15 @@ func TestName(t *testing.T) {
 	time.Sleep(time.Second)
 	log.Println(NOW())
 }
+
+func TestTime2(t *testing.T) {
+	time2()
+}
+
+func TestTime3(t *testing.T) {
+	time3()
+}
+
+func TestTime4(t *testing.T) {
+	time4()
+}

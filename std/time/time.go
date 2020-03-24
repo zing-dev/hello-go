@@ -2,6 +2,7 @@ package time
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -79,4 +80,34 @@ func time1() {
 
 	fmt.Println(time.Duration(time.Hour * 10).Seconds())                       // 36000秒
 	fmt.Println(time.Duration(time.Hour * 10).Truncate(time.Minute).Minutes()) // 600分钟
+}
+
+func time2() {
+	for {
+		log.Println("Hour", time.Now().Hour(), "Minute", time.Now().Minute(), "Second", time.Now().Second())
+		log.Println(time.Now().Truncate(time.Hour))
+		log.Println(time.Now().Truncate(time.Minute))
+		//log.Println(time.Now().Round(time.Hour))
+		time.Sleep(time.Second * 3)
+	}
+}
+
+func time3() {
+	for {
+		log.Println("Hour", time.Now().Hour(), "Minute", time.Now().Minute(), "Second", time.Now().Second())
+		log.Println(time.Now().Add(time.Hour / 2).Round(time.Hour))
+		log.Println(time.Now().Add(time.Hour / 2).Round(time.Minute))
+		time.Sleep(time.Second * 3)
+	}
+}
+
+func time4() {
+	for {
+		log.Println("Hour", time.Now().Hour(), "Minute", time.Now().Minute(), "Second", time.Now().Second())
+		//log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute * 2))
+		//log.Println(time.Now().Add(time.Minute / 2).Truncate(time.Minute * 2))
+		log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute).Minute())
+		log.Println(time.Now(). /*.Add(time.Minute / 2)*/ Truncate(time.Minute).Minute())
+		time.Sleep(time.Second * 1)
+	}
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 )
 
 type People struct{}
@@ -65,4 +66,19 @@ func BytesToStruct() {
 		log.Fatal(err)
 	}
 	log.Println(b)
+}
+
+func JSON() {
+	type Stu struct {
+		Name string `json:"name"`
+		Age  int    `json:"age"`
+	}
+
+	data, _ := json.Marshal(Stu{
+		Name: "zing", Age: 27,
+	})
+
+	log.Println(string(data))
+	log.Println(strings.ReplaceAll(string(data), "{", ""))
+
 }

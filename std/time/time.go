@@ -106,7 +106,7 @@ func time4() {
 		log.Println("Hour", time.Now().Hour(), "Minute", time.Now().Minute(), "Second", time.Now().Second())
 		//log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute * 2))
 		//log.Println(time.Now().Add(time.Minute / 2).Truncate(time.Minute * 2))
-		log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute).Minute())
+		log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute * 10).Minute())
 		log.Println(time.Now(). /*.Add(time.Minute / 2)*/ Truncate(time.Minute).Minute())
 		time.Sleep(time.Second * 1)
 	}

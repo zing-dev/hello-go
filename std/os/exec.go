@@ -1,8 +1,13 @@
 package os
 
 import (
+	"bufio"
+	"bytes"
+	"io"
 	"log"
 	"os/exec"
+	"regexp"
+	"strings"
 )
 
 func exec1() {
@@ -31,4 +36,51 @@ func exec1() {
 	}
 	log.Println(string(output))
 
+}
+
+func exec2() {
+	output, err := exec.Command("cmd", "/C", `file`).Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	rd := bufio.NewReader(bytes.NewBuffer(output))
+	for {
+		line, _, err := rd.ReadLine()
+		if err == io.EOF {
+			log.Println("读完了.....")
+			break
+		}
+		if err != nil {
+			log.Fatal("读错了....", err)
+		}
+		str := string(line)
+		if strings.HasPrefix(str, "Telnet") {
+			all := regexp.MustCompile(`\d+`).FindAllString(str, -1)
+			log.Println(all)
+		}
+	}
+}
+
+func exec3() {
+	output, err := exec.Command("cmd", "/C", `CPUInfoService.exe`).Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(string(output))
+	/*rd := bufio.NewReader(bytes.NewBuffer(output))
+	for {
+		line, _, err := rd.ReadLine()
+		if err == io.EOF {
+			log.Println("读完了.....")
+			break
+		}
+		if err != nil {
+			log.Fatal("读错了....", err)
+		}
+		str := string(line)
+		if strings.HasPrefix(str, "Telnet") {
+			all := regexp.MustCompile(`\d+`).FindAllString(str, -1)
+			log.Println(all)
+		}
+	}*/
 }

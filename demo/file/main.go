@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -11,7 +12,7 @@ import (
 
 var (
 	file, _ = os.OpenFile(`C:\Windows\System32\drivers\etc\services2`, os.O_RDWR, 0777)
-	snmp    = "snmp1              161/udp                           #SNMP\r\n"
+	snmp    = "snmp              161/udp                           #SNMP\r\n"
 )
 
 func read1() {
@@ -75,6 +76,59 @@ func read2() {
 	}
 	log.Println("n = ", n)
 }
+
+func read3() {
+	rd := bufio.NewReader(file)
+	for {
+		line, _, err := rd.ReadLine()
+		if err == io.EOF {
+			log.Println("读完了.....")
+			break
+		}
+		if err != nil {
+			log.Fatal("读错了....", err)
+		}
+		str := string(line)
+		if strings.HasPrefix(str, "snmp") && strings.HasSuffix(str, "#SNMP") {
+			all := regexp.MustCompile(`\d+`).FindAllString(str, -1)
+			log.Println(all)
+		}
+	}
+}
+
+func read4() {
+	str := `
+以下是 localhost 上的设置
+
+Alt 键已被映射到 'CTRL+A' :     YES
+Idle 会话超时             :     1 小时
+最多连接次数              :     2
+Telnet 端口               :     23
+失败的登录企图的最多次数  :     3
+断开时结束任务            :     YES
+操作模式                  :     Console
+身份验证机制              :     NTLM, Password
+默认域                    :     ATDTSMKC4L50022
+状态                      :     已停止`
+	/*rd := bufio.NewReader(bytes.NewBuffer([]byte(str)))
+	for {
+		line, _, err := rd.ReadLine()
+		if err == io.EOF {
+			log.Println("读完了.....")
+			break
+		}
+		if err != nil {
+			log.Fatal("读错了....", err)
+		}
+		str := string(line)
+		if strings.HasPrefix(str, "Telnet") {
+			all := regexp.MustCompile(`\d+`).FindAllString(str, -1)
+			log.Println(all)
+		}
+	}*/
+	fmt.Println(str)
+}
+
 func main() {
-	read2()
+	read4()
 }

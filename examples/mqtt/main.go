@@ -17,6 +17,14 @@ type Cfg struct {
 }
 
 func config() *Cfg {
+	if len(os.Args) > 1 {
+		address := os.Args[1]
+		return &Cfg{
+			Address:  address,
+			Username: "",
+			Password: "",
+		}
+	}
 	f, err := ini.ShadowLoad(DefaultIniName)
 	if err != nil {
 		file, err := os.Create(DefaultIniName)
@@ -57,6 +65,7 @@ func main() {
 	opts.CleanSession = false
 	opts.ConnectTimeout = time.Second * 3
 	opts.SetPingTimeout(10 * time.Second)
+	log.Println("===========mqtt连接测试v0.0.1===============")
 	for {
 		cfg := config()
 		opts.SetUsername(cfg.Username)
@@ -67,9 +76,9 @@ func main() {
 		if token := c.Connect(); token.Wait() && token.Error() != nil {
 		}
 		if true == c.IsConnected() {
-			log.Println("mqtt已连接....")
+			log.Println("mqtt连接 [ ", cfg.Address, " ]成功....")
 		} else {
-			log.Println("mqtt未连接....")
+			log.Println("mqtt连接 [ ", cfg.Address, " ]失败....")
 		}
 		time.Sleep(time.Second * 2)
 	}

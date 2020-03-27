@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"os"
 )
@@ -51,6 +52,29 @@ func ip2() {
 			if ipnet.IP.To4() != nil && ipnet.IP.To4().IsGlobalUnicast() {
 				fmt.Println(ipnet.IP.String())
 			}
+		}
+	}
+}
+
+func ip3() {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(addrs[0].(*net.IPNet))
+	face, err := net.InterfaceByName("WLAN")
+	if err != nil {
+		log.Fatal(err)
+	}
+	addrs, err = face.Addrs()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for k, v := range addrs {
+		ipNet := v.(*net.IPNet)
+		if ipNet.IP.IsGlobalUnicast() {
+			log.Println(k, v.(*net.IPNet).IP.To4())
 		}
 	}
 }

@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 )
 
-func main() {
+func ip1() {
 
 	pv4 := net.IPv4(127, 0, 0, 1)
-
 	fmt.Println(pv4.Equal(net.IP{}))
 	fmt.Println(pv4.Equal(pv4)) //true
 
@@ -36,5 +36,21 @@ func main() {
 	fmt.Println(p.UnmarshalText(text))
 	fmt.Printf("%s\n", text)
 	fmt.Printf("%p\n", p)
+}
 
+func ip2() {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	for _, address := range addrs {
+		// 检查ip地址判断是否回环地址
+		if ipnet, ok := address.(*net.IPNet); ok /*&& !ipnet.IP.IsLoopback() */ {
+			//if ipnet.IP.To4() != nil && ipnet.IP.To4().IsGlobalUnicast() {
+			if ipnet.IP.To4() != nil && ipnet.IP.To4().IsGlobalUnicast() {
+				fmt.Println(ipnet.IP.String())
+			}
+		}
+	}
 }

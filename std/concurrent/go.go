@@ -14,3 +14,12 @@ func go1() {
 	}
 	time.Sleep(time.Second)
 }
+
+func go2() {
+	for i := 0; i < 10; i++ {
+		go func() {
+			log.Println(i)
+		}()
+	}
+	time.Sleep(time.Second)
+}

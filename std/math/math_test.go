@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestName(t *testing.T) {
+func TestDecimal(t *testing.T) {
 	log.Println(Decimal(1.001))
 	log.Println(Decimal(1.51))
 	log.Println(Decimal(1.91001))
@@ -15,4 +15,8 @@ func TestName(t *testing.T) {
 	log.Println(Decimal(0.055))
 	log.Println(Decimal(0.555))
 	log.Println(Decimal(100.005))
+}
+
+func TestMath(t *testing.T) {
+	Math()
 }

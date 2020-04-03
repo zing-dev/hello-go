@@ -19,6 +19,9 @@ func main() {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		http.FileServer(http.Dir(dir)).ServeHTTP(writer, request)
 	})
-	fmt.Println("=============start===========")
-	_ = http.ListenAndServe("localhost:8080", nil)
+	fmt.Println("=============start at :8080===========")
+	err = http.ListenAndServe("localhost:8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

@@ -59,3 +59,57 @@ func f() {
 		}
 	}
 }
+
+func f2() {
+	name := "text.txt"
+	_, err := os.Stat(name)
+	if err != nil {
+		//stat text.txt: no such file or directory
+		fmt.Println(err)
+	} else {
+		err := os.Remove(name)
+		if err != nil {
+			fmt.Println("Remove", err)
+		}
+	}
+	_, err = os.OpenFile(name, os.O_RDONLY, 777)
+	if err != nil {
+		//O_RDONLY open text.txt: no such file or directory
+		fmt.Println("O_RDONLY", err)
+	}
+	_, err = os.OpenFile(name, os.O_WRONLY, 777)
+	if err != nil {
+		//O_WRONLY open text.txt: no such file or directory
+		fmt.Println("O_WRONLY", err)
+	}
+
+	_, err = os.OpenFile(name, os.O_RDONLY|os.O_WRONLY, 777)
+	if err != nil {
+		//os.O_RDONLY|os.O_WRONLY open text.txt: no such file or directory
+		fmt.Println("os.O_RDONLY|os.O_WRONLY", err)
+	}
+	_, err = os.OpenFile(name, os.O_RDWR, 777)
+	if err != nil {
+		//os.O_RDWR open text.txt: no such file or directory
+		fmt.Println("os.O_RDWR", err)
+	}
+	_, err = os.OpenFile(name, os.O_APPEND, 777)
+	if err != nil {
+		//os.O_APPEND open text.txt: no such file or directory
+		fmt.Println("os.O_APPEND", err)
+	}
+	_, err = os.OpenFile(name, os.O_EXCL, 777)
+	if err != nil {
+		//os.O_EXCL open text.txt: no such file or directory
+		fmt.Println("os.O_EXCL", err)
+	}
+	_, err = os.OpenFile(name, os.O_TRUNC, 777)
+	if err != nil {
+		//os.O_TRUNC open text.txt: no such file or directory
+		fmt.Println("os.O_TRUNC", err)
+	}
+	_, err = os.OpenFile(name, os.O_CREATE, 777)
+	if err != nil {
+		fmt.Println("os.O_TRUNC", err)
+	}
+}

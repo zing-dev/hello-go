@@ -111,3 +111,69 @@ func time4() {
 		time.Sleep(time.Second * 1)
 	}
 }
+
+func time5() {
+	last := time.Now()
+	time.Sleep(time.Second * 3)
+	log.Println(time.Now().Sub(last))
+	log.Println(last.Sub(time.Now()))
+}
+
+func time6() {
+	send := time.Now()
+	for {
+		log.Println("================================================================")
+		log.Println(time.Now().Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Truncate(time.Minute).Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Truncate(time.Minute * 5).Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Truncate(time.Minute * 15).Format("2006-01-02 15:04:05"))
+		now := time.Now().Truncate(time.Minute)
+		if send.Equal(now) {
+			log.Println(now.Format("2006-01-02 15:04:05"))
+		}
+		log.Println("================================================================")
+		time.Sleep(time.Second * 30)
+	}
+}
+
+func time7() {
+	for {
+		log.Println("================================================================")
+		log.Println(time.Now().Format("2006-01-02 15:04:05"))
+		if time.Now().Round(time.Minute).After(time.Now()) {
+			log.Println(time.Now().Round(time.Minute).Format("2006-01-02 15:04:05"))
+		}
+		if time.Now().Round(time.Minute * 5).After(time.Now()) {
+			log.Println(time.Now().Round(time.Minute * 5).Format("2006-01-02 15:04:05"))
+		}
+		if time.Now().Round(time.Minute * 15).After(time.Now()) {
+			log.Println(time.Now().Round(time.Minute * 15).Format("2006-01-02 15:04:05"))
+		}
+		log.Println("================================================================")
+		time.Sleep(time.Second * 10)
+	}
+}
+
+func round() {
+	for {
+		log.Println("================================================================")
+		log.Println(time.Now().Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute).Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Add(time.Minute * 5 / 2).Round(time.Minute * 5).Format("2006-01-02 15:04:05"))
+		log.Println(time.Now().Add(time.Minute * 3).Round(time.Minute * 5).Format("2006-01-02 15:04:05"))
+		log.Println("================================================================")
+		time.Sleep(time.Second * 10)
+	}
+}
+
+func round2() {
+	for {
+		log.Println("================================================================")
+		log.Println(time.Now().Minute())
+		log.Println(time.Now().Add(time.Minute / 2).Round(time.Minute).Minute())
+		log.Println(time.Now().Add(time.Minute * 5 / 2).Round(time.Minute * 5).Minute())
+		log.Println(time.Now().Add(time.Minute * 15 / 2).Round(time.Minute * 15).Minute())
+		log.Println("================================================================")
+		time.Sleep(time.Second * 10)
+	}
+}

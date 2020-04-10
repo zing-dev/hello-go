@@ -3,6 +3,7 @@ package os
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
@@ -111,5 +112,31 @@ func f2() {
 	_, err = os.OpenFile(name, os.O_CREATE, 777)
 	if err != nil {
 		fmt.Println("os.O_TRUNC", err)
+	}
+}
+
+const ConfigFile = "config.json"
+
+func f3() {
+	f, err := os.Open(ConfigFile)
+	if err != nil && os.IsNotExist(err) {
+		if f, err = os.Create(ConfigFile); err != nil {
+			log.Println(err)
+		}
+	}
+	_, err = f.WriteString("hello")
+	if err != nil {
+		//write config.json: Access is denied.
+		log.Println(err)
+	}
+}
+func f4() {
+	f, err := os.OpenFile(ConfigFile, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		log.Println(err)
+	}
+	_, err = f.WriteString("hello")
+	if err != nil {
+		log.Println(err)
 	}
 }

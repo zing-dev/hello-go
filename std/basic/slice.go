@@ -61,3 +61,20 @@ func Slice3() {
 	}
 	s2[0].run()
 }
+
+func arr(i int) {
+	a := []int{1, 2, 3, 4}
+	for i, v := range a {
+		if v == i {
+			//delete(a, i)
+		}
+	}
+
+}
+func Slice4() {
+	/*	arr := []int{1, 2, 3, 4, 5}
+
+		for _, v := range arr {
+
+		}*/
+}

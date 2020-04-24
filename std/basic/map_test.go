@@ -9,3 +9,7 @@ func TestMap1(t *testing.T) {
 func TestMap2(t *testing.T) {
 	map2()
 }
+
+func TestMap3(t *testing.T) {
+	map3()
+}

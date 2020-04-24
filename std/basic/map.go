@@ -87,3 +87,24 @@ func map2() {
 	//{"1":{"id":1,"name":"zing"},"2":{"id":2,"name":"zing2"}}
 	fmt.Println(string(data))
 }
+
+func map3() {
+	data, err := json.MarshalIndent(map[string]interface{}{
+		"root": map[string]interface{}{
+			"students": map[string]interface{}{
+				"1": map[string]interface{}{
+					"name": "zing",
+					"age":  20,
+				},
+				"2": map[string]interface{}{
+					"name": "zing",
+					"age":  23,
+				},
+			},
+		},
+	}, "", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(data))
+}

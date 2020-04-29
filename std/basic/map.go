@@ -108,3 +108,20 @@ func map3() {
 	}
 	fmt.Println(string(data))
 }
+
+func map4() {
+	m := make(map[interface{}]interface{})
+	m[0] = "0"
+	m[0.0] = 0.1
+	m["1"] = 1
+	m[struct{}{}] = "struct"
+	m[false] = false
+	m[true] = true
+
+	//map[false:false true:true 0:0.1 0:0 1:1]
+	fmt.Println(m)
+	fmt.Println(m[0])
+	fmt.Println(m[0.0])
+	fmt.Println(m["1"])
+	fmt.Println(m[struct{}{}])
+}

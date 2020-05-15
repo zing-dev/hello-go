@@ -1,6 +1,7 @@
 package byte
 
 import (
+	"encoding/binary"
 	"log"
 	"testing"
 )
@@ -29,15 +30,6 @@ func TestName3(t *testing.T) {
 	log.Println((91 + 26 - 65) % 26)
 }
 
-func TestName5(t *testing.T) {
-	log.Println(string(65))      //A  65  + 0
-	log.Println(string(66))      //B  65  + 1
-	log.Println(string(90))      //Z  65  + 25
-	log.Println(string(91))      //AA 65  + 26 + 0 //
-	log.Println(string(92))      //AB 65  + 26 + 1
-	log.Println(string(92 + 26)) //AB 65  + 26 + 1
-}
-
 func TestName4(t *testing.T) {
 	log.Println(row(65))
 	log.Println(row(66))
@@ -50,18 +42,26 @@ func TestName4(t *testing.T) {
 	log.Println(row(65 + 26 + 26))
 }
 
-func row(column int) string {
-	column -= 64
-	str := ""
-	for column > 26 {
-		i := column % 26
-		if i == 0 {
-			str = string(64+26) + str
-			column = (column - 26) / 26
-		} else {
-			str = string(64+i) + str
-			column = (column - i) / 26
-		}
-	}
-	return string(column+64) + str
+func TestName5(t *testing.T) {
+	log.Println(string(65))      //A  65  + 0
+	log.Println(string(66))      //B  65  + 1
+	log.Println(string(90))      //Z  65  + 25
+	log.Println(string(91))      //AA 65  + 26 + 0 //
+	log.Println(string(92))      //AB 65  + 26 + 1
+	log.Println(string(92 + 26)) //AB 65  + 26 + 1
+}
+
+func TestName6(t *testing.T) {
+	str := "a15297c10-9f1f-0605-5c54-4f41150d6e2e"
+	log.Println([]byte(str))
+	log.Println([]byte(str[:4]))
+	log.Println(string([]byte{49, 53, 50}))
+	log.Println([]byte("1"))
+	log.Println([]byte("哈"))
+	log.Println(string([]byte{229, 147, 136}))
+	log.Println(binary.BigEndian.Uint16([]byte(str[:2])))
+	log.Println(binary.BigEndian.Uint16([]byte(str[2:4])))
+	a := make([]byte, 2)
+	binary.BigEndian.PutUint16(a, 24881)
+	log.Println(a)
 }

@@ -72,3 +72,19 @@ func byte1() {
 	fmt.Printf("%c\n", 0x7F)
 	fmt.Println(bytes.Trim(e, "a")) //[98 99 100 101]
 }
+
+func row(column int) string {
+	column -= 64
+	str := ""
+	for column > 26 {
+		i := column % 26
+		if i == 0 {
+			str = string(64+26) + str
+			column = (column - 26) / 26
+		} else {
+			str = string(64+i) + str
+			column = (column - i) / 26
+		}
+	}
+	return string(column+64) + str
+}

@@ -65,3 +65,15 @@ func TestName6(t *testing.T) {
 	binary.BigEndian.PutUint16(a, 24881)
 	log.Println(a)
 }
+func TestName7(t *testing.T) {
+	data := make([]byte, 10)
+	binary.BigEndian.PutUint16(data, 10)
+	log.Println(data)
+	binary.BigEndian.PutUint16(data, 100)
+	log.Println(data)
+	binary.BigEndian.PutUint16(data[2:4], 100)
+	log.Println(data)
+	binary.BigEndian.PutUint16(data[4:8], 256)
+	log.Println(data)
+	log.Println(append(data, 1))
+}

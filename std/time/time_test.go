@@ -78,3 +78,9 @@ func TestT1(t *testing.T) {
 	interval(time.Minute + 1)
 	log.Println(time.Now().Truncate(time.Minute * 4))
 }
+
+func TestTime(t *testing.T) {
+	start := time.Now()
+	time.Sleep(time.Second)
+	log.Println(time.Now().Sub(start))
+}

@@ -77,3 +77,8 @@ func TestName7(t *testing.T) {
 	log.Println(data)
 	log.Println(append(data, 1))
 }
+
+func TestName8(t *testing.T) {
+	byte2()
+	//byte3()
+}

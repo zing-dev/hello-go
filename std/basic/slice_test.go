@@ -22,4 +22,5 @@ func TestSlice4(t *testing.T) {
 	s = append(s, 1)
 	s = append(s, 2)
 	fmt.Println(s)
+	Slice4()
 }

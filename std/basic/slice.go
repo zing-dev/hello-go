@@ -72,9 +72,16 @@ func arr(i int) {
 
 }
 func Slice4() {
-	/*	arr := []int{1, 2, 3, 4, 5}
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	length := len(arr)
+	log.Println(arr)
+	start := length/2 - 2
+	end := length/2 + 2
+	log.Println(start, end)
+	log.Println(arr[start:end])
 
-		for _, v := range arr {
-
-		}*/
+	a := make([]int, 10)
+	a[0] = 1
+	a[1] = 2
+	log.Println(a)
 }

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 func main() {
@@ -12,15 +13,23 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if len(os.Args) == 2 {
-		dir += "/" + os.Args[1]
+	port := 8080
+	if len(os.Args) == 3 {
+		if p, err := strconv.Atoi(os.Args[1]); err != nil {
+			log.Fatal("port error")
+		} else {
+			port = p
+		}
+		dir += "/" + os.Args[2]
+	} else {
+		log.Fatal("error: web port dir need!")
 	}
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		http.FileServer(http.Dir(dir)).ServeHTTP(writer, request)
 	})
-	fmt.Println("=============start at :8080===========")
-	err = http.ListenAndServe("localhost:8080", nil)
+	fmt.Println(fmt.Sprintf("=============start at :%d===========", port))
+	err = http.ListenAndServe(fmt.Sprintf("localhost:%d", port), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

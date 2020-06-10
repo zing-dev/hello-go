@@ -3,6 +3,7 @@ package byte
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 )
 
 func byte1() {
@@ -87,4 +88,44 @@ func row(column int) string {
 		}
 	}
 	return string(column+64) + str
+}
+
+func byte2() {
+	data := []byte{0x82, 0x31, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
+		0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
+		0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x83}
+	data = []byte{0x82, 0x36, 0x39, 0x30, 0x30, 0x30, 0x3C, 0x30, 0x3C, 0x38, 0x32, 0x30, 0x30, 0x30,
+		0x30, 0x30, 0x31, 0x30, 0x30, 0x33, 0x36, 0x30, 0x3B, 0x34, 0x35, 0x83}
+	data = bytes.Map(func(r rune) rune {
+		r -= 0x30
+		return r
+	}, data[1:len(data)-1])
+	fmt.Println(data)
+
+	fmt.Println(fmt.Sprintf("%s", []byte{66 - 30, 66}))
+	fmt.Println(fmt.Sprintf("%x%x", 66-30, 66))
+	fmt.Println(fmt.Sprintf("%x", []byte{66 - 30, 66}))
+	fmt.Println(fmt.Sprintf("%x", "$B"))
+	fmt.Println(fmt.Sprintf("%x", data[0:2]))
+	fmt.Println(strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 16, 32))
+	fmt.Println(strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 10, 32))
+
+	a, _ := strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 16, 32)
+	b, _ := strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 10, 32)
+	fmt.Println(a == b)
+	fmt.Println(int('1'))
+
+}
+
+func byte3() {
+	data := []byte{0x82, 0x36, 0x39, 0x30, 0x30, 0x30, 0x3C, 0x30, 0x3C, 0x38, 0x32, 0x30, 0x30, 0x30,
+		0x30, 0x30, 0x31, 0x30, 0x30, 0x33, 0x36, 0x30, 0x3B, 0x34, 0x35, 0x83}
+	data = bytes.Map(func(r rune) rune {
+		r -= 0x30
+		return r
+	}, data[1:len(data)-1])
+	fmt.Println(data)
+	fmt.Println(fmt.Sprintf("%x", data[0:2]))
+	fmt.Println(strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 16, 32))
+	fmt.Println(strconv.ParseInt(fmt.Sprintf("%x", data[0:2]), 10, 32))
 }

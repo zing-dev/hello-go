@@ -8,14 +8,40 @@ import (
 	"time"
 )
 
+type Data struct {
+	value string
+	time  time.Time
+}
 type Cache struct {
 	data sync.Map
 	size int32
 }
 
-func (c *Cache) store(key string, value interface{}) {
-	c.data.Store(key, value)
-	atomic.AddInt32(&c.size, 1)
+func (c *Cache) watch() {
+	ticket := time.NewTicker(time.Second * 10)
+	for {
+		select {
+		case <-ticket.C:
+			log.Println("before", c.size)
+			c.data.Range(func(key, value interface{}) bool {
+				k := key.(string)
+				v := value.(Data)
+				if time.Now().Sub(v.time) > time.Second*5 {
+					c.delete(k)
+				}
+				return true
+			})
+			log.Println("end", c.size)
+		}
+	}
+}
+
+func (c *Cache) store(key string, value Data) {
+	if _, ok := c.data.Load(key); !ok {
+		c.data.Store(key, value)
+		atomic.AddInt32(&c.size, 1)
+		log.Println("存储", key, "长度", c.size)
+	}
 }
 
 func (c *Cache) length() int {
@@ -25,6 +51,7 @@ func (c *Cache) delete(key string) {
 	if _, ok := c.data.Load(key); ok {
 		c.data.Delete(key)
 		atomic.AddInt32(&c.size, -1)
+		log.Println("删除", key, "长度", c.size)
 	}
 }
 
@@ -50,22 +77,19 @@ func TestName(t *testing.T) {
 
 func TestCache(t *testing.T) {
 	cache := Cache{}
-	cache.store("1", 1)
-	cache.store("2", 2)
-	cache.store("3", 3)
-	log.Println(cache.length())
-	cache.delete("1")
-	cache.delete("2")
-	log.Println(cache.length())
-	cache.ranges()
-	cache.store("11", 11)
-	cache.store("12", 11)
-	cache.store("13", 11)
-	cache.store("14", 11)
-	cache.store("15", 11)
-	cache.ranges()
-	log.Println(cache.length())
-	cache.delete("11")
-	log.Println(cache.length())
-	log.Println(cache.size)
+	go cache.watch()
+	cache.store("1", Data{value: "1111", time: time.Now()})
+	time.Sleep(time.Second * 2)
+	cache.store("2", Data{value: "2222", time: time.Now()})
+	time.Sleep(time.Second * 2)
+	cache.store("3", Data{value: "3333", time: time.Now()})
+	time.Sleep(time.Second * 3)
+	cache.store("4", Data{value: "4444", time: time.Now()})
+	cache.store("4", Data{value: "4444", time: time.Now()})
+	time.Sleep(time.Second)
+	cache.store("5", Data{value: "5555", time: time.Now()})
+	cache.store("5", Data{value: "5555", time: time.Now()})
+	time.Sleep(time.Second * 5)
+	cache.store("6", Data{value: "6666", time: time.Now()})
+	time.Sleep(time.Second * 10)
 }

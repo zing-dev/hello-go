@@ -1,4 +1,4 @@
-package main
+package unicode
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ func main() {
 	fmt.Println(utf8.RuneLen(10))    //1
 	fmt.Println(utf8.RuneLen(10000)) //3
 	fmt.Println(utf8.RuneLen('张'))   //3
-	fmt.Println(utf8.RuneLen('😄'))   //4
+	//fmt.Println(utf8.RuneLen('😄'))   //4
 
 	fmt.Printf("%d\n", '张')
 }

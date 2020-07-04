@@ -2,6 +2,7 @@ package byte
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"testing"
 	"unicode"
@@ -150,4 +151,112 @@ func TestMap(t *testing.T) {
 
 func TestRepeat(t *testing.T) {
 	log.Println(bytes.Repeat([]byte("a"), 10))
+}
+
+func TestToUpper(t *testing.T) {
+	log.Println(string(bytes.ToUpper([]byte("asd"))))
+	log.Println(string(bytes.ToUpper([]byte("α"))))
+	log.Println(string(bytes.ToUpper([]byte("あ"))))
+}
+
+func TestToTitle(t *testing.T) {
+	log.Println(string(bytes.ToTitle([]byte("hello world"))))
+}
+
+func TestTitle(t *testing.T) {
+	log.Println(string(bytes.ToTitle([]byte("hello world"))))
+}
+
+func TestTrimLeftFunc(t *testing.T) {
+	log.Println(string(bytes.TrimLeftFunc([]byte("go-gopher"), unicode.IsLetter)))
+	log.Println(string(bytes.TrimLeftFunc([]byte("go-gopher!"), unicode.IsPunct)))
+	log.Println(string(bytes.TrimLeftFunc([]byte("1234go-gopher!567"), unicode.IsNumber)))
+}
+
+func TestTrimRightFunc(t *testing.T) {
+	log.Println(string(bytes.TrimRightFunc([]byte("go-gopher"), unicode.IsLetter)))
+	log.Println(string(bytes.TrimRightFunc([]byte("go-gopher!"), unicode.IsPunct)))
+	log.Println(string(bytes.TrimRightFunc([]byte("1234go-gopher!567"), unicode.IsNumber)))
+}
+
+func TestTrimFunc(t *testing.T) {
+	log.Println(string(bytes.TrimFunc([]byte("go-gopher"), unicode.IsLetter)))
+	log.Println(string(bytes.TrimFunc([]byte("go-gopher!"), unicode.IsPunct)))
+	log.Println(string(bytes.TrimFunc([]byte("1234go-gopher!567"), unicode.IsNumber)))
+}
+
+func TestTrimPrefix(t *testing.T) {
+	var b = []byte("Goodbye,, world!")
+	b = bytes.TrimPrefix(b, []byte("Goodbye,"))
+	b = bytes.TrimPrefix(b, []byte("See ya,"))
+	log.Printf("Hello%s", b)
+}
+
+func TestTrimSuffix(t *testing.T) {
+	var b = []byte("Hello, goodbye, etc!")
+	b = bytes.TrimSuffix(b, []byte("goodbye, etc!"))
+	b = bytes.TrimSuffix(b, []byte("gopher"))
+	b = append(b, bytes.TrimSuffix([]byte("world!"), []byte("x!"))...)
+	log.Println(b)
+}
+
+func TestIndexFunc(t *testing.T) {
+	f := func(c rune) bool {
+		return unicode.Is(unicode.Han, c)
+	}
+	log.Println(bytes.IndexFunc([]byte("Hello, 世界"), f))
+	log.Println(bytes.IndexFunc([]byte("Hello, world"), f))
+}
+
+func TestLastIndexFunc(t *testing.T) {
+	log.Println(bytes.LastIndexFunc([]byte("go gopher!"), unicode.IsLetter))
+	log.Println(bytes.LastIndexFunc([]byte("go gopher!"), unicode.IsPunct))
+	log.Println(bytes.LastIndexFunc([]byte("go gopher!"), unicode.IsNumber))
+}
+
+func TestTrim(t *testing.T) {
+	log.Println(string(bytes.Trim([]byte(" !!! Achtung! Achtung! !!! "), "! ")))
+	log.Println(string(bytes.Trim([]byte("!as!!df!!"), "!")))
+	log.Println(string(bytes.Trim([]byte("11!as!!df!1!1"), "1!")))
+}
+
+func TestTrimLeft(t *testing.T) {
+	log.Print(string(bytes.TrimLeft([]byte("453gopher8257"), "0123456789")))
+}
+
+func TestTrimRight(t *testing.T) {
+	log.Print(string(bytes.TrimRight([]byte("453gopher8257"), "0123456789")))
+}
+
+func TestTrimSpace(t *testing.T) {
+	log.Printf("%s", bytes.TrimSpace([]byte(" \t\n a lone gopher \n\t\r\n")))
+}
+
+func TestRunes(t *testing.T) {
+	rs := bytes.Runes([]byte("go gopher 你好"))
+	for _, r := range rs {
+		fmt.Printf("%#U\n", r)
+	}
+	log.Printf("%c\n", 0x597D)
+}
+
+func TestReplace(t *testing.T) {
+	log.Printf("%s\n",
+		bytes.Replace([]byte("oink oink oink"), []byte("k"), []byte("ky"), 2))
+	log.Printf("%s\n",
+		bytes.Replace([]byte("oink oink oink"), []byte("oink"), []byte("moo"), -1))
+}
+
+func TestReplaceAll(t *testing.T) {
+	log.Printf("%s\n",
+		bytes.ReplaceAll([]byte("oink oink oink"), []byte("oink"), []byte("moo")))
+}
+
+func TestEqualFold(t *testing.T) {
+	log.Println(bytes.EqualFold([]byte("Go"), []byte("go")))
+}
+
+func TestIndex(t *testing.T) {
+	log.Println(bytes.Index([]byte("chicken"), []byte("ken")))
+	log.Println(bytes.Index([]byte("chicken"), []byte("dmr")))
 }

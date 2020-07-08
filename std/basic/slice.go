@@ -85,3 +85,14 @@ func Slice4() {
 	a[1] = 2
 	log.Println(a)
 }
+
+type S struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+type SS []S
+
+func (ss SS) Add(s S) {
+}
+func (ss SS) New() {
+}

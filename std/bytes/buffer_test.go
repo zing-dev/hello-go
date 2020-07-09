@@ -92,3 +92,60 @@ func TestRead(t *testing.T) {
 	log.Println(buf)
 	log.Println(buffer.Len())
 }
+
+func TestNext(t *testing.T) {
+	log.Println(buffer.Next(1))
+	log.Println(buffer.Next(2))
+}
+
+func TestReadByte(t *testing.T) {
+	b, err := buffer.ReadByte()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(string(b), b)
+}
+
+func TestReadRune(t *testing.T) {
+	r, size, err := buffer.ReadRune()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(r, size)
+
+	buffer.Reset()
+	buffer.WriteRune('哈')
+	r, size, err = buffer.ReadRune()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(r, size)
+}
+
+func TestUnreadRune(t *testing.T) {
+	log.Println(buffer.UnreadByte())
+	buffer.Reset()
+	log.Println(buffer.UnreadByte())
+	buffer.Next(1)
+	log.Println(buffer.UnreadByte())
+	buffer.WriteByte('a')
+	log.Println(buffer.UnreadByte())
+	_, _ = buffer.ReadByte()
+	log.Println(buffer.UnreadByte())
+}
+
+func TestReadBytes(t *testing.T) {
+	line, err := buffer.ReadBytes(' ')
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(line, string(line))
+}
+
+func TestReadString(t *testing.T) {
+	line, err := buffer.ReadString(',')
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(line)
+}

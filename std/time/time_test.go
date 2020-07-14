@@ -84,3 +84,16 @@ func TestTime(t *testing.T) {
 	time.Sleep(time.Second)
 	log.Println(time.Now().Sub(start))
 }
+
+func TestTime8(t *testing.T) {
+	i := 10
+	i2 := time.Second * 10
+	log.Println(i, i2)
+	log.Println(i, i2.Seconds())
+	log.Println(i, i2.Minutes())
+	log.Println(i, i2.Milliseconds())
+	log.Println(time.Duration(i), i2.Milliseconds())
+	log.Println(time.Duration(i).Nanoseconds(), i2.Nanoseconds())
+	log.Println(time.Duration(i).Seconds(), i2)
+	log.Println(time.Duration(i) * time.Second)
+}

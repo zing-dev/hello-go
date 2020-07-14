@@ -2,6 +2,7 @@ package math
 
 import (
 	"log"
+	"math"
 	"testing"
 )
 
@@ -19,4 +20,6 @@ func TestDecimal(t *testing.T) {
 
 func TestMath(t *testing.T) {
 	Math()
+	max := math.Max(1, 1)
+	log.Println(max)
 }

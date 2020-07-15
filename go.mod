@@ -8,6 +8,7 @@ require (
 	github.com/elliotchance/pie v1.37.0
 	github.com/google/uuid v1.1.1
 	github.com/graphql-go/graphql v0.7.9
+	github.com/joho/godotenv v1.3.0
 	github.com/judwhite/go-svc v1.1.2
 	github.com/kavu/go_reuseport v1.5.0 // indirect
 	github.com/lib/pq v1.7.0

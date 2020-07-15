@@ -2,6 +2,7 @@ package os
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"runtime"
 	"strings"
@@ -46,4 +47,38 @@ func TestEnv(t *testing.T) {
 	//linux error
 	//fmt.Println(os.UserHomeDir())
 
+}
+
+func TestGetEnv(t *testing.T) {
+	value := os.Getenv("go")
+	log.Println(value)
+	err := os.Setenv("go", "hello")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(os.Getenv("go"))
+}
+
+func TestLookupEnv(t *testing.T) {
+	value, exist := os.LookupEnv("go")
+	log.Println(value, exist)
+
+	err := os.Setenv("go", "hello")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	value, exist = os.LookupEnv("go")
+	log.Println(value, exist)
+
+	value, exist = os.LookupEnv("GOPROXY")
+	log.Println(value, exist)
+}
+
+func TestExpandEnv(t *testing.T) {
+	_ = os.Setenv("NAME", "gopher")
+	_ = os.Setenv("BURROW", "/usr/gopher")
+
+	log.Println(os.ExpandEnv("$NAME lives in ${BURROW}."))
+	log.Println(os.ExpandEnv("$name lives in ${burrow}."))
 }

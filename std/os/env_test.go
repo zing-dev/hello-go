@@ -5,10 +5,10 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"testing"
 )
 
-func env() {
-
+func TestEnv(t *testing.T) {
 	environ := os.Environ()
 
 	for key, value := range environ {

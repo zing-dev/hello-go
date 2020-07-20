@@ -84,3 +84,12 @@ func S2() {
 	fmt.Println(face2["b"].(map[string]interface{})["c"])
 
 }
+
+type People struct {
+}
+
+func (*People) String() string {
+	return "this is people"
+}
+
+var people *People

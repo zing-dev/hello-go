@@ -2,7 +2,9 @@ package byte
 
 import (
 	"encoding/binary"
+	"encoding/json"
 	"log"
+	"strings"
 	"testing"
 )
 
@@ -79,6 +81,9 @@ func TestName7(t *testing.T) {
 }
 
 func TestName8(t *testing.T) {
-	byte2()
-	//byte3()
+	str := []string{"hello", "world"}
+	arr, _ := json.Marshal(str)
+	log.Println(string(arr))
+
+	log.Println(strings.Join(str, ""))
 }

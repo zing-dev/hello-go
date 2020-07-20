@@ -18,6 +18,9 @@ func TestSheet(t *testing.T) {
 	log.Println(f.GetSheetName(1))
 	log.Println(f.GetSheetIndex(f.GetSheetName(1)))
 	log.Println(f.GetSheetVisible(f.GetSheetName(2)))
+	log.Println(f.GetSheetName(0))
+	log.Println(f.GetSheetName(1))
+	log.Println(f.GetSheetName(2))
 }
 
 func TestRow(t *testing.T) {

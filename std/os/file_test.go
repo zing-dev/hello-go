@@ -1,6 +1,8 @@
 package os
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestF2(t *testing.T) {
 	f2()

@@ -1,8 +1,10 @@
 package math
 
 import (
+	"fmt"
 	"log"
 	"math"
+	"math/bits"
 	"testing"
 )
 
@@ -22,4 +24,12 @@ func TestMath(t *testing.T) {
 	Math()
 	max := math.Max(1, 1)
 	log.Println(max)
+}
+
+func TestAbs(t *testing.T) {
+	fmt.Println(math.Abs(-1.1))
+	fmt.Println(math.Abs(1))
+	fmt.Println(math.MaxFloat64 > math.MaxUint64)
+	fmt.Println(bits.Len64(math.Float64bits(math.MaxFloat64)))
+
 }

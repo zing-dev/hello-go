@@ -82,3 +82,49 @@ func TestReverse8(t *testing.T) {
 	fmt.Printf("%d => Reverse8(%08b) = (%08b) <= %d\n", 1<<2, 1<<2, bits.Reverse8(1<<2), bits.Reverse8(1<<2))
 
 }
+
+func TestLen(t *testing.T) {
+	fmt.Println(bits.Len(1 << 1))
+	fmt.Println(bits.Len(1 << 4))
+	fmt.Println(bits.Len(1 << 7))
+}
+
+func TestLen64(t *testing.T) {
+	fmt.Println(bits.Len64(1 << 4))
+	fmt.Println(bits.Len64(1 << 63))
+}
+
+func TestAdd(t *testing.T) {
+	fmt.Println(bits.Add(1, 2, 0))
+	fmt.Println(bits.Add(1, 2, 1))
+
+	fmt.Println(bits.Add(2, 2, 0))
+	fmt.Println(bits.Add(2, 2, 1))
+}
+
+func TestSub(t *testing.T) {
+	fmt.Println(bits.Sub(2, 1, 0))
+	fmt.Println(bits.Sub(2, 1, 1))
+
+	fmt.Println(bits.Sub(5, 2, 0))
+	fmt.Println(bits.Sub(5, 2, 1))
+}
+
+func TestMul(t *testing.T) {
+	fmt.Println(bits.Mul(2, 3))
+	fmt.Println(bits.Mul(3, 3))
+	fmt.Println(bits.Mul(4, 5))
+	fmt.Println(bits.Mul(1<<31, 1<<10))
+}
+
+func TestDiv(t *testing.T) {
+	fmt.Println(bits.Div(0, 10, 1))
+	fmt.Println(bits.Div(0, 10, 2))
+	fmt.Println(bits.Div(0, 10, 3))
+	fmt.Println(bits.Div(1, 10, 3))
+}
+
+func TestRem(t *testing.T) {
+	fmt.Println(bits.Rem(0, 10, 3))
+	fmt.Println(bits.Rem(0, 77, 8))
+}

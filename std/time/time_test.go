@@ -18,7 +18,7 @@ func TestTime1(t *testing.T) {
 	time1()
 }
 
-func TestName(t *testing.T) {
+func TestNOW(t *testing.T) {
 	log.Println(NOW())
 	time.Sleep(time.Second)
 	log.Println(NOW())

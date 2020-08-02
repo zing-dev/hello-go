@@ -5,11 +5,11 @@ import (
 	"io"
 	"log"
 	"net"
+	"testing"
 	"time"
 )
 
-func main() {
-
+func TestServer(t *testing.T) {
 	service := ":8080"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	if err != nil {
@@ -27,7 +27,6 @@ func main() {
 		}
 
 		for {
-			//b := []byte("                     ")
 			b := make([]byte, 100)
 			n, err := conn.Read(b)
 			if b[0] == 'a' || err == io.EOF {

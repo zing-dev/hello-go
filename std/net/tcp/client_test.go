@@ -5,10 +5,10 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
+	"testing"
 )
 
-func main() {
-
+func TestClient(t *testing.T) {
 	network := "tcp4"
 	address := ":7777"
 	addr, e := net.ResolveTCPAddr(network, address)

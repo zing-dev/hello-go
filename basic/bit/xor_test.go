@@ -1,6 +1,7 @@
 package bit
 
 import (
+	"encoding/binary"
 	"fmt"
 	"testing"
 )
@@ -85,4 +86,23 @@ func TestXor6(t *testing.T) {
 	fmt.Println(b) //1
 	a ^= b
 	fmt.Println(a) //2
+}
+
+func TestXor7(t *testing.T) {
+	u := binary.BigEndian.Uint32([]byte{0, 0, 0, 254})
+	fmt.Println((u & 1 << 0) >> 0)
+
+	//11000000
+	u = binary.BigEndian.Uint32([]byte{0, 0, 0, 192})
+	fmt.Println(u & (1 << 6))
+	fmt.Println(u & (1 << 6) >> 6)
+
+	fmt.Println(fmt.Sprintf("%8b", 192))  //11000000
+	fmt.Println(fmt.Sprintf("%8b", 1<<5)) //
+	fmt.Println(fmt.Sprintf("%b", 192&(1<<5)))
+	fmt.Println(fmt.Sprintf("%b", 192^(1<<7)))
+	fmt.Println(fmt.Sprintf("%b", (192^(1<<7))>>6))
+
+	fmt.Println(fmt.Sprintf("%b", 254))
+	fmt.Println(fmt.Sprintf("%b", 254&1))
 }

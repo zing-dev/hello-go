@@ -1,8 +1,11 @@
 package basic
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -58,4 +61,51 @@ func TestSlice6(t *testing.T) {
 	arr = []int{}
 
 	log.Println(m)
+}
+
+func TestSlice7(t *testing.T) {
+	t.Log(len([]byte("")))
+	t.Log(len([]byte("[]")))
+	data, err := json.Marshal(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(data))
+
+	data, err = json.Marshal("")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(data))
+	t.Log(string([]byte{}))
+	t.Log(string([]byte{'a'}))
+
+	data, err = json.Marshal([]byte{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(data))
+}
+
+func TestSlice8(t *testing.T) {
+	arr := "hello"
+	t.Log(arr[1:2])
+	t.Log(arr[1:5])
+	t.Log(arr[:5])
+	t.Log(arr[1:])
+}
+
+func NumberStrToSlice(str string) {
+	var data []byte
+	for _, v := range strings.Split(str, ",") {
+		i, err := strconv.Atoi(v)
+		if err == nil {
+			data = append(data, byte(i))
+		}
+	}
+	fmt.Println(data)
+}
+
+func TestNumberStrToSlice(t *testing.T) {
+	NumberStrToSlice("1,2,3,4,5,10,111,aaa")
 }

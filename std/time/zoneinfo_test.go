@@ -45,4 +45,5 @@ func TestFixedZone(t *testing.T) {
 
 	location = time.FixedZone("Asia/Shanghai", 3600*8)
 	t.Log(time.Now().In(location))
+
 }

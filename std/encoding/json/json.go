@@ -80,5 +80,4 @@ func JSON() {
 
 	log.Println(string(data))
 	log.Println(strings.ReplaceAll(string(data), "{", ""))
-
 }

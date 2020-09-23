@@ -5,8 +5,12 @@ import (
 	"math"
 )
 
+func Decimal32(value float32) float32 {
+	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
+}
+
 func Decimal(value float64) float64 {
-	return math.Trunc(value*1e2+0.5) / 1e2
+	return math.Trunc(value*1e1+0.5) / 1e1
 }
 
 func Math() {

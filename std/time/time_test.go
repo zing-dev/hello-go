@@ -1,6 +1,7 @@
 package time
 
 import (
+	"fmt"
 	"log"
 	"testing"
 	"time"
@@ -96,4 +97,12 @@ func TestTime8(t *testing.T) {
 	log.Println(time.Duration(i).Nanoseconds(), i2.Nanoseconds())
 	log.Println(time.Duration(i).Seconds(), i2)
 	log.Println(time.Duration(i) * time.Second)
+}
+
+func TestTime9(t *testing.T) {
+	log.Println(time.Now().Unix())
+	log.Println(time.Now().UnixNano())
+	log.Println(time.Now().UnixNano() / 1000000)
+	log.Println(fmt.Sprintf("%v", time.Now().UnixNano()/1000000))
+	log.Println(fmt.Sprintf("\\/Date(%13d+0800)\\/", time.Now().UnixNano()/1000000))
 }

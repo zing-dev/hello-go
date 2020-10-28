@@ -1,7 +1,8 @@
-package syscall__test
+package syscall
 
 import (
 	"fmt"
+	"github.com/zing-dev/4g-lte-sdk"
 	"syscall"
 	"testing"
 	"unsafe"
@@ -112,4 +113,15 @@ func GetFileSizeEx(hFile string) {
 }
 func TestGetFileSizeEx(t *testing.T) {
 	GetFileSizeEx(`syscall_test.go`)
+}
+
+func TestTLE(t *testing.T) {
+	err := lte.OpenModem(8, 115200)
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = lte.SendSms("test", "18630954530")
+	if err != nil {
+		t.Fatal(err)
+	}
 }

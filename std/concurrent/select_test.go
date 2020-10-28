@@ -1,7 +1,9 @@
 package concurrent
 
 import (
+	"log"
 	"testing"
+	"time"
 )
 
 func TestSelect1(t *testing.T) {
@@ -50,4 +52,47 @@ func TestSelect11(t *testing.T) {
 
 func TestSelect20(t *testing.T) {
 	select20()
+}
+
+func TestSelect001(t *testing.T) {
+	a := make(chan bool)
+	time.AfterFunc(time.Second, func() {
+		log.Println("start")
+		select {
+		case a <- true:
+			log.Println("aaa")
+		case _, ok := <-a:
+			if !ok {
+				a <- true
+			}
+		default:
+			log.Println("default")
+		}
+	})
+	go func() {
+		for {
+			log.Println("go start")
+			select {
+			case a <- true:
+				log.Println("go aaa")
+			case _, ok := <-a:
+				if !ok {
+					a <- true
+				}
+			default:
+				log.Println("go default")
+			}
+			time.Sleep(time.Second)
+		}
+	}()
+	for {
+		select {
+		case a := <-a:
+			log.Println("over", a)
+			return
+		default:
+			log.Println("sleep")
+			time.Sleep(time.Second * 5)
+		}
+	}
 }

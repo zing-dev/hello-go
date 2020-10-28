@@ -61,3 +61,9 @@ func AddSlashes(str string) string {
 	}
 	return string(tmpRune)
 }
+
+func TestName1(t *testing.T) {
+	fmt.Println(fmt.Sprintf("%v", []byte{1, 2, 3}))
+	fmt.Println(fmt.Sprintf("%d", []byte{1, 2, 3, 12}))
+	fmt.Println(fmt.Sprintf("%x", []byte{1, 2, 3, 12, 255}))
+}

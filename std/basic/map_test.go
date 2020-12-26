@@ -39,3 +39,29 @@ func TestMap5(t *testing.T) {
 		}
 	}
 }
+func TestMap6(t *testing.T) {
+	type Area struct {
+		Id   int
+		Name string
+	}
+
+	var cache = map[int][]Area{}
+	log.Println(cache)
+	log.Println(len(cache))
+	log.Println(cache[0])      //[]
+	log.Println(cache[1])      //[]
+	log.Println(len(cache[2])) //0
+	v, ok := cache[3]
+	log.Println(v, ok) //[] false
+
+	cache[0] = append(cache[0], Area{1, "111"})
+	log.Println(cache)
+	log.Println(len(cache))
+	log.Println(cache[0]) //[]
+
+	cache[0] = nil
+	log.Println(cache)
+	log.Println(len(cache))
+	log.Println(cache[0]) //[]
+
+}

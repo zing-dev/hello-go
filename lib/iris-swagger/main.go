@@ -1,0 +1,34 @@
+package main
+
+import (
+	"github.com/iris-contrib/swagger/v12"
+	"github.com/iris-contrib/swagger/v12/swaggerFiles"
+	"github.com/kataras/iris/v12"
+	"iris-swagger/api"
+	_ "iris-swagger/docs"
+)
+
+// @title swagger
+// @version 1.0
+// @description This is a sample server Petstore server.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+//go:generate swag init
+//
+// @host localhost:8080
+// @BasePath /api/v1
+func main() {
+	app := iris.New()
+	app.Get("/api/v1/quick/{id}", api.TestQuick)
+	app.Post("/api/v1/quick-post/{id}", api.TestQuickPost)
+	app.Get("/api/v1/test/{id}", api.GetStringByInt)
+	app.Get("/swagger/{any:path}", swagger.WrapHandler(swaggerFiles.Handler))
+	app.Run(iris.Addr(":8080"))
+}

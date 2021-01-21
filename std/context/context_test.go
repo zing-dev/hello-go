@@ -49,7 +49,11 @@ func TestWithCancel2(t *testing.T) {
 				case <-ctx.Done():
 					return // returning not to leak the goroutine
 				case dst <- n:
+					t.Log(n)
 					n++
+				default:
+					t.Log("=> ", n)
+					time.Sleep(time.Second / 2)
 				}
 			}
 		}()
@@ -61,10 +65,11 @@ func TestWithCancel2(t *testing.T) {
 
 	for n := range gen(ctx) {
 		fmt.Println(n)
-		if n == 5 {
+		if n == 10 {
 			break
 		}
 	}
+	time.Sleep(time.Second * 5)
 }
 
 func TestWithDeadline(t *testing.T) {

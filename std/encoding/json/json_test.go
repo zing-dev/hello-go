@@ -3,6 +3,7 @@ package json
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -111,6 +112,30 @@ func TestMarshalSlice(t *testing.T) {
 	t.Log(arr)
 	t.Log(data)
 	t.Log(string(data))
+
+	arr0 := []uint8{1, 2, 3, 4}
+	data, err = json.Marshal(arr0)
+	t.Log(arr0)
+	t.Log(data)
+	t.Log(string(data))
+
+	arr2 := []int{1, 2, 3, 4}
+	data, err = json.Marshal(arr2)
+	t.Log(arr2)
+	t.Log(data)
+	t.Log(string(data))
+
+	arr3 := [5]int{1, 2, 3, 4}
+	data, err = json.Marshal(arr3)
+	t.Log(arr3)
+	t.Log(data)
+	t.Log(string(data))
+
+	arr4 := []uint16{1, 2, 3, 4}
+	data, err = json.Marshal(arr4)
+	t.Log(arr4)
+	t.Log(data)
+	t.Log(string(data))
 }
 
 func TestMarshalIndent(t *testing.T) {
@@ -123,4 +148,70 @@ func TestMarshalIndent(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Println(string(data))
+}
+
+func TestName1(t *testing.T) {
+	a := [][]float32{
+		{1.111111, 2.22220000},
+		{.333333, 1111111111111111.4444454444111111111},
+		{.333333, 0},
+		{.333333, float32(math.Inf(0)), math.Float32frombits(math.MaxUint32)},
+	}
+
+	data, err := json.Marshal(a)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(string(data))
+
+	a = [][]float32{}
+	data, err = json.Marshal(a)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(string(data))
+
+	a = nil
+	data, err = json.Marshal(a)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(string(data))
+}
+
+func TestName2(t *testing.T) {
+	fmt.Println(float32(math.Inf(0)))
+	fmt.Println(float32(math.Inf(-1)))
+	fmt.Println(float32(math.Inf(1)))
+
+	a := make([][]float32, 10)
+	fmt.Println(a[0])
+	fmt.Println(a[0] == nil)
+	for i := 0; i < 10; i++ {
+		a[0] = append(a[0], float32(i))
+	}
+	a[0] = append(a[0], float32(math.Inf(0)))
+	fmt.Println(a)
+	fmt.Println(1 > math.Inf(0))
+	fmt.Println(1 + math.Inf(0))
+	fmt.Println(math.Inf(0) / 2)
+	fmt.Println(math.Inf(0) - math.Inf(0))
+	fmt.Println(math.MaxFloat32)
+
+	fmt.Println(math.Float32bits(math.MaxFloat32))
+	fmt.Println(math.Float32bits(0))
+	fmt.Println(math.Float32frombits(math.MaxUint32) + 1)
+	fmt.Println(math.Float32frombits(math.MaxUint16 * 2))
+	fmt.Println(0x7FF0000000000000)
+	fmt.Println(fmt.Sprintf("%b", 0x7FF0000000000000))
+	fmt.Println(math.Float64frombits(0x7FF0000000000000))
+	fmt.Println(math.Float64frombits(0xFFF0000000000000))
+	fmt.Println(fmt.Sprintf("==> %b", math.Float64frombits(0xFFF0000000000000)))
+	fmt.Println(math.Float32frombits(0x7FF00000))
+	fmt.Println(math.Float32frombits(0xffffffff))
+	fmt.Println(math.Float32frombits(0x7F000000))
+}
+
+func Decimal(value float32) float32 {
+	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
 }

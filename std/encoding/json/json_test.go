@@ -3,6 +3,7 @@ package json
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math"
 	"testing"
 )
@@ -214,4 +215,21 @@ func TestName2(t *testing.T) {
 
 func Decimal(value float32) float32 {
 	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
+}
+
+func TestJSONOmit(t *testing.T) {
+	type User struct {
+		Id   int    `json:"id,omitempty"`
+		Name string `json:"name,omitempty"`
+	}
+	u := User{
+		Id: 1,
+	}
+	data, _ := json.Marshal(u)
+	log.Println(string(data))
+
+	u2 := new(User)
+	_ = json.Unmarshal(data, u2)
+	log.Println(u2.Id)
+	log.Println(u2.Name)
 }

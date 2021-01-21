@@ -1,0 +1,156 @@
+basePath: /api/v1
+definitions:
+  api.ParamSearch:
+    properties:
+      id:
+        format: int
+        type: integer
+      name:
+        format: string
+        type: string
+    type: object
+  web.Message:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: swagger
+  version: "1.0"
+paths:
+  /quick-post/{id}:
+    post:
+      consumes:
+      - application/json
+      description: 快速上手接口测试,这是我的描述
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: id
+        in: body
+        name: id
+        required: true
+        schema:
+          $ref: '#/definitions/api.ParamSearch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+        "400":
+          description: id错误
+          schema:
+            $ref: '#/definitions/web.Message'
+        "404":
+          description: id没找到
+          schema:
+            $ref: '#/definitions/web.Message'
+      summary: 快速上手接口 POST 测试
+  /quick/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 快速上手接口测试,这是我的描述
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+        "400":
+          description: id错误
+          schema:
+            $ref: '#/definitions/web.Message'
+        "404":
+          description: id没找到
+          schema:
+            $ref: '#/definitions/web.Message'
+      summary: 快速上手接口测试
+  /test/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/web.Message'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/web.Message'
+      summary: Add a new pet to the store
+  /testapi/get-struct-array-by-string/{some_id}:
+    get:
+      consumes:
+      - application/json
+      description: get struct array by ID
+      parameters:
+      - description: Some ID
+        in: path
+        name: some_id
+        required: true
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: Offset
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/web.Message'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/web.Message'
+swagger: "2.0"

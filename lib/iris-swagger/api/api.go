@@ -28,6 +28,7 @@ func GetStringByInt(ctx iris.Context) {
 //
 // @Summary 快速上手接口测试
 // @Description 快速上手接口测试,这是我的描述
+// @Tags 接口
 // @Accept  json
 // @Produce  json
 // @Param   id     path    int     true        "id"
@@ -108,6 +109,116 @@ func TestQuickPost(ctx iris.Context) {
 	_, _ = ctx.JSON(web.Message{
 		Code:    0,
 		Message: "成功",
+	})
+}
+
+// @Summary 快速上手接口 POST Form测试
+// @Description 快速上手接口测试,这是我的描述
+// @Accept  x-www-form-urlencoded
+// @Produce  json
+// @Param   id     path    int     true        "id"
+// @Param   id     formData    int     true        "id"
+// @Param   name   formData    string     true     "名字"
+// @Success 200 {string} string	"成功"
+// @Failure 400 {object} web.Message "id错误"
+// @Failure 404 {object} web.Message "id没找到"
+// @Router /quick-post-form/{id} [post]
+func TestQuickPostForm(ctx iris.Context) {
+	id, err := ctx.PostValueInt("id")
+	if err != nil {
+		ctx.StatusCode(http.StatusNotFound)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusNotFound,
+			Message: "id没找到",
+		})
+		return
+	}
+	name := ctx.PostValue("name")
+	id2, err := ctx.Params().GetInt("id")
+	fmt.Println(ctx.PostValue("id"))
+	if err != nil {
+		ctx.StatusCode(http.StatusNotFound)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusNotFound,
+			Message: "id没找到",
+		})
+		return
+	}
+	if id2 < 0 {
+		ctx.StatusCode(http.StatusBadRequest)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusBadRequest,
+			Message: "id错误",
+		})
+		return
+	}
+	_, _ = ctx.JSON(web.Message{
+		Code:    0,
+		Message: fmt.Sprintf("成功: path: id: %d; form: id:%d, name: %s", id2, id, name),
+	})
+}
+
+// @Summary 快速上手接口 POST Query测试
+// @Description 快速上手接口测试,这是我的描述
+// @Accept  x-www-form-urlencoded
+// @Produce  json
+// @Param   id     path    int     true        "id"
+// @Param   id     query    int     true        "id"
+// @Param   name   query    string     true     "名字"
+// @Param   id2     formData    int     true        "id2"
+// @Param   name2   formData    string     true     "名字2"
+// @Success 200 {string} string	"成功"
+// @Failure 400 {object} web.Message "id错误"
+// @Failure 404 {object} web.Message "id没找到"
+// @Router /quick-post-query/{id} [post]
+func TestQuickPostQuery(ctx iris.Context) {
+	id, err := ctx.URLParamInt("id")
+	name := ctx.URLParam("name")
+	if err != nil {
+		ctx.StatusCode(http.StatusNotFound)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusNotFound,
+			Message: "id没找到",
+		})
+		return
+	}
+	id2, err := ctx.PostValueInt("id2")
+	if err != nil {
+		ctx.StatusCode(http.StatusNotFound)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusNotFound,
+			Message: "id没找到",
+		})
+		return
+	}
+	name2 := ctx.PostValue("name2")
+	_, _ = ctx.JSON(web.Message{
+		Code:    0,
+		Message: fmt.Sprintf("成功: query: id: %d, name: %s;form: id: %d, name: %s", id, name, id2, name2),
+	})
+}
+
+// @Summary 快速上手接口 POST File测试
+// @Description 快速上手接口测试,这是我的描述
+// @Accept  mpfd
+// @Produce  json
+// @Param   file   formData    file     true     "上传文件"
+// @Success 200 {string} string	"成功"
+// @Failure 400 {object} web.Message "file没找到"
+// @Router /quick-file [post]
+func TestQuickFile(ctx iris.Context) {
+	_, header, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.StatusCode(http.StatusNotFound)
+		_, _ = ctx.JSON(web.Message{
+			Code:    http.StatusNotFound,
+			Message: "file没找到",
+		})
+		return
+	}
+	_, _ = ctx.JSON(web.Message{
+		Code:    0,
+		Message: fmt.Sprintf("成功:form: name: %s,size: %d", header.Filename, header.Size),
 	})
 }
 

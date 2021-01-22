@@ -25,6 +25,9 @@ import (
 
 // @tag.name 接口2
 // @tag.description 这是接口文档2
+
+// @tag.name CMS
+// @tag.description CMS接口文档
 //go:generate swag init
 //
 // @host localhost:8080
@@ -36,7 +39,15 @@ func main() {
 	app.Post("/api/v1/quick-post-form/{id}", api.TestQuickPostForm)
 	app.Post("/api/v1/quick-post-query/{id}", api.TestQuickPostQuery)
 	app.Post("/api/v1/quick-file", api.TestQuickFile)
+
+	user := new(api.User)
+	{
+		app.Post("/api/v1/user/login", user.Login)
+		app.Get("/api/v1/user/list", user.List)
+	}
+
 	app.Get("/api/v1/test/{id}", api.GetStringByInt)
+
 	app.Get("/swagger/{any:path}", swagger.WrapHandler(swaggerFiles.Handler))
 	app.Run(iris.Addr(":8080"))
 }

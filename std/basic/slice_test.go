@@ -1,8 +1,10 @@
 package basic
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"strconv"
 	"strings"
@@ -108,4 +110,56 @@ func NumberStrToSlice(str string) {
 
 func TestNumberStrToSlice(t *testing.T) {
 	NumberStrToSlice("1,2,3,4,5,10,111,aaa")
+}
+
+func ReadAll(r io.Reader) ([]byte, error) {
+	b := make([]byte, 0, 3)
+	for {
+		if len(b) == cap(b) {
+			// Add more capacity (let append pick how much).
+			fmt.Println("==> ", len(b), cap(b))
+			a := append(b, 0)
+			fmt.Println("a ==> ", len(a), cap(a))
+			b = a[:len(b)]
+			fmt.Println("===> ", len(b), cap(b))
+		}
+		n, err := r.Read(b[len(b):cap(b)])
+		b = b[:len(b)+n]
+		fmt.Println("=> ", len(b), cap(b))
+		if err != nil {
+			if err == io.EOF {
+				err = nil
+			}
+			return b, err
+		}
+	}
+}
+
+func TestSlice12(t *testing.T) {
+	b := make([]byte, 0, 4)
+	buffer := bytes.NewBuffer([]byte{1, 2, 3, 4})
+	n, err := buffer.Read(b[len(b):cap(b)])
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(n, b)
+	if len(b) == cap(b) {
+		b = append(b, 0)[:len(b)]
+		fmt.Println(b)
+	}
+
+	fmt.Println(io.ReadAll(bytes.NewBuffer([]byte{1, 2, 3, 4})))
+	fmt.Println(ReadAll(bytes.NewBuffer([]byte{1, 2, 3, 4})))
+}
+func TestSliceAppend(t *testing.T) {
+	a := make([]byte, 0, 3)
+	fmt.Println(len(a), cap(a))
+
+	a = append(a, 0)
+	fmt.Println(len(a), cap(a))
+	a = append(a, 1)
+	a = append(a, 2)
+	fmt.Println(len(a), cap(a))
+	a = append(a, 0)
+	fmt.Println(len(a), cap(a))
 }

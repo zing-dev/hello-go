@@ -1,4 +1,4 @@
-package atomic
+package atomic_test
 
 import (
 	"log"
@@ -47,6 +47,7 @@ func (c *Cache) store(key string, value Data) {
 func (c *Cache) length() int {
 	return int(atomic.LoadInt32(&c.size))
 }
+
 func (c *Cache) delete(key string) {
 	if _, ok := c.data.Load(key); ok {
 		c.data.Delete(key)

@@ -1,4 +1,4 @@
-package atomic
+package atomic_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestValue(t *testing.T) {
+func TestValueStruct(t *testing.T) {
 	type A struct {
 		id   int
 		name string

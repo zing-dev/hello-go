@@ -1,6 +1,6 @@
-module github.com/zhangrxiang/hello-go
+module github.com/zing-dev/hello-go
 
-go 1.13
+go 1.16
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
@@ -13,14 +13,12 @@ require (
 	github.com/goburrow/serial v0.1.0 // indirect
 	github.com/godbus/dbus v4.1.0+incompatible // indirect
 	github.com/google/uuid v1.1.1
-	github.com/gordonklaus/portaudio v0.0.0-20200911161147-bb74aa485641
 	github.com/graphql-go/graphql v0.7.9
 	github.com/joho/godotenv v1.3.0
 	github.com/judwhite/go-svc v1.1.2
 	github.com/kavu/go_reuseport v1.5.0 // indirect
 	github.com/lib/pq v1.7.0
 	github.com/nobonobo/joycon v0.0.0-20180320092020-1dc7fb3b089b
-	github.com/oandrew/go-mpg123 v0.0.0-20170911050902-e37dc31c0208
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sevlyar/retag v0.0.0-20190429052747-c3f10e304082
 	github.com/sirupsen/logrus v1.5.0

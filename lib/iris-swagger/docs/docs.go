@@ -33,6 +33,165 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/quick-file": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST File测试",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "上传文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "file没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/quick-post-form/{id}": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST Form测试",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id错误",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    },
+                    "404": {
+                        "description": "id没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/quick-post-query/{id}": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST Query测试",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id2",
+                        "name": "id2",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字2",
+                        "name": "name2",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id错误",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    },
+                    "404": {
+                        "description": "id没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
         "/quick-post/{id}": {
             "post": {
                 "description": "快速上手接口测试,这是我的描述",
@@ -91,6 +250,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "接口"
                 ],
                 "summary": "快速上手接口测试",
                 "parameters": [
@@ -218,6 +380,107 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/user/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "用户列表",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CMS"
+                ],
+                "summary": "用户列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "第几页",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数据",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "登录",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CMS"
+                ],
+                "summary": "登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -240,12 +503,29 @@ var doc = `{
                 "code": {
                     "type": "integer"
                 },
+                "data": {
+                    "type": "object"
+                },
                 "message": {
                     "type": "string"
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "这是接口文档",
+            "name": "接口"
+        },
+        {
+            "description": "这是接口文档2",
+            "name": "接口2"
+        },
+        {
+            "description": "CMS接口文档",
+            "name": "CMS"
+        }
+    ]
 }`
 
 type swaggerInfo struct {
@@ -259,11 +539,11 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "1.0",
+	Version:     "v0.0.1",
 	Host:        "localhost:8080",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "swagger",
+	Title:       "swagger 接口开发测试",
 	Description: "This is a sample server Petstore server.",
 }
 

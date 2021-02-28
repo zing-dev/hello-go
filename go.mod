@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
+	github.com/Atian-OE/DTSSDK_Golang v0.1.6 // indirect
 	github.com/ecc1/ble v0.0.0-20180627165003-b31a0c22ab80
 	github.com/eclipse/paho.mqtt.golang v1.2.0
 	github.com/elliotchance/pie v1.37.0
@@ -12,11 +13,14 @@ require (
 	github.com/goburrow/modbus v0.1.0
 	github.com/goburrow/serial v0.1.0 // indirect
 	github.com/godbus/dbus v4.1.0+incompatible // indirect
+	github.com/golang/protobuf v1.4.3
 	github.com/google/uuid v1.1.1
 	github.com/graphql-go/graphql v0.7.9
 	github.com/joho/godotenv v1.3.0
 	github.com/judwhite/go-svc v1.1.2
 	github.com/kavu/go_reuseport v1.5.0 // indirect
+	github.com/leesper/holmes v0.0.0-20190916004209-307d8a307864
+	github.com/leesper/tao v0.0.0-20201216143147-2c485cb2042e
 	github.com/lib/pq v1.7.0
 	github.com/nobonobo/joycon v0.0.0-20180320092020-1dc7fb3b089b
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -27,6 +31,7 @@ require (
 	github.com/tidwall/evio v1.0.7
 	github.com/zing-dev/4g-lte-sdk v0.0.1
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+	google.golang.org/protobuf v1.25.0
 	gorm.io/driver/mysql v0.2.9
 	gorm.io/driver/postgres v0.2.5
 	gorm.io/driver/sqlite v1.0.8

@@ -1,3 +1,6 @@
 [submodule "demo/wsam/shimmer"]
 	path = demo/wsam/shimmer
 	url = git@github.com:agnivade/shimmer.git
+[submodule "examples/tao"]
+	path = examples/tao
+	url = git@github.com:leesper/tao.git

@@ -6,7 +6,7 @@
 
 //protoc --go_out=. dtssdk/model/message.proto
 
-package tao
+package demo
 
 import (
 	proto "github.com/golang/protobuf/proto"

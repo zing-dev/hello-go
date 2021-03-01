@@ -2,18 +2,21 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"sync"
+	"time"
 )
 
 func HelloWorld() {
-	fmt.Println("Hello, World!")
+	time.Sleep(time.Second)
+	log.Println("Hello, World!")
 }
 
 func HelloWorld2() {
 	c := make(chan struct{})
 	go func() {
-		fmt.Println("Hello, World chan!")
+		time.Sleep(time.Second)
+		log.Println("Hello, World chan!")
 		c <- struct{}{}
 	}()
 	<-c
@@ -23,7 +26,8 @@ func HelloWorld3() {
 	var g sync.WaitGroup
 	g.Add(1)
 	go func() {
-		fmt.Println("Hello, World WaitGroup!")
+		time.Sleep(time.Second)
+		log.Println("Hello, World WaitGroup!")
 		g.Done()
 	}()
 	g.Wait()
@@ -32,7 +36,8 @@ func HelloWorld3() {
 func HelloWorld4() {
 	cond := sync.NewCond(new(sync.Mutex))
 	go func() {
-		fmt.Println("Hello, World Cond!")
+		time.Sleep(time.Second)
+		log.Println("Hello, World Cond!")
 		cond.Signal()
 	}()
 	cond.L.Lock()
@@ -45,7 +50,8 @@ func HelloWorld5() {
 	go cancel()
 	select {
 	case <-ctx.Done():
-		fmt.Println("Hello, World WithCancel!")
+		time.Sleep(time.Second)
+		log.Println("Hello, World WithCancel!")
 	}
 }
 

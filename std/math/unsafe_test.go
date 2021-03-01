@@ -2,6 +2,7 @@ package math
 
 import (
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"math"
 	"testing"
@@ -9,8 +10,11 @@ import (
 )
 
 func TestFloat32bits(t *testing.T) {
-	fmt.Println(math.Float32bits(1.0)) //1065353216
-	fmt.Println(math.Float32bits(1.1)) //1066192077
+	data, _ := json.Marshal(math.Float32frombits(math.MaxUint32 - 19))
+	fmt.Println(string(data), len(data))
+	fmt.Println(math.Float32frombits(math.MaxUint32 - 19)) //1065353216
+	fmt.Println(math.Float32bits(1.0))                     //1065353216
+	fmt.Println(math.Float32bits(1.1))                     //1066192077
 
 	var f = float32(1.0)
 	fmt.Println(&f)

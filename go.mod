@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
+	github.com/UnnoTed/fileb0x v1.1.4 // indirect
 	github.com/ecc1/ble v0.0.0-20180627165003-b31a0c22ab80
 	github.com/eclipse/paho.mqtt.golang v1.2.0
 	github.com/elliotchance/pie v1.37.0

@@ -7,7 +7,6 @@ import (
 
 	"github.com/labstack/echo"
 
-	// your embedded files import here ...
 	"fileb0x-demo/resources"
 	"github.com/skratchdot/open-golang/open"
 )

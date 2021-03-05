@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
-        "title": "swagger",
+        "title": "swagger 接口开发测试",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -13,11 +13,170 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "1.0"
+        "version": "v0.0.1"
     },
     "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
+        "/quick-file": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST File测试",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "上传文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "file没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/quick-post-form/{id}": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST Form测试",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id错误",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    },
+                    "404": {
+                        "description": "id没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/quick-post-query/{id}": {
+            "post": {
+                "description": "快速上手接口测试,这是我的描述",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "快速上手接口 POST Query测试",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id2",
+                        "name": "id2",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "名字2",
+                        "name": "name2",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id错误",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    },
+                    "404": {
+                        "description": "id没找到",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
         "/quick-post/{id}": {
             "post": {
                 "description": "快速上手接口测试,这是我的描述",
@@ -76,6 +235,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "接口"
                 ],
                 "summary": "快速上手接口测试",
                 "parameters": [
@@ -203,6 +365,107 @@
                     }
                 }
             }
+        },
+        "/user/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "用户列表",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CMS"
+                ],
+                "summary": "用户列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "第几页",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数据",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "登录",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CMS"
+                ],
+                "summary": "登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "schema": {
+                            "$ref": "#/definitions/web.Message"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -225,10 +488,27 @@
                 "code": {
                     "type": "integer"
                 },
+                "data": {
+                    "type": "object"
+                },
                 "message": {
                     "type": "string"
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "这是接口文档",
+            "name": "接口"
+        },
+        {
+            "description": "这是接口文档2",
+            "name": "接口2"
+        },
+        {
+            "description": "CMS接口文档",
+            "name": "CMS"
+        }
+    ]
 }

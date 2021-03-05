@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>web file server</title>
+</head>
+<body>
+{{range .}}
+<div>
+    <a href="{{ .Name }}">{{ .Name }}</a>
+</div>
+{{else}}
+<div><strong>no rows</strong></div>
+{{end}}
+</body>
+</html>

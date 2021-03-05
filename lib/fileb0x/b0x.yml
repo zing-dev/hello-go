@@ -78,7 +78,7 @@ lcf: true
 custom:
 
   # type: array of strings
-  - files: 
+  - files:
     - "../../README.md"
     - "../../bench.bat"
 

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+
 	"strconv"
 )
 
@@ -29,7 +30,7 @@ func main() {
 		http.FileServer(http.Dir(dir)).ServeHTTP(writer, request)
 	})
 	fmt.Println(fmt.Sprintf("=============start at :%d===========", port))
-	err = http.ListenAndServe(fmt.Sprintf("localhost:%d", port), nil)
+	err = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

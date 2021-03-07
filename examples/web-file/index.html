@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <title>web file server</title>
 </head>
+<style>
+    a{
+    }
+</style>
 <body>
 {{range .}}
 <div>
-    <a href="{{ .Name }}">{{ .Name }}</a>
+    {{if .IsDir}}
+    <a href="{{ .Path }}" title="dir"><small>{{ .ModTime }}</small> {{ .Name }}
+    </a>
+    {{else}}
+    <a href="{{ .Path }}" title="file" target="_blank"> <small>{{ .ModTime }}</small> {{ .Name }}
+    </a>
+    {{end}}
 </div>
 {{else}}
-<div><strong>no rows</strong></div>
+<div><strong>no file</strong></div>
 {{end}}
 </body>
 </html>

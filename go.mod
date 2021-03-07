@@ -23,7 +23,6 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sevlyar/retag v0.0.0-20190429052747-c3f10e304082
 	github.com/sirupsen/logrus v1.5.0
-	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/tealeg/xlsx v1.0.5
 	github.com/tidwall/evio v1.0.7
 	github.com/zing-dev/4g-lte-sdk v0.0.1

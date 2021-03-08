@@ -1,26 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv='content-type' content="text/html;utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="app-mobile-web-app-capable" content="yes"/>
+    <meta name="app-mobile-web-app-status-bar-style" content="black-translucent"/>
     <title>web file server</title>
 </head>
 <style>
-    a{
+    .file {
+        display: block;
+        height: 25px;
+        padding: 2px;
+        width: 100%;
     }
+
+    a {
+        text-decoration: none;
+    }
+
+    .file:hover {
+        background: cornsilk;
+    }
+
+    .file > .icon, .name, time, .size {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 25px;
+    }
+
+    .file > .time, .size {
+        color: gray;
+        font-size: 13px;
+    }
+
+    .file > .icon {
+        /*width: 5%;*/
+    }
+    label[for=upload]{
+        display: inline-block;
+        width: 50%;
+    }
+    @media (min-width: 120px) and (max-width: 960px){
+        .file > .name {
+            width: 100%;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+
+        .file > .icon ,.file > .time ,.file > .size{
+            display: none;
+        }
+    }
+    @media only screen and (min-width: 960px){
+        .file > .name {
+            width: 50%;
+        }
+
+        .file > .time {
+            width: 10%;
+            margin-right: 10px;
+        }
+
+        .file > .size {
+            width: 10%;
+        }
+    }
+
 </style>
 <body>
-{{range .}}
 <div>
-    {{if .IsDir}}
-    <a href="{{ .Path }}" title="dir"><small>{{ .ModTime }}</small> {{ .Name }}
-    </a>
+    <form method="post" action="" enctype="multipart/form-data">
+        <div>
+            <button value="">save</button>
+            <label for="upload">
+                <input id="upload" name="upload" type="file" multiple>
+            </label>
+        </div>
+    </form>
+</div>
+<div>
+    {{range .}}
+    <div>
+        {{if .IsDir}}
+        <a class="file" href="{{ .Path }}" title="file">
+            <span class="icon"></span>
+            <span class="name">{{.Name}}</span>
+            <span class="time">{{.ModTime}}</span>
+            <span class="size">{{.Size}}</span>
+        </a>
+        {{else}}
+        <a class="file" href="{{ .Path }}" title="file" target="_blank">
+            <span class="icon"></span>
+            <span class="name">{{.Name}}</span>
+            <span class="time">{{.ModTime}}</span>
+            <span class="size">{{.Size}}</span>
+        </a>
+        {{end}}
+    </div>
     {{else}}
-    <a href="{{ .Path }}" title="file" target="_blank"> <small>{{ .ModTime }}</small> {{ .Name }}
-    </a>
+    <div><strong>no file</strong></div>
     {{end}}
 </div>
-{{else}}
-<div><strong>no file</strong></div>
-{{end}}
 </body>
 </html>

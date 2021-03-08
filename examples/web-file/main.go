@@ -5,41 +5,49 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 //go:generate fileb0x b0x.yml
-
-type config struct {
-	port string
-	dir  string
-}
 
 func handle(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodGet:
 		FileHandle(writer, request)
 	case http.MethodPost:
-		_, _ = writer.Write([]byte("post"))
+		FileUpload(writer, request)
 	default:
 	}
 }
 
 func main() {
 	flag.Parse()
-	c := config{
-		port: flag.Arg(0),
-		dir:  flag.Arg(1),
+	config = Config{
+		Port: flag.Arg(0),
+		Dir:  flag.Arg(1),
 	}
-	if c.port == "" {
-		c.port = "8081"
+	if config.Port == "" {
+		config.Port = "8081"
 	}
-	if c.dir == "" {
-		c.dir = "./"
+	if config.Dir == "" {
+		dir, err := os.UserHomeDir()
+		if err != nil {
+			config.Dir = "./"
+		} else {
+			config.Dir = dir + "/wf-uploads"
+		}
 	}
-	log.Println(fmt.Sprintf("www dir %s, port %s", c.dir, c.port))
-	http.HandleFunc("/", handle)
-	fmt.Println(fmt.Sprintf("server start from :%s...", c.port))
-	err := http.ListenAndServe(fmt.Sprintf(":%s", c.port), nil)
-	fmt.Println("server end: ", err)
 
+	_, err := os.Stat(config.Dir)
+	if os.IsNotExist(err) {
+		err := os.Mkdir(config.Dir, 0x777)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	log.Println(fmt.Sprintf("uploads dir %s and port %s", config.Dir, config.Port))
+	http.HandleFunc("/", handle)
+	log.Println(fmt.Sprintf("server start from :%s...", config.Port))
+	err = http.ListenAndServe(fmt.Sprintf(":%s", config.Port), nil)
+	log.Println("server end: ", err)
 }

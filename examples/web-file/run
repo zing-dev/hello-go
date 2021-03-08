@@ -1,2 +1,10 @@
+#!/bin/bash
 go generate
-go build && ./web-file.exe
+go build
+
+if [[ $(go version) =~ "linux" ]]
+then
+  ./web-file
+else
+  ./web-file.exe
+fi

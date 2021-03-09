@@ -47,15 +47,16 @@ func FileUpload(writer http.ResponseWriter, request *http.Request) {
 					log.Println("Err:Open ", err)
 					return
 				}
+				defer f.Close()
 				f2, err := os.OpenFile(root+file.Filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0777)
 				if err != nil {
 					log.Println("Err:OpenFile ", err)
 					return
 				}
+				defer f2.Close()
 				_, err = io.Copy(f2, f)
 				if err != nil {
 					log.Println("Err:Copy ", err)
-					return
 				}
 			}(file)
 

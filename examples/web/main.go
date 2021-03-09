@@ -22,11 +22,14 @@ func main() {
 			port = p
 		}
 		dir += "/" + os.Args[2]
+	} else if len(os.Args) == 1 {
+		dir += "/."
 	} else {
 		log.Fatal("error: web port dir need!")
 	}
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Println("from ", request.RemoteAddr)
 		http.FileServer(http.Dir(dir)).ServeHTTP(writer, request)
 	})
 	fmt.Println(fmt.Sprintf("=============start at :%d===========", port))

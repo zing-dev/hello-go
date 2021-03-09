@@ -67,3 +67,9 @@ func TestName1(t *testing.T) {
 	fmt.Println(fmt.Sprintf("%d", []byte{1, 2, 3, 12}))
 	fmt.Println(fmt.Sprintf("%x", []byte{1, 2, 3, 12, 255}))
 }
+
+func TestFor(t *testing.T) {
+	for range [3]interface{}{} {
+		t.Log("")
+	}
+}

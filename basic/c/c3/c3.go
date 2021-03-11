@@ -4,7 +4,7 @@ import "C"
 import "log"
 
 func c() {
-	SayHello(C.CString("hell world"))
+	SayHello(C.CString("hello world"))
 	add(1, 2)
 }
 

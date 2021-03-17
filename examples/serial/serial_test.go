@@ -41,7 +41,7 @@ func TestGetDetailedPortsList(t *testing.T) {
 }
 
 func TestOpen(t *testing.T) {
-	dev, err := serial.Open("COM3",
+	dev, err := serial.Open("/dev/pts/4",
 		serial.WithBaudrate(9600),
 		serial.WithParity(serial.NoParity),
 		serial.WithDataBits(8),
@@ -58,7 +58,8 @@ func TestOpen(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	n, err := dev.Write([]byte{0x55, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x66})
+	//n, err := dev.Write([]byte{0x55, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x66})
+	n, err := dev.Write([]byte("hello world"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -68,7 +69,8 @@ func TestOpen(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("stat recv: ", n)
+	log.Println("stat recv: ", n, string(buf))
+	dev.Close()
 }
 
 func TestName(t *testing.T) {

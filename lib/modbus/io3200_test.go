@@ -1,4 +1,4 @@
-package modbus
+package modbus_test
 
 import (
 	"bytes"
@@ -14,10 +14,6 @@ var (
 	handler *modbus.RTUClientHandler = nil
 	client  modbus.Client
 )
-
-func init() {
-	build()
-}
 
 func build() {
 	handler = modbus.NewRTUClientHandler(fmt.Sprintf(`\\.\%s`, address))

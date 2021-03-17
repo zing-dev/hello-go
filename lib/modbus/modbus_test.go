@@ -1,4 +1,4 @@
-package modbus
+package modbus_test
 
 import (
 	"bytes"

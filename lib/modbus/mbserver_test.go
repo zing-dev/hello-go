@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"github.com/goburrow/modbus"
 	"github.com/goburrow/serial"
-	"github.com/google/goterm/term"
-	"github.com/zing-dev/mbserver"
+	"github.com/tbrandon/mbserver"
 	"log"
 	"math/rand"
 	"testing"
@@ -17,33 +16,35 @@ func TestRun(t *testing.T) {
 	//if err != nil {
 	//	t.Fatal(err)
 	//}
-	go runServer("/dev/pts/7")
-	go runClient("/dev/pts/8")
+	//go runServer("/dev/pts/7")
+	go runServer(`\\.\COM14`)
+	//go runClient("/dev/pts/8")
+	//go runClient(`\\.\COM10`)
 	time.Sleep(time.Minute * 10)
 }
 
-func tty() (string, error) {
-	pty, err := term.OpenPTY()
-	if err != nil {
-		return "", err
-	}
-	return pty.PTSName()
-}
+//func tty() (string, error) {
+//	pty, err := term.OpenPTY()
+//	if err != nil {
+//		return "", err
+//	}
+//	return pty.PTSName()
+//}
 
-func TestTTY(t *testing.T) {
-	t.Log(tty())
-}
+//func TestTTY(t *testing.T) {
+//	t.Log(tty())
+//}
 
 func runServer(address string) {
 	server := mbserver.NewServer()
 	log.Println("server: ", address)
 	err := server.ListenRTU(&serial.Config{
 		Address:  address,
-		BaudRate: 9600,
+		BaudRate: 14400,
 		DataBits: 8,
 		StopBits: 1,
 		Parity:   "N",
-		Timeout:  time.Second * 3,
+		Timeout:  time.Second * 100,
 	})
 	if err != nil {
 		log.Println("TCPClient...")
@@ -55,19 +56,24 @@ func runServer(address string) {
 		log.Println("RTUServer...")
 	}
 	defer server.Close()
+	for k := range server.HoldingRegisters {
+		//server.HoldingRegisters[k] = uint16(rand.Intn(30)*10 + 500)
+		server.HoldingRegisters[k] = uint16(k)
+	}
+
 	for {
-		for k := range server.HoldingRegisters {
+		/*for k := range server.HoldingRegisters {
 			//server.HoldingRegisters[k] = uint16(rand.Intn(30)*10 + 500)
 			server.HoldingRegisters[k] = uint16(k)
 		}
-		log.Println("server: update...")
+		log.Println("server: update...")*/
 		//server.Coils
 		time.Sleep(time.Second * 10)
 	}
 }
 
 func TestServer(t *testing.T) {
-	runServer("")
+	runServer(`\\.\COM10`)
 }
 
 func runClient(address string) {
@@ -76,7 +82,7 @@ func runClient(address string) {
 	handler.BaudRate = 9600
 	handler.DataBits = 8
 	handler.Parity = "N"
-	handler.Timeout = time.Second * 3
+	handler.Timeout = time.Second * 100
 	handler.SlaveId = byte(1)
 	err := handler.Connect()
 	if err != nil {
@@ -96,8 +102,8 @@ func runClient(address string) {
 	for {
 		address := rand.Intn(125)
 		quantity := rand.Intn(10) + 1
-		registers, err := client.ReadHoldingRegisters(uint16(address), uint16(quantity))
 		log.Println("send: ", address, quantity)
+		registers, err := client.ReadHoldingRegisters(uint16(address), uint16(quantity))
 		if err != nil {
 			log.Println("client: ", err)
 			continue
@@ -108,13 +114,22 @@ func runClient(address string) {
 }
 
 func TestClient(t *testing.T) {
-	runClient("/dev/pts/4")
+	//runClient("/dev/pts/4")
+	runClient(`\\.\COM14`)
 }
 
 func TestModbus(t *testing.T) {
 	// Server
 	s := mbserver.NewServer()
-	err := s.ListenTCP("127.0.0.1:3333")
+	err := s.ListenRTU(&serial.Config{
+		Address:  `\\.\COM14`,
+		BaudRate: 9600,
+		DataBits: 8,
+		StopBits: 1,
+		Parity:   "N",
+		Timeout:  time.Second * 10,
+	})
+	//err = s.ListenTCP("127.0.0.1:3333")
 	if err != nil {
 		t.Fatalf("failed to listen, got %v\n", err)
 	}
@@ -124,7 +139,14 @@ func TestModbus(t *testing.T) {
 	time.Sleep(1 * time.Millisecond)
 
 	// Client
-	handler := modbus.NewTCPClientHandler("127.0.0.1:3333")
+	handler := modbus.NewRTUClientHandler(`\\.\COM16`)
+	handler.BaudRate = 9600
+	handler.StopBits = 1
+	handler.DataBits = 8
+	handler.Parity = "N"
+	handler.Timeout = time.Second * 10
+	handler.SlaveId = byte(1)
+	//handler = modbus.NewTCPClientHandler("127.0.0.1:3333")
 	// Connect manually so that multiple requests are handled in one connection session
 	err = handler.Connect()
 	if err != nil {

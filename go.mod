@@ -14,7 +14,6 @@ require (
 	github.com/goburrow/serial v0.1.0
 	github.com/godbus/dbus v4.1.0+incompatible // indirect
 	github.com/golang/protobuf v1.4.3
-	github.com/google/goterm v0.0.0-20200907032337-555d40f16ae2
 	github.com/google/uuid v1.1.1
 	github.com/graphql-go/graphql v0.7.9
 	github.com/joho/godotenv v1.3.0
@@ -27,10 +26,12 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sevlyar/retag v0.0.0-20190429052747-c3f10e304082
 	github.com/sirupsen/logrus v1.5.0
+	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
+	github.com/tbrandon/mbserver v0.0.0-20170611213546-993e1772cc62
 	github.com/tealeg/xlsx v1.0.5
 	github.com/tidwall/evio v1.0.7
+	github.com/xiegeo/modbusone v0.2.3
 	github.com/zing-dev/4g-lte-sdk v0.0.1
-	github.com/zing-dev/mbserver v0.0.1
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
 	google.golang.org/protobuf v1.25.0
 	gorm.io/driver/mysql v0.2.9

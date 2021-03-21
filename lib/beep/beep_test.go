@@ -34,7 +34,7 @@ func TestWav(t *testing.T) {
 }
 
 func TestStop(t *testing.T) {
-	f, err := os.Open("bugscaner-tts-auido(2).wav")
+	f, err := os.Open("alarm.mp3")
 	if err != nil {
 		log.Fatal(err)
 	}

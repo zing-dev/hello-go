@@ -19,15 +19,15 @@ func TestCondSignal(t *testing.T) {
 	running := make(chan bool, n)
 	awake := make(chan bool, n)
 	for i := 0; i < n; i++ {
-		go func() {
+		go func(i int) {
 			m.Lock()
 			running <- true
-			t.Log("before wait")
+			t.Log("before wait: ", i)
 			c.Wait()
-			t.Log("after wait")
+			t.Log("after wait: ", i)
 			awake <- true
 			m.Unlock()
-		}()
+		}(i)
 	}
 	for i := 0; i < n; i++ {
 		<-running // Wait for everyone to run.
@@ -51,22 +51,24 @@ func TestCondSignal(t *testing.T) {
 		}
 		n--
 	}
-	t.Log("before signal2")
-	c.Signal()
-	t.Log("after signal2")
+	//t.Log("before signal2")
+	//c.Signal()
+	//t.Log("after signal2")
 }
 
 func TestCondSignalGenerations(t *testing.T) {
 	var m Mutex
 	c := NewCond(&m)
-	n := 100
+	n := 3
 	running := make(chan bool, n)
 	awake := make(chan int, n)
 	for i := 0; i < n; i++ {
 		go func(i int) {
 			m.Lock()
 			running <- true
+			t.Log("before wait: ", i)
 			c.Wait()
+			t.Log("after wait: ", i)
 			awake <- i
 			m.Unlock()
 		}(i)
@@ -78,15 +80,18 @@ func TestCondSignalGenerations(t *testing.T) {
 		}
 		<-running
 		m.Lock()
+		t.Log("before signal: ", i)
 		c.Signal()
+		t.Log("after signal: ", i)
 		m.Unlock()
 	}
+	time.Sleep(time.Second)
 }
 
 func TestCondBroadcast(t *testing.T) {
 	var m Mutex
 	c := NewCond(&m)
-	n := 200
+	n := 4
 	running := make(chan int, n)
 	awake := make(chan int, n)
 	exit := false
@@ -95,7 +100,9 @@ func TestCondBroadcast(t *testing.T) {
 			m.Lock()
 			for !exit {
 				running <- g
+				t.Log("before wait: ", g)
 				c.Wait()
+				t.Log("after wait: ", g)
 				awake <- g
 			}
 			m.Unlock()
@@ -107,6 +114,7 @@ func TestCondBroadcast(t *testing.T) {
 		}
 		if i == n-1 {
 			m.Lock()
+			t.Log("exit-> true: ", i)
 			exit = true
 			m.Unlock()
 		}
@@ -116,7 +124,9 @@ func TestCondBroadcast(t *testing.T) {
 		default:
 		}
 		m.Lock()
+		t.Log("before broadcast: ", i)
 		c.Broadcast()
+		t.Log("after broadcast: ", i)
 		m.Unlock()
 		seen := make([]bool, n)
 		for i := 0; i < n; i++ {
@@ -142,6 +152,7 @@ func TestRace(t *testing.T) {
 	go func() {
 		c.L.Lock()
 		x = 1
+		t.Log("before wait: 1")
 		c.Wait()
 		if x != 2 {
 			t.Error("want 2")
@@ -162,7 +173,9 @@ func TestRace(t *testing.T) {
 				break
 			}
 			c.L.Unlock()
+			t.Log("------")
 			runtime.Gosched()
+			t.Log("======")
 			c.L.Lock()
 		}
 		c.L.Unlock()

@@ -1,8 +1,11 @@
 package byte
 
 import (
+	"bytes"
+	"compress/bzip2"
 	"encoding/binary"
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"strings"
 	"testing"
@@ -86,4 +89,18 @@ func TestName8(t *testing.T) {
 	log.Println(string(arr))
 
 	log.Println(strings.Join(str, ""))
+}
+
+func TestBz2(t *testing.T) {
+	data, err := ioutil.ReadFile("C:\\Go\\src\\compress\\bzip2\\testdata\\Isaac.Newton-Opticks.txt.bz2")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(len(data))
+	reader := bzip2.NewReader(bytes.NewReader(data))
+	if data, err := ioutil.ReadAll(reader); err != nil {
+		log.Fatal(err)
+	} else {
+		log.Println(len(data))
+	}
 }

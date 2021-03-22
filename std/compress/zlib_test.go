@@ -30,14 +30,13 @@ func TestZlib(t *testing.T) {
 }
 
 func TestZlibStruct(t *testing.T) {
-	start := time.Now()
 	type Student struct {
 		Id    int    `json:"id"`
 		Name  string `json:"name"`
 		Sex   int    `json:"sex"`
 		Grade int    `json:"grade"`
 	}
-	length := 1000000
+	length := 10000
 	var students = make([]Student, length)
 	for i := 0; i < length; i++ {
 		students[i] = Student{
@@ -49,13 +48,14 @@ func TestZlibStruct(t *testing.T) {
 	}
 
 	var b bytes.Buffer
+	start := time.Now()
 	src, _ := json.Marshal(students)
-	fmt.Println("src len ", len(src))
+	log.Println("src len ", len(src))
 	w := zlib.NewWriter(&b)
 	_, _ = w.Write(src)
 	_ = w.Close()
 	desc := b.Bytes()
-	fmt.Println("desc len ", len(desc))
+	log.Println("desc len ", len(desc))
 	b.Reset()
 	r, _ := zlib.NewReader(bytes.NewBuffer(desc))
 
@@ -77,7 +77,6 @@ func TestZlibStruct(t *testing.T) {
 		log.Fatal("err ", err)
 	}
 	end := time.Now()
-	fmt.Println(students2[1], students2[2])
-	fmt.Println("time ", end.Sub(start))
-	time.Sleep(time.Minute)
+	log.Println(students2[1], students2[2])
+	log.Println("time ", end.Sub(start))
 }

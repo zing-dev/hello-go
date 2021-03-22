@@ -1,6 +1,7 @@
 package binary
 
 import (
+	"encoding/binary"
 	"log"
 	"testing"
 )
@@ -34,4 +35,12 @@ func TestBytesToInt(t *testing.T) {
 func TestIntegersToBytes(t *testing.T) {
 	log.Println(IntegersToBytes([]int32{1, 2}))
 	log.Println(BytesToIntegers(IntegersToBytes([]int32{1, 2})))
+}
+
+func TestSize(t *testing.T) {
+	t.Log(binary.Size(int32(1)))
+	t.Log(binary.Size(byte(1)))
+	t.Log(binary.Size([10]byte{}))
+	t.Log(binary.Size(struct{}{}))      //0
+	t.Log(binary.Size(map[byte]byte{})) //-1
 }

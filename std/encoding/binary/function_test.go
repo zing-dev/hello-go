@@ -72,7 +72,7 @@ func TestEncodingPackage(t *testing.T) {
 	data, err = decodeBytes(reader)
 	log.Println("data:", string(data), err)
 
-	data, _ = json.Marshal(People{
+	data, _ = json.Marshal(User{
 		Id:   123,
 		Name: "zing",
 		Age:  25,

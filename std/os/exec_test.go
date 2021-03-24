@@ -2,6 +2,7 @@ package os
 
 import (
 	"log"
+	"os/exec"
 	"testing"
 )
 
@@ -38,4 +39,41 @@ func TestExec5(t *testing.T) {
 func TestExec6(t *testing.T) {
 	log.Println(exec6("192.168.0.215"))
 	log.Println(exec6("192.168.0.216"))
+}
+
+func TestLookPath(t *testing.T) {
+	path, err := exec.LookPath("git")
+	if err != nil {
+		t.Fatal(err)
+	}
+	log.Println(path)
+	cmd := exec.Command(path, "version")
+	res, err := cmd.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	log.Println(string(res))
+}
+
+func TestCommand(t *testing.T) {
+	cmd := exec.Command("go", "mod", "graph")
+	data, err := cmd.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	log.Print(string(data))
+}
+
+func TestCombinedOutput(t *testing.T) {
+	p, err := exec.LookPath("go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cmd := exec.Cmd{
+		Path: p,
+		Args: []string{
+			"mod", "graph",
+		},
+	}
+	log.Println(cmd.CombinedOutput())
 }

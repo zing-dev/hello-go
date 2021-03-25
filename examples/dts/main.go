@@ -9,8 +9,8 @@ import (
 
 func main() {
 	log.Println("===========dts连接测试v0.0.1===============")
-	c := make(chan *dtssdk.DTSSDKClient)
-	ip := "127.0.0.1"
+	c := make(chan *dtssdk.Client)
+	ip := "192.168.0.86"
 	if len(os.Args) == 2 {
 		ip = os.Args[1]
 	}

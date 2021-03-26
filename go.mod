@@ -32,7 +32,8 @@ require (
 	github.com/tidwall/evio v1.0.7
 	github.com/xiegeo/modbusone v0.2.3
 	github.com/zing-dev/4g-lte-sdk v0.0.1
-	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4
+	golang.org/x/tour v0.0.0-20210317163553-0a3a62c5e5c0
 	google.golang.org/protobuf v1.25.0
 	gorm.io/driver/mysql v0.2.9
 	gorm.io/driver/postgres v0.2.5

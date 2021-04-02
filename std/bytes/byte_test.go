@@ -1,4 +1,4 @@
-package byte
+package bytes
 
 import (
 	"bytes"
@@ -21,14 +21,14 @@ func TestName2(t *testing.T) {
 
 func TestName3(t *testing.T) {
 	log.Println(76)
-	log.Println(string(67))
-	log.Println(string(65))
-	log.Println(string(65) + string(65))
-	log.Println(string(65 + 65))
+	log.Println(string(rune(67)))
+	log.Println(string(rune(65)))
+	log.Println(string(rune(65)) + string(rune(65)))
+	log.Println(string(rune(65 + 65)))
 	log.Println('A')
 	log.Println('Z')
 	log.Println(91 - 65)
-	log.Println(string(91))
+	log.Println(string(rune(91)))
 	log.Println((91 - 65) / 26)
 	log.Println((91 - 65) % 26)
 	log.Println((91 + 26 - 65) / 26)
@@ -48,12 +48,12 @@ func TestName4(t *testing.T) {
 }
 
 func TestName5(t *testing.T) {
-	log.Println(string(65))      //A  65  + 0
-	log.Println(string(66))      //B  65  + 1
-	log.Println(string(90))      //Z  65  + 25
-	log.Println(string(91))      //AA 65  + 26 + 0 //
-	log.Println(string(92))      //AB 65  + 26 + 1
-	log.Println(string(92 + 26)) //AB 65  + 26 + 1
+	log.Println(string(rune(65)))      //A  65  + 0
+	log.Println(string(rune(66)))      //B  65  + 1
+	log.Println(string(rune(90)))      //Z  65  + 25
+	log.Println(string(rune(91)))      //AA 65  + 26 + 0 //
+	log.Println(string(rune(92)))      //AB 65  + 26 + 1
+	log.Println(string(rune(92 + 26))) //AB 65  + 26 + 1
 }
 
 func TestName6(t *testing.T) {

@@ -1,9 +1,14 @@
-package byte
+package bytes
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
 	"log"
+	"net"
 	"testing"
+	"time"
 )
 
 var buffer = bytes.NewBufferString("hello world")
@@ -148,4 +153,90 @@ func TestReadString(t *testing.T) {
 		log.Fatal(err)
 	}
 	log.Println(line)
+}
+
+func TestPackageOne(t *testing.T) {
+	user := User{Id: 1, Name: "zing"}
+	p := NewPackage(One, user)
+	err := p.Unpack(p.Pack())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	u := new(User)
+	_ = json.Unmarshal(p.Data, u)
+	log.Println(u)
+	log.Println(p.Cmd, p.Size, string(p.Data), p.Data)
+
+	p = NewPackage(One, nil)
+	err = p.Unpack(p.Pack())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println(p.Cmd, p.Size, string(p.Data), p.Data)
+}
+
+func TestPackageList(t *testing.T) {
+	users := make([]User, 100)
+	for i := 0; i < 100; i++ {
+		users[i] = User{Id: i + 1, Name: fmt.Sprintf("name-%d", i+1)}
+	}
+	//users = make([]User, 0)
+	p := NewPackage(List, users)
+	err := p.Unpack(p.Pack())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	u := new([]User)
+	_ = json.Unmarshal(p.Data, u)
+	log.Println(u)
+}
+
+func TestPackageListRead(t *testing.T) {
+	users := make([]User, 100000)
+	for i := 0; i < 100000; i++ {
+		users[i] = User{Id: i + 1, Name: fmt.Sprintf("name-%d", i+1)}
+	}
+	p := NewPackage(List, users)
+	r := bytes.NewReader(p.Pack())
+	log.Println("size: ", r.Size())
+	for {
+		data := make([]byte, 1024)
+		n, err := r.Read(data)
+		if err != io.EOF /*&& n == 1024*/ {
+			continue
+		}
+		err = p.Unpack(data[:n])
+		var u []User
+		_ = json.Unmarshal(p.Data, &u)
+		log.Println("len", len(u))
+		break
+	}
+}
+
+func TestPackageClient(t *testing.T) {
+	client := &Client{}
+	client.Run()
+	p := NewPackage(One, nil)
+	go func(conn net.Conn) {
+		n, err := p.ReadFrom(client.conn)
+		if err != nil {
+			log.Println(n, err)
+		}
+		user := User{}
+		err = json.Unmarshal(p.Data, &user)
+		log.Println(user)
+	}(client.conn)
+	n, err := p.WriteTo(client.conn)
+	if err != nil {
+		log.Println(n, err)
+	}
+	time.Sleep(time.Minute * 10)
+}
+
+func TestPackageServer(t *testing.T) {
+	server := Server{}
+	server.Run()
 }

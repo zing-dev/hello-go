@@ -1,4 +1,4 @@
-package byte
+package bytes
 
 import (
 	"bytes"
@@ -80,14 +80,14 @@ func row(column int) string {
 	for column > 26 {
 		i := column % 26
 		if i == 0 {
-			str = string(64+26) + str
+			str = string(rune(64+26)) + str
 			column = (column - 26) / 26
 		} else {
-			str = string(64+i) + str
+			str = string(rune(64+i)) + str
 			column = (column - i) / 26
 		}
 	}
-	return string(column+64) + str
+	return string(rune(column+64)) + str
 }
 
 func byte2() {

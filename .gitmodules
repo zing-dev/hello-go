@@ -4,3 +4,6 @@
 [submodule "examples/tao"]
 	path = examples/tao
 	url = git@github.com:leesper/tao.git
+[submodule "lib/dts-sdk"]
+	path = lib/dts-sdk
+	url = git@github.com:Atian-OE/DTSSDK_Golang.git

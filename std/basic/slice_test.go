@@ -24,11 +24,14 @@ func TestSlice3(t *testing.T) {
 }
 
 func TestSlice4(t *testing.T) {
+	Slice4()
 	s := make([]int, 0)
 	s = append(s, 1)
 	s = append(s, 2)
 	fmt.Println(s)
-	Slice4()
+
+	var a []byte
+	log.Println(append(a, 1, 2, 3))
 }
 
 func TestSlice5(t *testing.T) {
@@ -156,10 +159,10 @@ func TestSliceAppend(t *testing.T) {
 	fmt.Println(len(a), cap(a))
 
 	a = append(a, 0)
-	fmt.Println(len(a), cap(a))
+	fmt.Println(len(a), cap(a), a)
 	a = append(a, 1)
 	a = append(a, 2)
-	fmt.Println(len(a), cap(a))
+	fmt.Println(len(a), cap(a), a)
 	a = append(a, 0)
-	fmt.Println(len(a), cap(a))
+	fmt.Println(len(a), cap(a), a)
 }

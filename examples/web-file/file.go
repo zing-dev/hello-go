@@ -1,13 +1,14 @@
 package main
 
 import (
+	"embed"
 	"html/template"
 	"io"
 	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
-	"web-file/resources"
+	//"web-file/resources"
 )
 
 type Config struct {
@@ -27,6 +28,9 @@ type FileInfo struct {
 type Files []FileInfo
 
 var config Config
+
+//go:embed *.html
+var eHTML embed.FS
 
 func FileUpload(writer http.ResponseWriter, request *http.Request) {
 	err := request.ParseMultipartForm(1 << 32)
@@ -48,7 +52,7 @@ func FileUpload(writer http.ResponseWriter, request *http.Request) {
 					return
 				}
 				defer f.Close()
-				f2, err := os.OpenFile(root+file.Filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0777)
+				f2, err := os.OpenFile(root+file.Filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 				if err != nil {
 					log.Println("Err:OpenFile ", err)
 					return
@@ -119,7 +123,8 @@ func FileList(writer http.ResponseWriter, rootPath, urlPath string) {
 		return
 	}
 
-	file, err := resources.ReadFile("index.html")
+	//file, err := resources.ReadFile("index.html")
+	file, err := eHTML.ReadFile("index.html")
 	if err != nil {
 		writer.WriteHeader(http.StatusInternalServerError)
 		_, _ = writer.Write([]byte(err.Error()))

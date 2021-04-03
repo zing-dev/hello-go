@@ -219,20 +219,36 @@ func TestPackageListRead(t *testing.T) {
 func TestPackageClient(t *testing.T) {
 	client := &Client{}
 	client.Run()
-	p := NewPackage(One, nil)
 	go func(conn net.Conn) {
+		log.Println("client read")
+		p := &Package{}
 		n, err := p.ReadFrom(client.conn)
 		if err != nil {
 			log.Println(n, err)
 		}
-		user := User{}
-		err = json.Unmarshal(p.Data, &user)
-		log.Println(user)
+		switch p.Cmd {
+		case One:
+			user := User{}
+			err = json.Unmarshal(p.Data, &user)
+			log.Println(user)
+		case List:
+			var users []User
+			err = json.Unmarshal(p.Data, &users)
+			log.Println(len(users))
+		}
+
 	}(client.conn)
+	log.Println("client write")
+	p := NewPackage(List, nil)
 	n, err := p.WriteTo(client.conn)
 	if err != nil {
 		log.Println(n, err)
 	}
+	//p2 := NewPackage(List, nil)
+	//n, err = p2.WriteTo(client.conn)
+	//if err != nil {
+	//	log.Println(n, err)
+	//}
 	time.Sleep(time.Minute * 10)
 }
 

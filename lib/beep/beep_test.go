@@ -17,7 +17,7 @@ const (
 )
 
 func TestWav(t *testing.T) {
-	f, err := os.Open("bugscaner-tts-auido(10)-迅捷PDF转换器.wav")
+	f, err := os.Open("alarm.mp3")
 	if err != nil {
 		log.Fatal(err)
 	}

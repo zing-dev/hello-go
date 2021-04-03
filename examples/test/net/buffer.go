@@ -1,16 +1,13 @@
-package bytes
+package net
 
 import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"log"
-	"net"
 	"sync"
-	"time"
 )
 
 const (
@@ -89,17 +86,20 @@ func (p *Package) ReadFrom(r io.Reader) (int64, error) {
 	for {
 		//log.Println("ReadFrom: start")
 		n, err := r.Read(data)
-		log.Println("ReadFrom: ", n, err)
+		//_, _ = r.(net.Conn).Read(data)
+		log.Println("ReadFrom->: ", n, err)
 		if err == io.EOF {
 			err = nil
 		}
+		if n == 0 {
+			break
+		}
 		if err != nil {
-			//log.Println("read ", err)
 			break
 		}
 		//log.Println("ReadFrom Unpack start")
 		err = p.Unpack(data[:n])
-		if err == nil || n == 0 {
+		if err == nil {
 			break
 		}
 		log.Println("ReadFrom: ", err)
@@ -111,92 +111,24 @@ func (p *Package) Unpack(data []byte) error {
 	p.locker.Lock()
 	defer p.locker.Unlock()
 	log.Println("Unpack start")
-	if p.Cache.Len() == 0 {
-		log.Println("resolve start")
-		if err := p.resolve(data); err != nil {
-			return err
+	if len(p.Data) == 0 {
+		if len(data) < 5 {
+			return errors.New("data's length so small")
 		}
-	} else if p.Cache.Len() == len(p.Data)+5 {
-		p.Cache.Reset()
+		p.Size = int(binary.BigEndian.Uint32(data[:4]))
+		p.Cmd = data[4]
+		p.Data = data[5:]
+	} else if len(p.Data) == p.Size {
+		//p.Cache.Reset()
+		return nil
+	} else {
+		p.Data = append(p.Data, data...)
 	}
-	p.Cache.Write(data)
+	//p.Cache.Write(data)
 	//if err := p.read(p.Cache.Bytes()); err != nil {
 	//	return err
 	//}
 	//log.Println("Unpack end")
 	//p.Cache.Reset()
-	return nil
-}
-
-type Client struct {
-	conn net.Conn
-}
-
-func (c *Client) Write(data []byte) {
-	_, _ = c.conn.Write(data)
-}
-
-func (c *Client) Read() []byte {
-	data, err := io.ReadAll(c.conn)
-	if err != nil && err != io.EOF {
-		panic(err)
-	}
-	return data
-}
-
-func (c *Client) Run() {
-	conn, err := net.DialTimeout("tcp", ":1122", time.Second)
-	if err != nil {
-		panic(err)
-	}
-	err = conn.(*net.TCPConn).SetWriteBuffer(1024)
-	if err != nil {
-		panic(err)
-	}
-	c.conn = conn
-	log.Println(conn.LocalAddr())
-}
-
-type Server struct {
-}
-
-func (s *Server) Run() {
-	listen, err := net.Listen("tcp", ":1122")
-	if err != nil {
-		panic(err)
-	}
-	for {
-		conn, err := listen.Accept()
-		if err != nil {
-			continue
-		}
-		go func(conn net.Conn) {
-			log.Println("new conn from ", conn.RemoteAddr().String())
-			p := Package{}
-			_, err := p.ReadFrom(conn)
-			if err != nil {
-				log.Println("ReadFrom: ", err)
-			} else {
-				switch p.Cmd {
-				case One:
-					log.Println("server cmd: One")
-					p := NewPackage(p.Cmd, User{Id: 1, Name: "zing"})
-					_, err := p.WriteTo(conn)
-					if err != nil {
-						log.Println("One WriteTo: ", err)
-					}
-				case List:
-					users := make([]User, 100000)
-					for i := 0; i < 100000; i++ {
-						users[i] = User{Id: i + 1, Name: fmt.Sprintf("name-%d", i+1)}
-					}
-					p := NewPackage(List, users)
-					_, err := p.WriteTo(conn)
-					if err != nil {
-						log.Println("List WriteTo: ", err)
-					}
-				}
-			}
-		}(conn)
-	}
+	return errors.New("")
 }

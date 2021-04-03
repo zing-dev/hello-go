@@ -20,7 +20,7 @@ func Encode(message []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	err = binary.Write(pkg, binary.LittleEndian, []byte(message))
+	err = binary.Write(pkg, binary.LittleEndian, message)
 	if err != nil {
 		return nil, err
 	}

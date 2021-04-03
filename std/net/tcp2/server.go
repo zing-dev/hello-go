@@ -32,7 +32,7 @@ func tcpPipe(conn *net.TCPConn) {
 	}
 }
 
-func boradcastMessage(message string) {
+func broadcastMessage(message string) {
 	for _, conn := range ConnMap {
 		b, err := EncodeStr(message)
 		if err != nil {

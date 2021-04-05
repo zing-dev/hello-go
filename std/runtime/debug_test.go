@@ -20,6 +20,7 @@ func TestNumCgoCall(t *testing.T) {
 }
 
 func TestNumGoroutine(t *testing.T) {
+	go func() {}()
 	t.Log(runtime.NumGoroutine())
 	runtime.LockOSThread()
 }

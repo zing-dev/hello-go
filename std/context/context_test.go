@@ -3,6 +3,7 @@ package context
 import (
 	"context"
 	"fmt"
+	"log"
 	"testing"
 	"time"
 )
@@ -92,14 +93,75 @@ func TestWithDeadline(t *testing.T) {
 }
 
 func TestWithTimeout(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
-	defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Second)
+	go func() {
+		time.Sleep(time.Second * 30)
+		cancel()
+		log.Println("parent cancel")
+	}()
 
-	select {
-	case <-time.After(1 * time.Second):
-		fmt.Println("overslept")
-	case <-ctx.Done():
-		fmt.Println(ctx.Err()) // prints "context deadline exceeded"
+	ctx, cancel = context.WithTimeout(ctx, 10*time.Second)
+	go func() {
+		time.Sleep(time.Second * 20)
+		defer cancel()
+		log.Println("child cancel")
+	}()
+	for {
+		select {
+		case <-time.After(1 * time.Second):
+			log.Println("overslept")
+		case <-ctx.Done():
+			if ctx.Err() == context.Canceled {
+				log.Println("parent already cancel")
+			}
+			if ctx.Err() == context.DeadlineExceeded {
+				log.Println("child already timeout")
+			}
+			time.Sleep(time.Second / 10)
+			return
+		}
+	}
+}
+
+func TestTimeout(t *testing.T) {
+	type App struct {
+		ctx    context.Context
+		cancel context.CancelFunc
+	}
+
+	type Child struct {
+		ctx    context.Context
+		cancel context.CancelFunc
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	app := App{ctx: ctx, cancel: cancel}
+
+	ctx, cancel = context.WithTimeout(app.ctx, time.Second*30)
+	child := Child{ctx: ctx, cancel: cancel}
+	go func() {
+		time.Sleep(time.Second * 30)
+		child.cancel()
+	}()
+	ticket := time.NewTicker(time.Second * 5)
+	for {
+		select {
+		case <-ticket.C:
+			log.Println("timeout 5 second")
+		case <-time.After(time.Second * 3):
+			log.Println("go...")
+			ticket.Reset(time.Second * 5)
+			time.Sleep(time.Second * 6)
+		case <-app.ctx.Done():
+			log.Println("app done")
+		case <-child.ctx.Done():
+			if child.ctx.Err() == context.Canceled {
+				log.Println("cancel..")
+			}
+			if child.ctx.Err() == context.DeadlineExceeded {
+				log.Println("deadline..")
+			}
+			return
+		}
 	}
 }
 

@@ -85,47 +85,44 @@ func (p *Package) WriteTo(w io.Writer) (int64, error) {
 }
 
 func (p *Package) ReadFrom(r io.Reader) (int64, error) {
-	data := make([]byte, 1024)
-	for {
-		//log.Println("ReadFrom: start")
-		n, err := r.Read(data)
-		log.Println("ReadFrom: ", n, err)
-		if err == io.EOF {
-			err = nil
-		}
-		if err != nil {
-			//log.Println("read ", err)
-			break
-		}
-		//log.Println("ReadFrom Unpack start")
-		err = p.Unpack(data[:n])
-		if err == nil || n == 0 {
-			break
-		}
-		log.Println("ReadFrom: ", err)
+	header := make([]byte, 5)
+	_, err := io.ReadFull(r, header)
+	if err != nil {
+		return 0, err
 	}
-	return int64(p.Size), nil
+	p.Size = int(binary.BigEndian.Uint32(header[:4]))
+	p.Cmd = header[4]
+	data := make([]byte, p.Size)
+	n, err := io.ReadFull(r, data)
+	p.Data = data
+	return int64(n), err
 }
 
 func (p *Package) Unpack(data []byte) error {
 	p.locker.Lock()
 	defer p.locker.Unlock()
 	log.Println("Unpack start")
-	if p.Cache.Len() == 0 {
-		log.Println("resolve start")
-		if err := p.resolve(data); err != nil {
-			return err
+	if len(p.Data) == 0 {
+		if len(data) < 5 {
+			return errors.New("data's length so small")
 		}
-	} else if p.Cache.Len() == len(p.Data)+5 {
-		p.Cache.Reset()
+		p.Size = int(binary.BigEndian.Uint32(data[:4]))
+		p.Cmd = data[4]
+		p.Data = data[5:]
 	}
-	p.Cache.Write(data)
+	if len(p.Data) == p.Size {
+		//p.Cache.Reset()
+		return nil
+	} else {
+		p.Data = append(p.Data, data...)
+	}
+	//p.Cache.Write(data)
 	//if err := p.read(p.Cache.Bytes()); err != nil {
 	//	return err
 	//}
 	//log.Println("Unpack end")
 	//p.Cache.Reset()
-	return nil
+	return errors.New("errr")
 }
 
 type Client struct {
@@ -173,27 +170,29 @@ func (s *Server) Run() {
 		go func(conn net.Conn) {
 			log.Println("new conn from ", conn.RemoteAddr().String())
 			p := Package{}
-			_, err := p.ReadFrom(conn)
-			if err != nil {
-				log.Println("ReadFrom: ", err)
-			} else {
-				switch p.Cmd {
-				case One:
-					log.Println("server cmd: One")
-					p := NewPackage(p.Cmd, User{Id: 1, Name: "zing"})
-					_, err := p.WriteTo(conn)
-					if err != nil {
-						log.Println("One WriteTo: ", err)
-					}
-				case List:
-					users := make([]User, 100000)
-					for i := 0; i < 100000; i++ {
-						users[i] = User{Id: i + 1, Name: fmt.Sprintf("name-%d", i+1)}
-					}
-					p := NewPackage(List, users)
-					_, err := p.WriteTo(conn)
-					if err != nil {
-						log.Println("List WriteTo: ", err)
+			for {
+				_, err := p.ReadFrom(conn)
+				if err != nil {
+					log.Println("ReadFrom: ", err)
+				} else {
+					switch p.Cmd {
+					case One:
+						log.Println("server cmd: One")
+						p := NewPackage(p.Cmd, User{Id: 1, Name: "zing"})
+						_, err := p.WriteTo(conn)
+						if err != nil {
+							log.Println("One WriteTo: ", err)
+						}
+					case List:
+						users := make([]User, 100000)
+						for i := 0; i < 100000; i++ {
+							users[i] = User{Id: i + 1, Name: fmt.Sprintf("name-%d", i+1)}
+						}
+						p := NewPackage(List, users)
+						_, err := p.WriteTo(conn)
+						if err != nil {
+							log.Println("List WriteTo: ", err)
+						}
 					}
 				}
 			}

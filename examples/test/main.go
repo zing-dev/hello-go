@@ -1,14 +1,14 @@
 package main
 
 import (
-	"test/net"
+	"test/dts-client"
 )
 
 type T interface {
 	Run()
 }
 
-var App T = new(net.App)
+var App T = new(dts.Client)
 
 func main() {
 	App.Run()

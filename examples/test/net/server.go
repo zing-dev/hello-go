@@ -25,6 +25,7 @@ func (s *Server) Run() {
 			_, err := p.ReadFrom(conn)
 			if err != nil {
 				log.Println("ReadFrom: ", err)
+				return
 			} else {
 				switch p.Cmd {
 				case One:

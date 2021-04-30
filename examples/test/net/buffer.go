@@ -82,29 +82,17 @@ func (p *Package) WriteTo(w io.Writer) (int64, error) {
 }
 
 func (p *Package) ReadFrom(r io.Reader) (int64, error) {
-	data := make([]byte, 1024)
-	for {
-		//log.Println("ReadFrom: start")
-		n, err := r.Read(data)
-		//_, _ = r.(net.Conn).Read(data)
-		log.Println("ReadFrom->: ", n, err)
-		if err == io.EOF {
-			err = nil
-		}
-		if n == 0 {
-			break
-		}
-		if err != nil {
-			break
-		}
-		//log.Println("ReadFrom Unpack start")
-		err = p.Unpack(data[:n])
-		if err == nil {
-			break
-		}
-		log.Println("ReadFrom: ", err)
+	header := make([]byte, 5)
+	_, err := io.ReadFull(r, header)
+	if err != nil {
+		return 0, err
 	}
-	return int64(p.Size), nil
+	p.Size = int(binary.BigEndian.Uint32(header[:4]))
+	p.Cmd = header[4]
+	data := make([]byte, p.Size)
+	n, err := io.ReadFull(r, data)
+	p.Data = data
+	return int64(n), err
 }
 
 func (p *Package) Unpack(data []byte) error {

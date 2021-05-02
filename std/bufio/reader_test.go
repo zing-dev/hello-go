@@ -4,7 +4,9 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"log"
+	"os"
 	"testing"
 )
 
@@ -68,8 +70,20 @@ func TestReadSlice(t *testing.T) {
 }
 
 func TestReadLine(t *testing.T) {
-	line, prefix, err := reader.ReadLine()
-	log.Println(string(line), prefix, err)
+	data, _ := os.ReadFile("reader_test.go")
+	reader := bufio.NewReader(bytes.NewReader(data))
+	for {
+		line, prefix, err := reader.ReadLine()
+		fmt.Println(string(line), prefix, err)
+		if err == io.EOF {
+			fmt.Println("io.EOF break")
+			break
+		}
+		if err != nil {
+			fmt.Println(err, "break")
+			break
+		}
+	}
 }
 
 func TestReadBytes(t *testing.T) {

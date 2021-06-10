@@ -2,19 +2,54 @@ package main
 
 import (
 	"fmt"
+	"github.com/judwhite/go-svc"
 	"log"
 	"net/http"
 	"os"
-
 	"strconv"
 )
 
+// implements svc.Service
+type program struct{}
+
 func main() {
+	prg := program{}
+
+	// call svc.Run to start your program/service
+	// svc.Run will call Init, Start, and Stop
+	if err := svc.Run(&prg); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func (p *program) Init(env svc.Environment) error {
+	log.Printf("is win service? %v\n", env.IsWindowsService())
+
+	// write to "example.log" when running as a Windows Service
+	if env.IsWindowsService() {
+	}
+
+	return nil
+}
+
+func (p *program) Start() error {
+	log.Printf("Starting...\n")
+	go run()
+	return nil
+}
+
+func (p *program) Stop() error {
+	log.Printf("Stopping...\n")
+	log.Printf("Stopped.\n")
+	return nil
+}
+
+func run() {
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
-	port := 8080
+	port := 9999
 	if len(os.Args) == 3 {
 		if p, err := strconv.Atoi(os.Args[1]); err != nil {
 			log.Fatal("port error")

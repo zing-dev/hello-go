@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"sync"
 	"testing"
 	"time"
 )
@@ -209,4 +210,69 @@ func TestName(t *testing.T) {
 	close(done)
 	time.Sleep(1 * time.Second)
 	fmt.Println("main process exit!")
+}
+
+func TestName111(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	go func() {
+		time.Sleep(time.Second * 5)
+		cancel()
+	}()
+	for {
+		select {
+		case <-time.After(time.Second):
+			fmt.Println("do something...")
+		case <-ctx.Done():
+			fmt.Println("main", ctx.Err())
+			return
+		}
+	}
+}
+
+func product(channel chan<- int, i int) {
+	for {
+		fmt.Println("product", i)
+		channel <- i
+		time.Sleep(time.Second * time.Duration(1))
+		i--
+		if i == 0 {
+			close(channel)
+			fmt.Println("product over")
+			return
+		}
+	}
+}
+
+func customer(channel <-chan int, quick chan struct{}) {
+	for {
+		message, ok := <-channel
+		if ok {
+			fmt.Println("customer", message)
+		} else {
+			fmt.Println("customer over")
+			quick <- struct{}{}
+			return
+		}
+	}
+}
+
+func TestName112(t *testing.T) {
+	channel := make(chan int, 5)
+	quick := make(chan struct{})
+	go product(channel, 10)
+	go customer(channel, quick)
+	<-quick
+}
+
+var once sync.Once
+
+type manager struct{ name string }
+
+var single *manager
+
+func Singleton() *manager {
+	once.Do(func() {
+		single = &manager{"a"}
+	})
+	return single
 }

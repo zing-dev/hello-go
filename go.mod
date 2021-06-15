@@ -24,6 +24,7 @@ require (
 	github.com/lib/pq v1.7.0
 	github.com/nobonobo/joycon v0.0.0-20180320092020-1dc7fb3b089b
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/sevlyar/retag v0.0.0-20190429052747-c3f10e304082
 	github.com/sirupsen/logrus v1.5.0
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07

@@ -74,6 +74,8 @@ func TestIsDirective(t *testing.T) {
 	for _, tt := range isDirectiveTests {
 		if ok := isDirective(tt.in); ok != tt.ok {
 			t.Errorf("isDirective(%q) = %v, want %v", tt.in, ok, tt.ok)
+		} else {
+			t.Logf("isDirective(%q) = %v, want %v", tt.in, ok, tt.ok)
 		}
 	}
 }

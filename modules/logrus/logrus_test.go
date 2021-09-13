@@ -55,7 +55,7 @@ func TestLog2(t *testing.T) {
 
 func TestLog3(t *testing.T) {
 	var l = log.New()
-	// The API for setting attributes is a little different than the package level
+	// The API for setting attributes is a little different than the modules level
 	// exported logger. See Godoc.
 	l.Out = os.Stdout
 

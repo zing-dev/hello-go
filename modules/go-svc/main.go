@@ -4,7 +4,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/judwhite/go-svc/svc"
+	"github.com/judwhite/go-svc"
 )
 
 // program implements svc.Service

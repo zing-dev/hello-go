@@ -6,7 +6,7 @@
 
 //protoc --go_out=. dtssdk/model/message.proto
 
-package msg
+package demo
 
 import (
 	proto "github.com/golang/protobuf/proto"
@@ -24,7 +24,7 @@ const (
 )
 
 // This is a compile-time assertion that a sufficiently up-to-date version
-// of the legacy proto package is being used.
+// of the legacy proto modules is being used.
 const _ = proto.ProtoPackageIsVersion4
 
 type MsgID int32

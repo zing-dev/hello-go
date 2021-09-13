@@ -23,7 +23,7 @@ func (t TimeLocal) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the json.Unmarshaler interface.
 // The time is expected to be a quoted string in RFC 3339 format.
 func (t *TimeLocal) UnmarshalJSON(data []byte) error {
-	// Ignore null, like in the main JSON package.
+	// Ignore null, like in the main JSON modules.
 	if string(data) == "null" {
 		return nil
 	}

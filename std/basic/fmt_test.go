@@ -45,3 +45,14 @@ func calculation(p1, p2, p3 Point) float64 {
 	}
 	return h1 * w1 / l1
 }
+
+func TestSprintf(t *testing.T) {
+	fmt.Println(fmt.Sprintf("%6s", "hi"))
+	fmt.Println(fmt.Sprintf("%10s", "hi"))
+	fmt.Println(fmt.Sprintf("%-10s", "hi"))
+	fmt.Println(fmt.Sprintf("%-10s = v", "k"))
+	fmt.Println(fmt.Sprintf("%-10s = v2", "k2"))
+	fmt.Println(fmt.Sprintf("%-10s = %-2s", "k3", "v3"))
+	fmt.Println(fmt.Sprintf("%-10s = %-5s", "k3", "v3"))
+	fmt.Println(fmt.Sprintf(fmt.Sprintf("%%-%ds = %%-%ds", 10, 5), "hi", "wocao"))
+}

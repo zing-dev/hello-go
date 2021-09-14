@@ -32,7 +32,7 @@ func TestGetDetailedPortsList(t *testing.T) {
 		return
 	}
 	for _, port := range ports {
-		fmt.Printf("Found port: %s\n", port.Name)
+		fmt.Printf("Found port: %s port.IsUSB: %v\n", port.Name, port.IsUSB)
 		if port.IsUSB {
 			fmt.Printf("   USB ID     %s:%s\n", port.VID, port.PID)
 			fmt.Printf("   USB serial %s\n", port.SerialNumber)

@@ -7,3 +7,6 @@
 [submodule "lib/dts-sdk"]
 	path = lib/dts-sdk
 	url = git@github.com:Atian-OE/DTSSDK_Golang.git
+[submodule "submodules/godotenv"]
+	path = submodules/godotenv
+	url = git@github.com:zing-dev/godotenv.git

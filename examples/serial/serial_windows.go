@@ -6,8 +6,6 @@ import (
 	"time"
 )
 
-var port = conn()
-
 func conn() *serial.Port {
 	log.Println("start connect")
 	var port, err = serial.OpenPort(&serial.Config{
@@ -27,6 +25,7 @@ func main() {
 }
 
 func test() {
+	port := conn()
 	log.Println("start send")
 	n, err := port.Write([]byte{0x55, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x66})
 	if err != nil {
@@ -42,6 +41,7 @@ func test() {
 }
 
 func test2() {
+	port := conn()
 	go func() {
 		buf := make([]byte, 64)
 		for {

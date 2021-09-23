@@ -8,7 +8,7 @@ import (
 	"github.com/kataras/iris/v12"
 )
 
-//
+// GetStringByInt
 // @Summary Add a new pet to the store
 // @Description get string by ID
 // @Accept  json
@@ -25,7 +25,7 @@ func GetStringByInt(ctx iris.Context) {
 	_, _ = ctx.WriteString("hello")
 }
 
-//
+// TestQuick
 // @Summary 快速上手接口测试
 // @Description 快速上手接口测试,这是我的描述
 // @Tags 接口
@@ -66,6 +66,7 @@ type ParamSearch struct {
 	Name string `json:"name,omitempty" format:"string"`
 }
 
+// TestQuickPost
 // @Summary 快速上手接口 POST 测试
 // @Description 快速上手接口测试,这是我的描述
 // @Accept  json
@@ -112,6 +113,7 @@ func TestQuickPost(ctx iris.Context) {
 	})
 }
 
+// TestQuickPostForm
 // @Summary 快速上手接口 POST Form测试
 // @Description 快速上手接口测试,这是我的描述
 // @Accept  x-www-form-urlencoded
@@ -158,7 +160,8 @@ func TestQuickPostForm(ctx iris.Context) {
 	})
 }
 
-// @Summary 快速上手接口 POST Query测试
+// TestQuickPostQuery
+//@Summary 快速上手接口 POST Query测试
 // @Description 快速上手接口测试,这是我的描述
 // @Accept  x-www-form-urlencoded
 // @Produce  json
@@ -198,6 +201,7 @@ func TestQuickPostQuery(ctx iris.Context) {
 	})
 }
 
+// TestQuickFile
 // @Summary 快速上手接口 POST File测试
 // @Description 快速上手接口测试,这是我的描述
 // @Accept  mpfd
@@ -222,6 +226,7 @@ func TestQuickFile(ctx iris.Context) {
 	})
 }
 
+// GetStructArrayByString
 // @Description get struct array by ID
 // @Accept  json
 // @Produce  json

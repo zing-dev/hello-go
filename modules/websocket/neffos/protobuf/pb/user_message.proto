@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./pb";
+
+message UserMessage {
+  string Username = 1;
+  string Text = 2;
+  string At = 3;
+}

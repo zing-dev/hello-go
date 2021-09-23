@@ -4,9 +4,9 @@
 [submodule "examples/tao"]
 	path = examples/tao
 	url = git@github.com:leesper/tao.git
-[submodule "lib/dts-sdk"]
-	path = lib/dts-sdk
-	url = git@github.com:Atian-OE/DTSSDK_Golang.git
 [submodule "submodules/godotenv"]
 	path = submodules/godotenv
 	url = git@github.com:zing-dev/godotenv.git
+[submodule "modules/protobuf/protobuf"]
+	path = modules/protobuf/protobuf
+	url = https://github.com/golang/protobuf.git

@@ -1,0 +1,47 @@
+<html>
+
+<body style="padding:10px;">
+    <input type="text" id="messageTxt" />
+    <button type="button" id="sendBtn">Send</button>
+    <div id="messages" style="width: 375px;margin:10px 0 0 0;border-top: 1px solid black;">
+    </div>
+
+    <script type="text/javascript">
+        let messageTxt = document.getElementById("messageTxt");
+        let messages = document.getElementById("messages");
+        let sendBtn = document.getElementById("sendBtn")
+
+        let w = new WebSocket("ws://localhost:9999/endpoint");
+        w.onopen = function () {
+            console.log("Websocket connection enstablished");
+        };
+        w.onclose = function () {
+            appendMessage("<div style='text-align: center'><h3>Disconnected</h3></div>");
+        };
+        w.onmessage = function (message) {
+            appendMessage("<div>" + message.data + "</div>");
+        };
+
+        sendBtn.onclick = function () {
+            let myText = messageTxt.value;
+            messageTxt.value = "";
+
+            appendMessage("<div style='color: red'> me: " + myText + "</div>");
+            w.send(myText);
+        };
+
+        messageTxt.addEventListener("keyup", function (e) {
+            if (e.code === 'Enter') {
+                e.preventDefault();
+
+                sendBtn.click();
+            }
+        });
+
+        function appendMessage(messageDivHTML) {
+            messages.insertAdjacentHTML('afterbegin', messageDivHTML);
+        }
+    </script>
+</body>
+
+</html>

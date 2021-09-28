@@ -3,6 +3,7 @@ package reflect_test
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -11,9 +12,17 @@ type I interface {
 	Write(p []byte) (n int, err error)
 }
 
+type Coordinate struct {
+	long float32
+	lat  float32
+}
+
 type User struct {
-	Name string
-	age  int
+	ID         int
+	Name       string
+	age        int
+	address    []string
+	Coordinate Coordinate
 }
 
 func (u *User) SetAge(age int) *User {
@@ -75,4 +84,36 @@ func TestTypeOf(t *testing.T) {
 func TestKind(t *testing.T) {
 	fmt.Println(reflect.Kind(1))
 	fmt.Println(reflect.Kind(0.0))
+}
+
+type S struct {
+	A    string `json:"a"`
+	B    byte   `json:"b"`
+	C    bool   `json:"c,omitempty"`
+	Name string `json:"name"`
+}
+
+func (s S) M1() string {
+	return s.A
+}
+
+func TestTag(t *testing.T) {
+	ts := reflect.TypeOf(*&S{
+		A:    "hello world",
+		B:    1,
+		C:    false,
+		Name: "zing",
+	})
+	fmt.Println(ts)
+
+	fmt.Println(ts.NumField())
+	fmt.Println(ts.NumMethod())
+	for i := 0; i < ts.NumField(); i++ {
+		if value, ok := ts.Field(i).Tag.Lookup("json"); ok {
+			fmt.Println(value, strings.Split(value, ","), strings.Split(value, ",")[0])
+		}
+		fmt.Println("Field.Name: ", ts.Field(i).Name)
+		fmt.Println("Field.Type: ", ts.Field(i).Type)
+	}
+
 }

@@ -33,13 +33,24 @@ func TestValueOfMethods(t *testing.T) {
 	t.Log("Addr: ", value.Addr())
 }
 
-func TestStruct(t *testing.T) {
-	type User struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
+func TestGetVal(t *testing.T) {
+	user := User{ID: 1, Name: "zing", age: 20, address: []string{"无锡", "上海"}, Coordinate: Coordinate{long: 11.11, lat: 12.22}}
+	v := reflect.ValueOf(user)
+	fmt.Println(v)
+
+	for i := 0; i < v.NumField(); i++ {
+		f := v.Field(i)
+		fmt.Println("Kind: ", f.Kind(), " Type: ", f.Type(), " String: ", f.String(), " v: ", f, fmt.Sprintf("v: %v", f))
 	}
-	user := &User{Id: 1, Name: "zing"}
+}
+
+func TestStruct(t *testing.T) {
+	user := &User{ID: 1, Name: "zing"}
 	value := reflect.ValueOf(user)
+	for i := 0; i < value.NumField(); i++ {
+		fmt.Println(value.Elem())
+	}
+
 	t.Log(user)
 	t.Log(value)
 	t.Log(value.IsValid())

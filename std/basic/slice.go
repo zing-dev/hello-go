@@ -1,6 +1,9 @@
 package basic
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 func Slice1() {
 	s1 := []string{"a,b,c,d"}
@@ -95,4 +98,17 @@ type SS []S
 func (ss SS) Add(s S) {
 }
 func (ss SS) New() {
+}
+
+func RangeSlice() {
+	s := []byte{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	for i, b := range s {
+		if b > 5 {
+			s = append(s, b)
+		}
+		if b < 5 {
+			s = append(s[:i], s[i+1:]...)
+		}
+	}
+	fmt.Println(s) //[2 4 5 6 7 8 9 6 7 8 9 6 7]
 }

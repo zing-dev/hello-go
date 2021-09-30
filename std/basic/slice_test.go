@@ -166,3 +166,7 @@ func TestSliceAppend(t *testing.T) {
 	a = append(a, 0)
 	fmt.Println(len(a), cap(a), a)
 }
+
+func TestRangeSlice(t *testing.T) {
+	RangeSlice()
+}

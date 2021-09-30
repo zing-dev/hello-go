@@ -5,7 +5,6 @@ go 1.17
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/apache/rocketmq-client-go/v2 v2.1.0
-	github.com/ecc1/ble v0.0.0-20180627165003-b31a0c22ab80
 	github.com/eclipse/paho.mqtt.golang v1.3.5
 	github.com/elliotchance/pie v1.38.2
 	github.com/faiface/beep v1.1.0
@@ -19,10 +18,8 @@ require (
 	github.com/leesper/holmes v0.0.0-20190916004209-307d8a307864
 	github.com/leesper/tao v0.0.0-20201216143147-2c485cb2042e
 	github.com/lib/pq v1.10.3
-	github.com/nobonobo/joycon v0.0.0-20180320092020-1dc7fb3b089b
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/sevlyar/retag v0.0.0-20190429052747-c3f10e304082
 	github.com/sirupsen/logrus v1.8.1
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
 	github.com/tbrandon/mbserver v0.0.0-20210320091329-a1f8ae952881
@@ -43,9 +40,7 @@ require (
 require (
 	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
-	github.com/flynn/hid v0.0.0-20190502022136-f1b9b6cc019a // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
-	github.com/godbus/dbus v4.1.0+incompatible // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang/mock v1.3.1 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect

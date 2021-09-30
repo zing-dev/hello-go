@@ -1,5 +1,5 @@
 const neffos = require('neffos.js');
-const protos = require("./user_message_pb.js")
+const protos = require("./pb/user_message_pb.js")
 
 var scheme = document.location.protocol === "https:" ? "wss" : "ws";
 var port = document.location.port ? ":" + document.location.port : "";

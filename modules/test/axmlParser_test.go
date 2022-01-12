@@ -3,12 +3,19 @@ package test
 import (
 	"github.com/lunny/axmlParser"
 	"log"
+	"os"
 	"testing"
 )
 
+func TestAXmlParserQuick(t *testing.T) {
+	dir, err := os.Getwd()
+	log.Println(dir, err)
+}
+
 func TestAXmlParser(t *testing.T) {
+	path := "../../../../flutter/otdr_online/build/app/outputs/flutter-apk/app-release.apk"
 	listener := new(axmlParser.AppNameListener)
-	apk, err := axmlParser.ParseApk("C:\\Users\\admin\\OneDrive\\workspace\\flutter\\otdr_online\\build\\app\\outputs\\apk\\release\\app-release.apk", listener)
+	apk, err := axmlParser.ParseApk(path, listener)
 	if err != nil {
 		t.Fatal(err)
 	}

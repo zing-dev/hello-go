@@ -101,7 +101,7 @@ func GetFileSizeEx(hFile string) {
 		panic("失败1")
 	}
 	lpFileSize := int64(0)
-	r1, r2, errno := syscall.Syscall(getFileSizeEx, 2,
+	r1, r2, errno := syscall.SyscallN(getFileSizeEx, 2,
 		uintptr(unsafe.Pointer(hFileUtf16Ptr)),
 		uintptr(unsafe.Pointer(&lpFileSize)), 0)
 	if r1 != 0 {
@@ -124,4 +124,7 @@ func TestTLE(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestName(t *testing.T) {
 }

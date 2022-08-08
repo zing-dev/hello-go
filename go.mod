@@ -20,6 +20,7 @@ require (
 	github.com/lib/pq v1.10.3
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/shirou/gopsutil/v3 v3.22.6
 	github.com/sirupsen/logrus v1.8.1
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
 	github.com/tbrandon/mbserver v0.0.0-20210320091329-a1f8ae952881
@@ -27,7 +28,7 @@ require (
 	github.com/tidwall/evio v1.0.8
 	github.com/xiegeo/modbusone v0.2.3
 	github.com/zing-dev/4g-lte-sdk v0.0.1
-	golang.org/x/sys v0.0.0-20210910150752-751e447fb3d0
+	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
 	golang.org/x/tour v0.1.0
 	google.golang.org/protobuf v1.27.1
 	gorm.io/driver/mysql v1.1.2
@@ -40,6 +41,7 @@ require (
 require (
 	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
+	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang/mock v1.3.1 // indirect
@@ -58,14 +60,17 @@ require (
 	github.com/jinzhu/now v1.1.2 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/kavu/go_reuseport v1.5.0 // indirect
+	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742 // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/tidwall/gjson v1.2.1 // indirect
 	github.com/tidwall/match v1.0.1 // indirect
 	github.com/tidwall/pretty v0.0.0-20190325153808-1166b9ac2b65 // indirect
+	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/atomic v1.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8 // indirect

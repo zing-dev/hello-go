@@ -1,6 +1,6 @@
 module github.com/zing-dev/hello-go
 
-go 1.17
+go 1.18
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
@@ -20,6 +20,7 @@ require (
 	github.com/lib/pq v1.10.3
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/samber/lo v1.27.0
 	github.com/shirou/gopsutil/v3 v3.22.6
 	github.com/sirupsen/logrus v1.8.1
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
@@ -73,9 +74,10 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/atomic v1.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
-	golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8 // indirect
-	golang.org/x/image v0.0.0-20190227222117-0694c2d4d067 // indirect
-	golang.org/x/mobile v0.0.0-20190415191353-3e0bab5405d6 // indirect
+	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
+	golang.org/x/exp/shiny v0.0.0-20220722155223-a9213eeb770e // indirect
+	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
+	golang.org/x/mobile v0.0.0-20201217150744-e6ae53a27f4f // indirect
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	stathat.com/c/consistent v1.0.0 // indirect

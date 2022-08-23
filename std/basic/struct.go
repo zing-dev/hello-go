@@ -86,6 +86,9 @@ func S2() {
 }
 
 type People struct {
+	Id       int
+	Name     string
+	Password string
 }
 
 func (*People) String() string {

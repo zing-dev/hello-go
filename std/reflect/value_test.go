@@ -7,6 +7,24 @@ import (
 	"testing"
 )
 
+func TestTest(t *testing.T) {
+	var a *bool
+	a = nil
+	fmt.Println(reflect.TypeOf(a))
+	fmt.Println(reflect.TypeOf(a).Kind())
+	fmt.Println(reflect.TypeOf(a).Kind())
+	fmt.Println(reflect.ValueOf(a).IsNil())
+	fmt.Println(reflect.ValueOf((*bool)(nil)))
+	fmt.Println(reflect.TypeOf((*bool)(nil)).Kind() == reflect.Pointer)
+	fmt.Println(reflect.ValueOf((*bool)(nil)).IsNil())
+	fmt.Println(reflect.ValueOf((*bool)(nil)).IsZero())
+	i := 10
+	i2 := 0
+	fmt.Println(reflect.ValueOf(&i).IsZero())
+	fmt.Println(reflect.ValueOf(i2).IsZero(), reflect.ValueOf(i2))
+	fmt.Println(reflect.ValueOf(a) == reflect.ValueOf(nil))
+}
+
 func TestValueOf(t *testing.T) {
 	fmt.Println(reflect.ValueOf("hello world"))
 	fmt.Println(reflect.ValueOf(true))

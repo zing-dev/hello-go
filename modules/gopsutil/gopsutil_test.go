@@ -2,9 +2,11 @@ package gopsutil_test
 
 import (
 	"fmt"
+	"github.com/shirou/gopsutil/v3/cpu"
 	"log"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/shirou/gopsutil/v3/mem"
@@ -42,6 +44,21 @@ func TestVirtualMemory(t *testing.T) {
 
 	// convert to JSON. String() is also implemented
 	fmt.Println(v)
+}
+
+func TestCPU(t *testing.T) {
+	for {
+		percent, err := cpu.Percent(time.Second, true)
+		if err != nil {
+			return
+		}
+		total := float64(0)
+		for _, f := range percent {
+			total += f
+		}
+		log.Println(total / 6)
+		time.Sleep(time.Second)
+	}
 }
 
 func TestAbs(t *testing.T) {

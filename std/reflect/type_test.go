@@ -36,6 +36,9 @@ func TestTypeOf(t *testing.T) {
 	fmt.Println(reflect.TypeOf(int32(0)))   //int32
 	fmt.Println(reflect.TypeOf(0.0))        //float64
 	fmt.Println(reflect.TypeOf(true))       //bool
+	fmt.Println(reflect.TypeOf(true))       //bool
+	fmt.Println(reflect.TypeOf(nil))        //bool
+	fmt.Println(reflect.TypeOf(nil) == nil) //bool
 	fmt.Println(reflect.TypeOf(struct{}{})) //struct {}
 
 	tStr := reflect.TypeOf("")

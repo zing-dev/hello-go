@@ -21,20 +21,6 @@ func TestJSON(t *testing.T) {
 }
 
 func TestJSON2(t *testing.T) {
-	type Route struct {
-		Name   string `json:"name"`
-		Method string `json:"method"`
-	}
-	var R = map[Route]string{
-		Route{
-			Name:   "system/sms",
-			Method: "post",
-		}: "保存短信配置",
-		Route{
-			Name:   "system/sms",
-			Method: "post",
-		}: "保存短信配置",
-	}
 
 	data, err := json.Marshal(R)
 	if err != nil {
@@ -44,24 +30,6 @@ func TestJSON2(t *testing.T) {
 }
 
 func TestJSON3(t *testing.T) {
-	type Version struct {
-		Version   string `json:"version"`
-		Log       string `json:"log"`
-		Status    string `json:"status"`
-		GitHash   string `json:"git_hash"`
-		updatedAt string
-		hash      string
-	}
-
-	type Soft struct {
-		Name      string    `json:"name"`
-		Alias     string    `json:"alias"`
-		Author    string    `json:"author"`
-		Version   []Version `json:"versions"`
-		Copyright string    `json:"copyright"`
-		Inherit   bool      `json:"inherit"`
-	}
-
 	v := `
 {
   "name": "版本控制-软件",
@@ -213,10 +181,6 @@ func TestName2(t *testing.T) {
 	fmt.Println(math.Float32frombits(0x7F000000))
 }
 
-func Decimal(value float32) float32 {
-	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
-}
-
 func TestJSONOmit(t *testing.T) {
 	type User struct {
 		Id   int    `json:"id,omitempty"`
@@ -232,4 +196,8 @@ func TestJSONOmit(t *testing.T) {
 	_ = json.Unmarshal(data, u2)
 	log.Println(u2.Id)
 	log.Println(u2.Name)
+}
+
+func TestTestUnmarshal(t *testing.T) {
+	TestUnmarshal()
 }

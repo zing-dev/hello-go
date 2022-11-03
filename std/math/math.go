@@ -33,3 +33,7 @@ func Math() {
 
 	log.Println("Mod", math.Mod(11, 12))
 }
+
+func Decimal2(value float32) float32 {
+	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
+}

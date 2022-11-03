@@ -13,6 +13,39 @@ type Student struct{}
 type Boy struct {
 	Name string
 }
+type Version struct {
+	Version   string `json:"version"`
+	Log       string `json:"log"`
+	Status    string `json:"status"`
+	GitHash   string `json:"git_hash"`
+	updatedAt string
+	hash      string
+}
+
+type Soft struct {
+	Name      string    `json:"name"`
+	Alias     string    `json:"alias"`
+	Author    string    `json:"author"`
+	Version   []Version `json:"versions"`
+	Copyright string    `json:"copyright"`
+	Inherit   bool      `json:"inherit"`
+}
+
+type Route struct {
+	Name   string `json:"name"`
+	Method string `json:"method"`
+}
+
+var R = map[Route]string{
+	Route{
+		Name:   "system/sms",
+		Method: "post",
+	}: "保存短信配置",
+	Route{
+		Name:   "system/sms",
+		Method: "post",
+	}: "保存短信配置",
+}
 
 func StructToBytes() {
 	data, err := json.Marshal(People{})

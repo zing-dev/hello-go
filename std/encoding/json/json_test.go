@@ -201,3 +201,17 @@ func TestJSONOmit(t *testing.T) {
 func TestTestUnmarshal(t *testing.T) {
 	TestUnmarshal()
 }
+
+func TestMapToStruct(t *testing.T) {
+	r := new(Route)
+	err := MapToStruct(map[string]any{
+		"name":   "/api/run",
+		"method": "POST",
+		"ok":     true,
+		"ok2":    false,
+	}, r)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(*r)
+}

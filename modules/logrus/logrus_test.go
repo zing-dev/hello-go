@@ -111,3 +111,21 @@ func TestLog4(t *testing.T) {
 	logger.Warn("warn")
 	time.Sleep(time.Minute)
 }
+
+func show(content string) {
+	L.Info(content)
+}
+
+func show2(content string) {
+	show(content)
+}
+
+func TestLog5(t *testing.T) {
+	L.Info("Info...")
+	L.Debug("Debug...")
+	L.Error("Error...")
+	show("============")
+	show("============2")
+	show2("============222223")
+	show2("============222224")
+}

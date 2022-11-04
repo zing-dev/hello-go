@@ -34,6 +34,7 @@ type Soft struct {
 type Route struct {
 	Name   string `json:"name"`
 	Method string `json:"method"`
+	Ok     bool   `json:"ok"`
 }
 
 var R = map[Route]string{

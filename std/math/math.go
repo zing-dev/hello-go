@@ -5,10 +5,6 @@ import (
 	"math"
 )
 
-func Decimal32(value float32) float32 {
-	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
-}
-
 func Decimal(value float64) float64 {
 	return math.Trunc(value*1e1+0.5) / 1e1
 }
@@ -36,4 +32,18 @@ func Math() {
 
 func Decimal2(value float32) float32 {
 	return float32(math.Trunc(float64(value*1e1+0.5)) / 1e1)
+}
+
+func Decimal3(value, precision float64) float32 {
+	a := math.Pow(10, precision)
+	return float32(math.Trunc((value)*a+(0.5)) / (a))
+}
+
+func Decimal32(value, precision float32) float32 {
+	return float32(Decimal64(float64(value), float64(precision)))
+}
+
+func Decimal64(value, precision float64) float64 {
+	a := math.Pow(10, precision)
+	return math.Trunc((value)*a+(0.5)) / (a)
 }

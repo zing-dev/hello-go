@@ -7,7 +7,8 @@ import (
 )
 
 func time1() {
-
+	t := time.Time{}
+	fmt.Println(t.String())
 	fmt.Println(time.Now().String()) //2019-04-23 13:41:51.825852 +0800 CST m=+0.001974201
 
 	fmt.Println(time.Friday) //Friday
@@ -78,8 +79,8 @@ func time1() {
 
 	fmt.Println(time.Hour.Hours())
 
-	fmt.Println(time.Duration(time.Hour * 10).Seconds())                       // 36000秒
-	fmt.Println(time.Duration(time.Hour * 10).Truncate(time.Minute).Minutes()) // 600分钟
+	fmt.Println(time.Duration(time.Hour * 10).Seconds())          // 36000秒
+	fmt.Println((time.Hour * 10).Truncate(time.Minute).Minutes()) // 600分钟
 }
 
 func time2() {

@@ -31,6 +31,7 @@ require (
 	github.com/xiegeo/modbusone v1.0.1
 	github.com/zing-dev/4g-lte-sdk v0.0.1
 	golang.org/x/sys v0.1.0
+	golang.org/x/time v0.3.0
 	golang.org/x/tour v0.1.0
 	google.golang.org/protobuf v1.28.1
 	gorm.io/driver/mysql v1.4.3

@@ -48,6 +48,7 @@ func calculation(p1, p2, p3 Point) float64 {
 
 func TestSprintf(t *testing.T) {
 	fmt.Println(fmt.Sprintf("%6s", "hi"))
+	fmt.Println(fmt.Sprintf("%-6s", "hi"))
 	fmt.Println(fmt.Sprintf("%10s", "hi"))
 	fmt.Println(fmt.Sprintf("%-10s", "hi"))
 	fmt.Println(fmt.Sprintf("%-10s = v", "k"))

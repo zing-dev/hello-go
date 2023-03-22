@@ -63,5 +63,4 @@ func TestCopy(t *testing.T) {
 	src = bytes.NewBuffer(make([]byte, 1024*1024*1024))
 	n, err = io.Copy(dst, src)
 	log.Println(n, 1024*1024*1024, err)
-
 }

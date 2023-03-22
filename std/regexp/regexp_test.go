@@ -1,6 +1,7 @@
 package regexp
 
 import (
+	"log"
 	"fmt"
 	"mime"
 	"regexp"
@@ -28,7 +29,12 @@ func TestMatch(t *testing.T) {
 		duration, err := time.ParseDuration(s)
 		t.Log(ok, s, str, duration, err)
 	}
+}
 
+func TestMatchString(t *testing.T) {
+	log.Println(regexp.MatchString("/\\d/hello/\\d/world", "/1/hello/2/world/"))
+	log.Println(regexp.MatchString("/\\d+/hello/\\d/world", "11//11/hello/2/world/"))
+	log.Println(regexp.MatchString("/\\d+/hello/\\d/world", "//11//11/hello/2/world/"))
 }
 
 func TestMatch2(t *testing.T) {

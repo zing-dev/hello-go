@@ -65,15 +65,6 @@ func Slice3() {
 	s2[0].run()
 }
 
-func arr(i int) {
-	a := []int{1, 2, 3, 4}
-	for i, v := range a {
-		if v == i {
-			//delete(a, i)
-		}
-	}
-
-}
 func Slice4() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	length := len(arr)
@@ -93,12 +84,6 @@ type S struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
 }
-type SS []S
-
-func (ss SS) Add(s S) {
-}
-func (ss SS) New() {
-}
 
 func RangeSlice() {
 	s := []byte{1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -111,4 +96,67 @@ func RangeSlice() {
 		}
 	}
 	fmt.Println(s) //[2 4 5 6 7 8 9 6 7 8 9 6 7]
+}
+
+type fn = func(slice []int, elem int) []int
+
+func remove() []fn {
+	return []fn{
+		func(slice []int, elem int) []int {
+			var result []int
+			for _, x := range slice {
+				if x != elem {
+					result = append(result, x)
+				}
+			}
+			return result
+		},
+		func(slice []int, elem int) []int {
+			for i, x := range slice {
+				if x == elem {
+					if i < len(slice)-1 {
+						copy(slice[i:], slice[i+1:])
+					}
+					slice = slice[:len(slice)-1]
+					break
+				}
+			}
+			return slice
+		},
+		func(slice []int, elem int) []int {
+			i := 0
+			for _, x := range slice {
+				if x != elem {
+					slice[i] = x
+					i++
+				}
+			}
+			return slice[:i]
+		},
+		func(slice []int, elem int) []int {
+			seen := make(map[int]bool)
+			var result []int
+			for _, x := range slice {
+				if x != elem && !seen[x] {
+					seen[x] = true
+					result = append(result, x)
+				}
+			}
+			return result
+		},
+		func(slice []int, elem int) []int {
+			var result []int
+			for i, x := range slice {
+				if x == elem {
+					continue
+				}
+				if i < len(slice)-1 && i != len(result) {
+					result = append(result, x)
+				} else {
+					result[i] = x
+				}
+			}
+			return result
+		},
+	}
 }

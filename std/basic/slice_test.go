@@ -170,3 +170,16 @@ func TestSliceAppend(t *testing.T) {
 func TestRangeSlice(t *testing.T) {
 	RangeSlice()
 }
+
+func TestRemove(t *testing.T) {
+	for _, s := range [][]int{
+		{1, 2, 3, 4, 5},
+		{5, 4, 3, 2, 1},
+		{1, 2, 3, 2, 1},
+		{3, 2, 1, 2, 3},
+	} {
+		for i, f := range remove()[0:3] {
+			t.Log(i, f(s, 1))
+		}
+	}
+}

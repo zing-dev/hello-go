@@ -112,7 +112,8 @@ func TestMarshalIndent(t *testing.T) {
 		"id":   "1",
 		"name": "zing",
 		"age":  25,
-	}, "", "\t")
+		"data": map[string]any{"1": 1},
+	}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}

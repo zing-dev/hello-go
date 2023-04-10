@@ -1,8 +1,8 @@
 package regexp
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"mime"
 	"regexp"
 	"testing"

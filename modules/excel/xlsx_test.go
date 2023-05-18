@@ -3,6 +3,7 @@ package excel
 import (
 	"fmt"
 	"github.com/tealeg/xlsx"
+	"log"
 	"testing"
 )
 
@@ -18,5 +19,15 @@ func TestXlsx(t *testing.T) {
 		for _, row := range rows {
 			fmt.Println(row.Cells)
 		}
+	}
+}
+
+func TestReadXLSX(t *testing.T) {
+	rows, _ := f.GetRows(f.GetSheetName(f.GetActiveSheetIndex()))
+	log.Println(rows)
+	cols, _ := f.GetCols(f.GetSheetName(f.GetActiveSheetIndex()))
+	log.Println(cols)
+	for i, col := range cols {
+		log.Println(i, col)
 	}
 }

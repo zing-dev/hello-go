@@ -39,7 +39,7 @@ func TestChan(t *testing.T) {
 	}
 }
 
-func TestName31(t *testing.T) {
+func TestGenerics1(t *testing.T) {
 	printFooOrBar(foo{"foo"})
 	printFooOrBar(bar{"bar"})
 
@@ -49,4 +49,17 @@ func TestName31(t *testing.T) {
 	fmt.Println(find(d2))
 	fmt.Println(filter(d1))
 	fmt.Println(filter(d2))
+}
+
+func TestGenerics2(t *testing.T) {
+	is := IS{test: "hello"}
+	c := C[IS]{c: is}
+	fmt.Println(c.check().(IS).test)
+	fmt.Println(c.get().test)
+	fmt.Println(c.getRef().test)
+	//fmt.Println(any(1).(string))
+	//fmt.Println(any(byte(1)).(string))
+	//fmt.Println(interface{}("wocao").([]byte))
+	//fmt.Println(interface{}("wocao").([]byte))
+	fmt.Println(([]byte)("wocao"))
 }

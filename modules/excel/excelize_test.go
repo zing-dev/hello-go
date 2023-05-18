@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/xuri/excelize/v2"
 	"log"
 	"testing"
 )
@@ -29,14 +29,17 @@ func TestRow(t *testing.T) {
 		log.Fatal(err)
 	}
 	for rows.Next() {
-		columns := rows.Columns()
+		columns, err := rows.Columns()
+		if err != nil {
+			log.Fatal(err)
+		}
 		log.Println(columns)
 		for k, v := range columns {
 			log.Println(k, v)
 		}
 	}
 
-	row2 := f.GetRows(f.GetSheetName(1))
+	row2, err := f.GetRows(f.GetSheetName(1))
 	log.Println(row2)
 	for _, row := range row2 {
 		log.Println(row)

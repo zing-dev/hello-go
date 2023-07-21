@@ -3,6 +3,7 @@ package basic
 import (
 	"errors"
 	"log"
+	"os"
 	"testing"
 )
 
@@ -48,4 +49,26 @@ func TestErrorCase(t *testing.T) {
 	log.Println(errors.Is(errors.New("error1"), e1))
 	log.Println(errors.Is(e1, e1))
 	log.Println(errors.Is(e1, errors.New("error1")))
+}
+
+func TestIsError(t *testing.T) {
+	stat, err := os.Stat("error.go")
+	if errors.Is(err, os.ErrNotExist) {
+		log.Println("ErrNotExist")
+	}
+	if errors.Is(err, os.ErrExist) {
+		log.Println("ErrExist")
+		log.Println(stat.Name())
+	}
+	stat, err = os.Stat("error2.go")
+	if os.IsNotExist(err) {
+		log.Println("IsNotExist")
+	}
+	if errors.Is(err, os.ErrNotExist) {
+		log.Println("ErrNotExist")
+	}
+	if errors.Is(err, os.ErrExist) {
+		log.Println("ErrExist")
+		log.Println(stat.Name())
+	}
 }

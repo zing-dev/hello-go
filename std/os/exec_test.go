@@ -77,3 +77,11 @@ func TestCombinedOutput(t *testing.T) {
 	}
 	log.Println(cmd.CombinedOutput())
 }
+
+func TestExec(t *testing.T) {
+	output, err := exec.Command("cmd", "/C", "1.cmd").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(string(output))
+}

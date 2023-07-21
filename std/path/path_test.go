@@ -55,6 +55,8 @@ func TestExt(t *testing.T) {
 }
 
 func TestBase(t *testing.T) {
+	fmt.Println(path.Base("/a/b/_c.txt"))
+	fmt.Println(path.Base("/a/b/c.txt"))
 	fmt.Println(path.Base("/a/b"))
 	fmt.Println(path.Base("/"))
 	fmt.Println(path.Base(""))

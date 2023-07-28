@@ -47,3 +47,11 @@ func TestFixedZone(t *testing.T) {
 	t.Log(time.Now().In(location))
 
 }
+
+func TestTimeZone(t *testing.T) {
+	//log.Println(time.Now())
+	//time.LoadLocation("Local")
+	//log.Println(time.Now())
+	//time.LoadLocation("")
+	//log.Println(time.Now())
+}

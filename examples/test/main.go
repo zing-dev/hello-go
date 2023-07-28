@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"test/dts-client"
 )
 
@@ -26,5 +27,5 @@ func execPath() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return file, err
+	return filepath.Dir(file), err
 }

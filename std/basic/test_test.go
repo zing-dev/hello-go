@@ -76,3 +76,16 @@ func TestFor(t *testing.T) {
 		t.Log("")
 	}
 }
+func TestType(t *testing.T) {
+	type A string
+	type B = string
+	for _, a := range []any{A("A"), "a"} {
+		switch a.(type) {
+		case string:
+			fmt.Println(a, "string")
+		case A:
+			fmt.Println(a, "a")
+			//case B:
+		}
+	}
+}

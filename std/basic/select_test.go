@@ -26,6 +26,7 @@ func TestSelect(t *testing.T) {
 		select {
 		case <-ticker.C:
 			log.Println("1s")
+			time.Sleep(time.Second * 3)
 		case <-ticker3.C:
 			log.Println("3s")
 		case <-ticker5.C:

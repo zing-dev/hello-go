@@ -4,12 +4,14 @@
 package basic
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"golang.org/x/sys/windows"
 	"log"
 	"strconv"
 	"testing"
+	"time"
 )
 
 func TestName3(t *testing.T) {
@@ -75,7 +77,15 @@ func TestFor(t *testing.T) {
 	for range [3]interface{}{} {
 		t.Log("")
 	}
+
+	for v := range bytes.Repeat([]byte{'a'}, 10) {
+		go func(v int) {
+			println(v)
+		}(v)
+	}
+	time.Sleep(time.Second)
 }
+
 func TestType(t *testing.T) {
 	type A string
 	type B = string

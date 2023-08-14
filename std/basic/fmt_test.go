@@ -15,6 +15,7 @@ func TestFmt(t *testing.T) {
 	fmt.Printf("%.2d%.2d\n", 111, 222)
 	fmt.Printf("%.2b\n", 111)
 	fmt.Printf("%.2x\n", 111)
+	fmt.Printf("%v\n", []byte{1, 11, 111, 222})
 }
 
 type Point struct {

@@ -8,7 +8,6 @@ import (
 
 // 执行不到
 func TestSelect(t *testing.T) {
-func TestSelectAfter(t *testing.T) {
 	for {
 		select {
 		case <-time.After(time.Second * 9):
@@ -43,10 +42,6 @@ func TestSelectTicker(t *testing.T) {
 		ticker5   = time.NewTicker(time.Second * 5)
 		ticker10  = time.NewTicker(time.Second * 10)
 	)
-func TestSelect(t *testing.T) {
-	ticker := time.NewTicker(time.Second)
-	ticker3 := time.NewTicker(time.Second * 3)
-	ticker5 := time.NewTicker(time.Second * 5)
 	for {
 		select {
 		case <-ticker001.C:
@@ -57,20 +52,11 @@ func TestSelect(t *testing.T) {
 			t.Log("1秒")
 		case <-ticker2.C:
 			t.Log("2秒")
-		case <-ticker.C:
-			log.Println("1s")
-			time.Sleep(time.Second * 3)
-		case <-ticker3.C:
-			log.Println("3s")
 		case <-ticker5.C:
 			t.Log("5秒")
 		case <-ticker10.C:
 			t.Log("10秒")
 			return
 		}
-	}
-			log.Println("5s")
-		}
-
 	}
 }

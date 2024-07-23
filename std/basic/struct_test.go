@@ -16,3 +16,12 @@ func TestS3(t *testing.T) {
 	var p2 *People
 	t.Log(p2)
 }
+
+func TestStructClone(t *testing.T) {
+	p := &People{Name: "zing"}
+	println(p.Name)
+	p2 := *p
+	p2.Name = "zing2"
+	println(p.Name)
+	println(p2.Name)
+}

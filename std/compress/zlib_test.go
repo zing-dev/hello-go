@@ -5,7 +5,7 @@ import (
 	"compress/zlib"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"math/rand"
 	"testing"
@@ -24,7 +24,7 @@ func TestZlib(t *testing.T) {
 	fmt.Println(desc)
 
 	r, _ := zlib.NewReader(bytes.NewBuffer(desc))
-	data, _ := ioutil.ReadAll(r)
+	data, _ := io.ReadAll(r)
 	fmt.Println(string(data))
 
 }

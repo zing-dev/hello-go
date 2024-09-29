@@ -2,9 +2,6 @@ package x
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
-	"golang.org/x/crypto/ssh"
 	"io"
 	"log"
 	"net"
@@ -14,6 +11,10 @@ import (
 	"testing"
 	"time"
 	"unicode/utf8"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
+	"golang.org/x/crypto/ssh"
 )
 
 type loginInfo struct {
@@ -41,7 +42,7 @@ func InitialWS(c *gin.Context) (*websocket.Conn, error) {
 			return true
 		},
 	}
-	//将http协议提升为ws
+	// 将http协议提升为ws
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -75,16 +76,16 @@ func (w *WSoutput) Write(p []byte) (int, error) {
 }
 
 type sshConnect struct {
-	connect    *ssh.Client    //ssh连接
-	session    *ssh.Session   //ssh会话
-	session2   *ssh.Session   //ssh会话
-	stdinPipe  io.WriteCloser //标准输入管道
-	stdinPipe2 io.WriteCloser //标准输入管道
+	connect    *ssh.Client    // ssh连接
+	session    *ssh.Session   // ssh会话
+	session2   *ssh.Session   // ssh会话
+	stdinPipe  io.WriteCloser // 标准输入管道
+	stdinPipe2 io.WriteCloser // 标准输入管道
 }
 
 // 初始化ssh连接
 func (t *sshConnect) InitialSSH(login loginInfo) error {
-	//初始化ssh登陆配置
+	// 初始化ssh登陆配置
 	config := &ssh.ClientConfig{
 		User:    login.UserName,
 		Auth:    []ssh.AuthMethod{ssh.Password(login.PassWord)},
@@ -96,7 +97,7 @@ func (t *sshConnect) InitialSSH(login loginInfo) error {
 			return nil
 		},
 	}
-	//创建ssh连接
+	// 创建ssh连接
 	sshConnect, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", login.Address, login.Port), config)
 	if err != nil {
 		return err
@@ -125,20 +126,20 @@ func (t *sshConnect) InitialTerminal(ws *websocket.Conn, rows, cols int) error {
 	wsOutput := WSoutput{
 		ws: ws,
 	}
-	//ssh.stdout and stderr will write output into comboWriter
+	// ssh.stdout and stderr will write output into comboWriter
 	session.Stdout = &wsOutput
 	session.Stderr = &wsOutput
 
 	session2.Stdout = &wsOutput
 	session2.Stderr = &wsOutput
-	//定义terminal模式
+	// 定义terminal模式
 	modes := ssh.TerminalModes{
-		ssh.ECHO:          1, //开启回显
+		ssh.ECHO:          1, // 开启回显
 		ssh.TTY_OP_ISPEED: 14400,
 		ssh.TTY_OP_OSPEED: 14400,
 	}
 
-	//将pty与远程的会话关联起来
+	// 将pty与远程的会话关联起来
 	if err := session.RequestPty("xterm", rows, cols, modes); err != nil {
 		return err
 	}
@@ -153,7 +154,7 @@ func (t *sshConnect) InitialTerminal(ws *websocket.Conn, rows, cols int) error {
 func (t *sshConnect) Connect(ws *websocket.Conn) {
 	stopCh := make(chan struct{}, 1)
 
-	//启用协程获取webTerminal的输入
+	// 启用协程获取webTerminal的输入
 	go func() {
 		for {
 			// 读取web socket信息，msg为用户输入的信息
@@ -165,11 +166,11 @@ func (t *sshConnect) Connect(ws *websocket.Conn) {
 			log.Println(string(msg))
 
 			t.session2.Run(string(msg))
-			//心跳检测
+			// 心跳检测
 			if string(msg) == "ping" {
 				continue
 			}
-			//terminal窗口调整
+			// terminal窗口调整
 			if strings.Contains(string(msg), "resize") {
 				resizeSlice := strings.Split(string(msg), ":")
 				rows, _ := strconv.Atoi(resizeSlice[1])
@@ -223,7 +224,7 @@ func sshTerminal(c *gin.Context) {
 		PassWord: "123456",
 	}
 
-	//将http协议提升为ws协议
+	// 将http协议提升为ws协议
 	ws, err := InitialWS(c)
 	if err != nil {
 		fmt.Println(err)

@@ -1,11 +1,13 @@
 package http
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var temp = `
@@ -111,6 +113,23 @@ func http1() {
 	http.HandleFunc("/param", func(writer http.ResponseWriter, request *http.Request) {
 		_, _ = writer.Write([]byte(param))
 	})
+	http.Handle("/event", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Connection", "keep-alive")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		flusher, ok := w.(http.Flusher)
+		if !ok {
+			log.Panic("server not support")
+		}
+		for i := 0; i < 10; i++ {
+			fmt.Fprintf(w, "data: ===> %d\n\n", i)
+			flusher.Flush()
+			time.Sleep(3 * time.Second)
+		}
+		fmt.Fprintf(w, "event: close\ndata: close\n\n") // 一定要带上data，否则无效
+	}))
 
 	err := http.ListenAndServe(":8088", nil)
 	if err != nil {

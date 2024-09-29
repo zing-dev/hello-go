@@ -2,6 +2,7 @@ package basic
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -70,5 +71,26 @@ func TestIsError(t *testing.T) {
 	if errors.Is(err, os.ErrExist) {
 		log.Println("ErrExist")
 		log.Println(stat.Name())
+	}
+}
+
+func TestPanic(t *testing.T) {
+	p := func(ok bool) error {
+		defer func() error {
+			if r := recover(); r != nil {
+				fmt.Printf("---> %s", r)
+				return r.(error)
+			}
+			return nil
+		}()
+		if ok {
+			panic("wocao ")
+		}
+		return errors.New("fuck")
+	}
+	if err := p(true); err != nil {
+		fmt.Printf("==> %s", err)
+	} else {
+		fmt.Printf("ok")
 	}
 }

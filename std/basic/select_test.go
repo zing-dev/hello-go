@@ -32,6 +32,21 @@ func TestSelect(t *testing.T) {
 	}
 }
 
+func TestSelectSleep(t *testing.T) {
+	ticker := time.NewTicker(time.Second)
+	for {
+		select {
+		case <-time.After(time.Second):
+			log.Println("After")
+		case <-ticker.C:
+			log.Println("ticker")
+		default:
+			time.Sleep(time.Second * 2)
+			log.Println("default")
+		}
+	}
+}
+
 // 可以执行
 func TestSelectTicker(t *testing.T) {
 	var (

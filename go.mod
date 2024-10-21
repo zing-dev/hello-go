@@ -15,6 +15,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/graphql-go/graphql v0.8.0
+	github.com/huandu/go-sqlbuilder v1.30.1
 	github.com/joho/godotenv v1.4.0
 	github.com/judwhite/go-svc v1.2.1
 	github.com/leesper/holmes v0.0.0-20190916004209-307d8a307864
@@ -62,6 +63,7 @@ require (
 	github.com/golang/mock v1.3.1 // indirect
 	github.com/hajimehoshi/go-mp3 v0.3.0 // indirect
 	github.com/hajimehoshi/oto v0.7.1 // indirect
+	github.com/huandu/xstrings v1.4.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
